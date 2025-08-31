@@ -1,4 +1,3 @@
-const carpeta = JSON.parse(localStorage.getItem("carpetaAnimes")) || [];
 // 🔗 Referencias DOM
 const urlActual = document.getElementById("url_actual");
 const inputNombreAnime = document.getElementById("url_anime");
@@ -35,25 +34,35 @@ btnBuscar.addEventListener("click", () => {
   setTimeout(() => animePortada.style.border = "none", 1500);
 });
 
-// 💾 Guardar anime en localStorage
-btnGuardar.addEventListener("click", () => {
-  const anime = {
-    nombre: animeNombre.textContent,
-    estado: animeEstado.textContent,
-    temporada: animeTempoCap.textContent,
-    viendo: animeEstadoViendo.textContent,
-    portada: animePortada.src,
-    url: urlActual.textContent,
-    fecha: new Date().toISOString()
-  };
+// 🗃️ IndexedDB: guardar anime
+const dbRequest = indexedDB.open("AnimeDB", 1);
+dbRequest.onupgradeneeded = function (event) {
+  const db = event.target.result;
+  db.createObjectStore("animes", { keyPath: "nombre" });
+};
 
-  carpeta.push(anime);
-  console.warn("Animes:", carpeta);
-  localStorage.setItem("carpetaAnimes", JSON.stringify(carpeta));
+dbRequest.onsuccess = function (event) {
+  const db = event.target.result;
 
-  btnGuardar.textContent = "Guardado ✔";
-  setTimeout(() => btnGuardar.textContent = "Guardar anime", 1500);
-});
+  btnGuardar.addEventListener("click", () => {
+    const anime = {
+      nombre: animeNombre.textContent,
+      estado: animeEstado.textContent,
+      temporada: animeTempoCap.textContent,
+      viendo: animeEstadoViendo.textContent,
+      portada: animePortada.src,
+      url: urlActual.textContent,
+      fecha: new Date().toISOString()
+    };
+
+    const tx = db.transaction("animes", "readwrite");
+    const store = tx.objectStore("animes");
+    store.put(anime);
+
+    btnGuardar.textContent = "Guardado ✔";
+    setTimeout(() => btnGuardar.textContent = "Guardar anime", 1500);
+  });
+};
 
 // 📁 Redirigir a carpetas.html
 btnMostrarCarpetas.addEventListener("click", () => {
