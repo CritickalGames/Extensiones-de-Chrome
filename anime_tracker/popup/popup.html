@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Anime Tracker</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <h2>Anime Tracker</h2>
+  <p><strong>URL actual:</strong> <span id="url_actual">Cargando...</span></p>
+  <p><strong>Nombre del anime:</strong> <span id="anime"><input id="url_anime" type="text" placeholder="Nombre de la url"></span></p>
+
+  <button id="guardar">Guardar anime</button>
+  <button id="mostrarCarpetas">Mostrar carpetas</button>
+
+  <div class="container">
+    <div class="iz-panel">
+        <img id="anime_portada" src="https://lh3.googleusercontent.com/-tGHmZ6GF0cc/WpohCECY6kI/AAAAAAABdDI/fdZBbrmha_A9gOQ9wp-qKgThLFr1rUq0QCHMYCw/s0/ef3ba899fa0c572bebb18586d81b151c2d72f2bf.jpg">
+    </div>
+    <div class="dr-panel">
+        <h1 id="anime_nombre">Anime Génerico</h1>
+        <h2 id="anime_estado">Emisión/Finalizado</h2>
+        <button id="btn_capitulo_visto">Capítulo visto</button>
+        <h2 id="anime_tempo_cap">Temporada/Capítulo: Estado</h2>
+        <h3 id="anime_estado_viendo">Ver/Viendo/Visto</h3>
+    </div>
+  </div>
+  <div class="container">
+      <h2>Buscar anime</h2>
+      <input id="url_anime_buscar" type="text" placeholder="Nombre de la url">
+      <button id="btn_buscar">Buscar</button>
+  </div>
+  <div>
+    <h2>Animes encontrados</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>Nombre</th>
+          <th>Lanzamiento</th>
+          <th>Vida</th>
+          <th>Estado</th>
+          <th>Estado Vista</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><img src="https://via.placeholder.com/150" alt="Dr Stone"></td>
+          <td>Dr Stone</td>
+          <td>1/2025 - 7/2025</td>
+          <td>T4/E20</td>
+          <td>Fin</td>
+          <td>Ver</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+<script src="popup.js"></script>
+</html>

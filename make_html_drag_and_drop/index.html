@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Editor Drag & Drop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Editor Visual HTML + CSS</h2>
+
+  <div class="container">
+    <!-- Panel izquierdo -->
+    <div class="left-panel">
+      <div class="panel">
+        <h3>Bloques disponibles</h3>
+        <div class="block" draggable="true" data-html="<h1>Título</h1>">Título</div>
+        <div class="block" draggable="true" data-html="<p>Texto de ejemplo</p>">Texto</div>
+        <div class="block" draggable="true" data-html="<img src='https://via.placeholder.com/150'>">Imagen</div>
+        <div class="block" draggable="true" data-html="<button>Botón</button>">Botón</div>
+        <div class="block" draggable="true" data-html="<input type='text' placeholder='Escribí algo'>">Input</div>
+        <div class="block" draggable="true" data-html="<div>Div</div>">Div</div>
+        <div class="block" draggable="true" data-html='
+<div class="container">
+    <div class="iz-panel"></div>
+    <div class="dr-panel"></div>
+</div>
+        '>/div/Contenedor</div>
+        <div class="block" draggable="true" data-html="
+<ol>
+    <li>Elemento</li>
+</ol>
+        ">Lista Ordenadas</div>
+        <div class="block" draggable="true" data-html="
+<ul>
+    <li>Elemento</li>
+</ul>
+        ">Lista Desrdenadas</div>
+      <div class="block" draggable="true" data-html='
+<table border="1">
+    <thead>
+        <tr>
+            <th>Encabezado</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr id="0">
+        <td>Celda</td>
+        </tr>
+    </tbody>
+</table>
+        '>Tabla</div>
+        
+      </div>
+
+    
+      <textarea id="resultado" placeholder="Acá se genera tu HTML..."></textarea>
+      <div class="botones">
+        <button id="exportar">Exportar HTML</button>
+        <button id="importar">Importar HTML</button>
+      </div>
+
+      <textarea id="cssEditor" placeholder="Escribí tu CSS acá..."></textarea>
+    </div>
+
+    <!-- Panel derecho -->
+    <div class="right-panel">
+      <div class="canvas" id="canvas">
+        <h3>Previsualización</h3>
+        <p>Arrastrá bloques aquí</p>
+      </div>
+    </div>
+  </div>
+
+  <style id="customStyles"></style>
+  <script src="editor.js"></script>
+</body>
+</html>
