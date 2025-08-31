@@ -1,6 +1,3 @@
-//TODO: Hacer la búsqueda de la URL; si no encuentra el anime, no cambiar placeholder
-//TODO: Hacer la búsqueda de la URL; si encuentra url, cambiar placeholder
-
 // router
 import { obj_route } from '../core/router.js';
 
@@ -20,32 +17,38 @@ const animeTempoCap = document.getElementById("anime_tempo_cap");
 const animeEstadoViendo = document.getElementById("anime_estado_viendo");
 const animePortada = document.getElementById("anime_portada");
 
-// 🌐 Obtener URL de la pestaña activa
-chrome.tabs.query({ active: true, currentWindow: true }, async function(tabs) {
-  const activeTab = tabs[0];
-  const url = activeTab.url || "No disponible";
-  urlActual.textContent = url;
-
-  // 🧠 Parsear URL vía router
-  const { nombre, temporada, capitulo } = await obj_route('parse.parse_url', { url });
-
-  // 🧠 Buscar anime
-  const resultado = await obj_route('search.conseguir_anime', { URL_nombre: nombre });
-
-  if (!resultado || !nombre){
-    inputNombreAnime.value = nombre;
-    console.warn("Anime no encontrado en DB ni API");
-    return; // No modificar DOM si no se encontró
-  }
-  // ✅ Actualizar DOM
+// 🧩 Función modular para actualizar DOM
+function actualizarDOM(resultado, temporada = 0, capitulo = 0) {
   animeNombre.textContent = resultado.nombre;
   animeEstado.textContent = resultado.estado;
   animeTempoCap.textContent = `T${temporada}/E${capitulo}`;
   animeEstadoViendo.textContent = resultado.viendo;
   animePortada.src = resultado.portada;
   inputNombreAnime.value = resultado.nombre;
-});
 
+  animeEstadoViendo.style.color = resultado.viendo === "Visto ✔" ? "green" : "red";
+
+  // Guardar estado actual para carpetas.html
+  chrome.storage.local.set({ animeActual: { ...resultado, temporada, capitulo } });
+}
+
+// 🌐 Obtener URL de la pestaña activa
+chrome.tabs.query({ active: true, currentWindow: true }, async function(tabs) {
+  const activeTab = tabs[0];
+  const url = activeTab.url || "No disponible";
+  urlActual.textContent = url;
+
+  const { nombre, temporada, capitulo } = await obj_route('parse.parse_url', { url });
+  const resultado = await obj_route('search.conseguir_anime', { URL_nombre: nombre });
+
+  if (!resultado || !nombre) {
+    inputNombreAnime.value = nombre;
+    console.warn("Anime no encontrado en DB ni API");
+    return;
+  }
+
+  actualizarDOM(resultado, temporada, capitulo);
+});
 
 // 🔍 Buscar manualmente
 btnBuscar.addEventListener("click", async () => {
@@ -55,11 +58,7 @@ btnBuscar.addEventListener("click", async () => {
   const resultado = await obj_route('conseguir_anime', { nombre, temporada: 0, capitulo: 0 });
   if (!resultado) return;
 
-  animeNombre.textContent = resultado.nombre;
-  animeEstado.textContent = resultado.estado;
-  animeTempoCap.textContent = `T${resultado.temporada}/E${resultado.capitulo}`;
-  animeEstadoViendo.textContent = resultado.viendo;
-  animePortada.src = resultado.portada;
+  actualizarDOM(resultado, resultado.temporada, resultado.capitulo);
 });
 
 // 🗃️ Guardar anime en IndexedDB
@@ -71,10 +70,11 @@ btnGuardar.addEventListener("click", async () => {
     viendo: animeEstadoViendo.textContent,
     portada: animePortada.src,
     url: urlActual.textContent,
-    fecha: new Date().toISOString()
+    fecha: new Date().toISOString(),
+    URL_nombre: animeNombre.textContent // clave para IndexedDB
   };
 
-  await obj_route('guardar_anime', anime);
+  await obj_route('db.guardar_anime', anime);
 
   btnGuardar.textContent = "Guardado ✔";
   setTimeout(() => btnGuardar.textContent = "Guardar anime", 1500);
@@ -85,16 +85,10 @@ btnMostrarCarpetas.addEventListener("click", () => {
   window.location.href = "subpopup/carpetas.html";
 });
 
-// ✅ Marcar capítulo como visto
-// TODO: Cambiar txt de btn de "Capítulo no visto ❌" a "Capítulo visto ✔"
-// TODO: Hacer que el botón pueda alternar entre ambos estados
+// ✅ Alternar estado de capítulo visto
 btnCapituloVisto.addEventListener("click", () => {
   const actual = animeEstadoViendo.textContent;
-  if (actual === "Visto") {
-    animeEstadoViendo.textContent = "No visto ❌";
-    animeEstadoViendo.style.color = "red";
-  } else {
-    animeEstadoViendo.textContent = "Visto ✔";
-    animeEstadoViendo.style.color = "green";
-  }
+  const nuevoEstado = actual === "Visto ✔" ? "No visto ❌" : "Visto ✔";
+  animeEstadoViendo.textContent = nuevoEstado;
+  animeEstadoViendo.style.color = nuevoEstado === "Visto ✔" ? "green" : "red";
 });

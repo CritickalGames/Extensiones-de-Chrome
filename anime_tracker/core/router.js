@@ -1,25 +1,20 @@
-// router.js
+const rutas = {
+  search: 'core/search.js',
+  api: 'core/api.js',
+  parse: 'core/parser.js',
+  db: 'core/db.js'
+};
+
 export async function obj_route(action, payload) {
   const [modulo, funcion] = action.split('.');
+  const ruta = rutas[modulo];
 
-  switch (modulo) {
-    case 'search': {
-        const url = chrome.runtime.getURL('core/search.js');
-        const mod = await import(url);
-        return await mod[funcion](payload);
-    }
-    case 'api': {
-        const url = chrome.runtime.getURL('core/api.js');
-        const mod = await import(url);
-        return await mod[funcion](payload);
-    }
-    case 'parse': {
-        const url = chrome.runtime.getURL('core/parser.js');
-        const mod = await import(url);
-        return await mod[funcion](payload);
-    }
-    default:
-        console.warn(`Módulo desconocido: ${modulo}`);
-        return false;
+  if (!ruta) {
+    console.warn(`Módulo desconocido: ${modulo}`);
+    return false;
   }
+
+  const url = chrome.runtime.getURL(ruta);
+  const mod = await import(url);
+  return await mod[funcion](payload);
 }
