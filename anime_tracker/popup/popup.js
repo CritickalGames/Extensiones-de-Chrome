@@ -1,4 +1,6 @@
-const carpeta = JSON.parse(localStorage.getItem("carpetaAnimes")) || [];
+// router
+import { obj_route } from '../core/router.js';
+
 // 🔗 Referencias DOM
 const urlActual = document.getElementById("url_actual");
 const inputNombreAnime = document.getElementById("url_anime");
@@ -15,28 +17,52 @@ const animeTempoCap = document.getElementById("anime_tempo_cap");
 const animeEstadoViendo = document.getElementById("anime_estado_viendo");
 const animePortada = document.getElementById("anime_portada");
 
+// 🧩 Función modular para actualizar DOM
+function actualizarDOM(resultado, temporada = 0, capitulo = 0) {
+  animeNombre.textContent = resultado.nombre;
+  animeEstado.textContent = resultado.estado;
+  animeTempoCap.textContent = `T${temporada}/E${capitulo}`;
+  animeEstadoViendo.textContent = resultado.viendo;
+  animePortada.src = resultado.portada;
+  inputNombreAnime.value = resultado.nombre;
+
+  animeEstadoViendo.style.color = resultado.viendo === "Visto ✔" ? "green" : "red";
+
+  // Guardar estado actual para carpetas.html
+  chrome.storage.local.set({ animeActual: { ...resultado, temporada, capitulo } });
+}
+
 // 🌐 Obtener URL de la pestaña activa
-chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+chrome.tabs.query({ active: true, currentWindow: true }, async function(tabs) {
   const activeTab = tabs[0];
-  urlActual.textContent = activeTab.url || "No disponible";
+  const url = activeTab.url || "No disponible";
+  urlActual.textContent = url;
+
+  const { nombre, temporada, capitulo } = await obj_route('parse.parse_url', { url });
+  const resultado = await obj_route('search.conseguir_anime', { URL_nombre: nombre });
+
+  if (!resultado || !nombre) {
+    inputNombreAnime.value = nombre;
+    console.warn("Anime no encontrado en DB ni API");
+    return;
+  }
+
+  actualizarDOM(resultado, temporada, capitulo);
 });
 
-// 🔍 Buscar anime (simulado)
-btnBuscar.addEventListener("click", () => {
+// 🔍 Buscar manualmente
+btnBuscar.addEventListener("click", async () => {
   const nombre = inputBuscarAnime.value.trim();
   if (!nombre) return;
 
-  animeNombre.textContent = nombre;
-  animeEstado.textContent = "Emisión";
-  animeTempoCap.textContent = "T1/E1";
-  animeEstadoViendo.textContent = "Ver";
+  const resultado = await obj_route('conseguir_anime', { nombre, temporada: 0, capitulo: 0 });
+  if (!resultado) return;
 
-  animePortada.style.border = "2px solid lime";
-  setTimeout(() => animePortada.style.border = "none", 1500);
+  actualizarDOM(resultado, resultado.temporada, resultado.capitulo);
 });
 
-// 💾 Guardar anime en localStorage
-btnGuardar.addEventListener("click", () => {
+// 🗃️ Guardar anime en IndexedDB
+btnGuardar.addEventListener("click", async () => {
   const anime = {
     nombre: animeNombre.textContent,
     estado: animeEstado.textContent,
@@ -44,12 +70,11 @@ btnGuardar.addEventListener("click", () => {
     viendo: animeEstadoViendo.textContent,
     portada: animePortada.src,
     url: urlActual.textContent,
-    fecha: new Date().toISOString()
+    fecha: new Date().toISOString(),
+    URL_nombre: animeNombre.textContent // clave para IndexedDB
   };
 
-  carpeta.push(anime);
-  console.warn("Animes:", carpeta);
-  localStorage.setItem("carpetaAnimes", JSON.stringify(carpeta));
+  await obj_route('db.guardar_anime', anime);
 
   btnGuardar.textContent = "Guardado ✔";
   setTimeout(() => btnGuardar.textContent = "Guardar anime", 1500);
@@ -60,8 +85,10 @@ btnMostrarCarpetas.addEventListener("click", () => {
   window.location.href = "subpopup/carpetas.html";
 });
 
-// ✅ Marcar capítulo como visto
+// ✅ Alternar estado de capítulo visto
 btnCapituloVisto.addEventListener("click", () => {
-  animeEstadoViendo.textContent = "Visto";
-  animeEstadoViendo.style.color = "green";
+  const actual = animeEstadoViendo.textContent;
+  const nuevoEstado = actual === "Visto ✔" ? "No visto ❌" : "Visto ✔";
+  animeEstadoViendo.textContent = nuevoEstado;
+  animeEstadoViendo.style.color = nuevoEstado === "Visto ✔" ? "green" : "red";
 });

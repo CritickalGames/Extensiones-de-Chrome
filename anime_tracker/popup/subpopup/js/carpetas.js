@@ -1,15 +1,16 @@
-// 🔗 Referencias
+import { obj_route } from "../../../core/router.js";
+
+// 🔗 Referencias DOM
 const contenedor = document.getElementById("lista_animes");
 const inputBuscar = document.getElementById("buscar");
 const btnVolver = document.getElementById("btn_volver");
 const btnBorrar = document.getElementById("btn_borrar");
 
-// 📦 Obtener data guardada
-const carpeta = JSON.parse(localStorage.getItem("carpetaAnimes")) || [];
-
-// 🧱 Renderizar tabla con interacción
+// 🧱 Renderizar tabla
 function renderTabla(animes) {
-  if (animes.length === 0) {
+  contenedor.innerHTML = "";
+
+  if (!animes.length) {
     contenedor.innerHTML = "<p>No hay animes guardados.</p>";
     return;
   }
@@ -30,8 +31,8 @@ function renderTabla(animes) {
       </tr>
     </thead>
     <tbody>
-      ${animes.map((anime, index) => `
-        <tr data-index="${index}">
+      ${animes.map(anime => `
+        <tr>
           <td><img src="${anime.portada}" alt="${anime.nombre}" width="100"></td>
           <td>${anime.nombre}</td>
           <td>${anime.estado}</td>
@@ -46,7 +47,6 @@ function renderTabla(animes) {
 
   contenedor.appendChild(tabla);
 
-  // 🎯 Interacción: al hacer click en una fila, copiar nombre al input
   tabla.querySelectorAll("tbody tr").forEach(row => {
     row.addEventListener("click", () => {
       const nombre = row.children[1].textContent;
@@ -56,26 +56,43 @@ function renderTabla(animes) {
   });
 }
 
-// 🚀 Ejecutar render
-renderTabla(carpeta);
+// 🗑️ Borrar anime por nombre
+async function borrarAnime(nombre) {
+  try {
+    await obj_route("db.deleteAnime", nombre);
+    const actualizados = await obj_route("db.getAllAnimes");
+    renderTabla(actualizados);
+  } catch (err) {
+    alert("❌ Error al borrar anime: " + err);
+  }
+}
 
-// 🔙 Volver al popup principal
-btnVolver.addEventListener("click", () => {
-  window.location.href = "../popup.html";
-});
+// 🚀 Inicializar flujo
+async function init() {
+  try {
+    const animes = await obj_route("db.getAllAnimes");
+    renderTabla(animes);
 
-// 🗑️ Borrar anime por nombre exacto
-btnBorrar.addEventListener("click", () => {
-  const nombreABorrar = inputBuscar.value.trim();
-  if (!nombreABorrar) return alert("Escribe el nombre del anime a borrar.");
+    // Restaurar último anime buscado desde popup
+    chrome.storage.local.get("animeActual", ({ animeActual }) => {
+      if (animeActual?.nombre) {
+        inputBuscar.value = animeActual.nombre;
+      }
+    });
 
-  const index = carpeta.findIndex(anime => anime.nombre === nombreABorrar);
-  if (index === -1) return alert("No se encontró ese anime.");
+    btnBorrar.addEventListener("click", async () => {
+      const nombre = inputBuscar.value.trim();
+      if (!nombre) return alert("Escribe el nombre del anime a borrar.");
+      await borrarAnime(nombre);
+      inputBuscar.value = "";
+    });
 
-  // 🧹 Eliminar y actualizar
-  carpeta.splice(index, 1);
-  localStorage.setItem("carpetaAnimes", JSON.stringify(carpeta));
-  contenedor.innerHTML = ""; // Limpiar tabla
-  renderTabla(carpeta);      // Volver a renderizar
-  inputBuscar.value = "";    // Limpiar input
-});
+    btnVolver.addEventListener("click", () => {
+      window.location.href = "../popup.html";
+    });
+  } catch (err) {
+    alert("❌ Error al inicializar: " + err);
+  }
+}
+
+init();
