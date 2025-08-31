@@ -32,7 +32,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, async function(tabs) {
   // 🧠 Buscar anime
   const resultado = await obj_route('search.conseguir_anime', { URL_nombre: nombre });
 
-  if (!resultado) {
+  if (!resultado or !nombre) {
     inputNombreAnime.value = nombre;
     console.warn("Anime no encontrado en DB ni API");
     return; // No modificar DOM si no se encontró

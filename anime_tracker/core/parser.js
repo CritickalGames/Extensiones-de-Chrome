@@ -4,7 +4,7 @@ export function parse_url({ url }) {
   const regex = /[a-zA-Z]+-[a-zA-Z]+/;
   const match = partes.find(p => regex.test(p));
 
-  const URL_nombre = match || 'desconocido';
+  const URL_nombre = match || false;
   const URL_dir = url.split('//')[1]?.split('.')[0] || 'desconocido';
 
   return {
