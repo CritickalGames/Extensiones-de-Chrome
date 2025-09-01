@@ -2,12 +2,17 @@ let dbInstance = null;
 
 /**
  * Abre la base de datos AnimeDB como singleton.
+ * Si se pasan objectStoreName y accion, devuelve directamente el objectStore.
  */
-export async function abrirDB() {
-  if (dbInstance) return dbInstance;
+export async function abrirDB(objectStoreName = null, accion = null) {
+  if (dbInstance) {
+    return objectStoreName && accion
+      ? dbInstance.transaction(objectStoreName, accion).objectStore(objectStoreName)
+      : dbInstance;
+  }
 
   dbInstance = await new Promise((resolve, reject) => {
-    const req = indexedDB.open("AnimeDB", 1);
+    const req = indexedDB.open("AnimeIsAlive2", 1);
 
     req.onupgradeneeded = (e) => {
       const db = e.target.result;
@@ -19,7 +24,9 @@ export async function abrirDB() {
     req.onerror = () => reject("❌ Error al abrir la base de datos.");
   });
 
-  return dbInstance;
+  return objectStoreName && accion
+    ? dbInstance.transaction(objectStoreName, accion).objectStore(objectStoreName)
+    : dbInstance;
 }
 
 /**
@@ -27,11 +34,8 @@ export async function abrirDB() {
  */
 export async function guardar_anime(anime) {
   try {
-    const db = await abrirDB();
-    const tx = db.transaction("animes", "readwrite");
-    const store = tx.objectStore("animes");
+    const store = await abrirDB("animes", "readwrite");
 
-    // Validación opcional: evitar duplicados
     const existente = await new Promise((resolve) => {
       const req = store.get(anime.URL_nombre);
       req.onsuccess = () => resolve(req.result);
@@ -53,10 +57,9 @@ export async function guardar_anime(anime) {
  */
 export async function getAllAnimes() {
   try {
-    const db = await abrirDB();
+    const store = await abrirDB("animes", "readonly");
+
     return await new Promise((resolve, reject) => {
-      const tx = db.transaction("animes", "readonly");
-      const store = tx.objectStore("animes");
       const request = store.getAll();
       request.onsuccess = () => resolve(request.result);
       request.onerror = () => reject("❌ Error al obtener los animes.");
@@ -72,10 +75,9 @@ export async function getAllAnimes() {
  */
 export async function deleteAnime(URL_nombre) {
   try {
-    const db = await abrirDB();
+    const store = await abrirDB("animes", "readwrite");
+
     return await new Promise((resolve, reject) => {
-      const tx = db.transaction("animes", "readwrite");
-      const store = tx.objectStore("animes");
       const request = store.delete(URL_nombre);
       request.onsuccess = () => resolve();
       request.onerror = () => reject("❌ No se pudo borrar el anime.");
@@ -83,4 +85,19 @@ export async function deleteAnime(URL_nombre) {
   } catch (err) {
     console.error(err);
   }
+}
+
+/**
+ * Busca un anime por su clave URL_nombre.
+ */
+export async function buscar_en_db(URL_nombre) {
+  const store = await abrirDB("animes", "readonly");
+
+  return await new Promise((resolve) => {
+    const req = store.get(URL_nombre);
+    req.onsuccess = () => resolve(req.result || false);
+    console.warn("REQ:", req);
+    
+    req.onerror = () => resolve(false);
+  });
 }
