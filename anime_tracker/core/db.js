@@ -1,3 +1,4 @@
+import { obj_route } from "./router.js";
 let dbInstance = null;
 
 /**
@@ -93,11 +94,20 @@ export async function deleteAnime(URL_nombre) {
 export async function buscar_en_db(URL_nombre) {
   const store = await abrirDB("animes", "readonly");
 
-  return await new Promise((resolve) => {
+  const resultado = await new Promise((resolve) => {
     const req = store.get(URL_nombre);
     req.onsuccess = () => resolve(req.result || false);
-    console.warn("REQ:", req);
-    
     req.onerror = () => resolve(false);
   });
+
+  if (resultado) return resultado;
+
+  // Buscar en API si no está en DB
+  const api_resultado = await obj_route('api.buscar_en_api', URL_nombre);
+  if (!api_resultado) return false;
+
+  // Guardar en DB si lo encontrás
+  //! Aún no lo decido: await obj_route('db.guardar_anime', api_resultado);
+
+  return api_resultado;
 }

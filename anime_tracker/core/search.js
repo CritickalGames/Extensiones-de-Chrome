@@ -2,6 +2,7 @@ import { obj_route } from "./router.js";
 
 export async function conseguir_anime(URL_nombre) {
   // Buscar en base de datos
+  //? Si DB falla, busca en API automaticamente
   const resultado = await obj_route('db.buscar_en_db', URL_nombre);
   console.log("Resultado DB:", resultado);
   if (resultado) return resultado;
@@ -15,8 +16,6 @@ export async function conseguir_anime(URL_nombre) {
 
   return api_resultado;
 }
-
-
 
 export async function buscar_anime({ nombre }) {
   // TODO: búsqueda por nombre parcial
