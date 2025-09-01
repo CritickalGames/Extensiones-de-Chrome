@@ -21,32 +21,37 @@ const animePortada = document.getElementById("anime_portada");
 function actualizarDOM(resultado, temporada = 0, capitulo = 0) {
   animeNombre.textContent = resultado.nombre;
   animeEstado.textContent = resultado.estado;
-  animeTempoCap.textContent = `T${temporada}/E${capitulo}`;
+  animeTempoCap.value = `T${temporada}/E${capitulo}`;
   animeEstadoViendo.textContent = resultado.viendo;
   animePortada.src = resultado.portada;
   inputNombreAnime.value = resultado.nombre;
 
   animeEstadoViendo.style.color = resultado.viendo === "Visto ✔" ? "green" : "red";
-
-  // Guardar estado actual para carpetas.html
-  chrome.storage.local.set({ animeActual: { ...resultado, temporada, capitulo } });
 }
-
+function prevista_generica(URL_anime, nombre, temporada, capitulo) {
+  animeNombre.textContent = nombre;
+  animeEstado.textContent = "? Desconocido";
+  animeTempoCap.value = `T${temporada}/E${capitulo}`;
+  inputNombreAnime.value = URL_anime;
+}
 // 🌐 Obtener URL de la pestaña activa
 chrome.tabs.query({ active: true, currentWindow: true }, async function(tabs) {
   const activeTab = tabs[0];
   const url = activeTab.url || "No disponible";
   urlActual.textContent = url;
 
-  const { nombre, temporada, capitulo } = await obj_route('parse.parse_url', { url });
-  const resultado = await obj_route('search.conseguir_anime', { URL_nombre: nombre });
+  const {URL_dir, URL_anime, nombre, temporada, capitulo} = await obj_route('parse.parse_url', { url });
+  console.warn("PAREADO:", {URL_dir, URL_anime, nombre, temporada, capitulo});
+  
+  const resultado = await obj_route('search.conseguir_anime', URL_anime);
 
-  if (!resultado || !nombre) {
-    inputNombreAnime.value = nombre;
+  if (!resultado || !URL_anime) {
+    inputNombreAnime.value = URL_anime;
     console.warn("Anime no encontrado en DB ni API");
+    prevista_generica(URL_anime, nombre, temporada, capitulo);
     return;
   }
-
+  // mostrar todo resultado en consola
   actualizarDOM(resultado, temporada, capitulo);
 });
 
@@ -55,7 +60,7 @@ btnBuscar.addEventListener("click", async () => {
   const nombre = inputBuscarAnime.value.trim();
   if (!nombre) return;
 
-  const resultado = await obj_route('conseguir_anime', { nombre, temporada: 0, capitulo: 0 });
+  const resultado = await obj_route('search.conseguir_anime', nombre);
   if (!resultado) return;
 
   actualizarDOM(resultado, resultado.temporada, resultado.capitulo);
