@@ -1,6 +1,7 @@
 // api.js
 export async function buscar_en_api(URL_nombre) {
   // TODO: llamada real a API
+  return false;
   return {
     URL_nombre,
     URL_dir: "simulado",
@@ -13,5 +14,3 @@ export async function buscar_en_api(URL_nombre) {
     fecha: new Date().toISOString()
   };
 }
-
-

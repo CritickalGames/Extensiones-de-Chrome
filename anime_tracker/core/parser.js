@@ -1,17 +1,47 @@
 // parse.js
 export function parse_url({ url }) {
-  const partes = url.split('/');
-  const regex = /[a-zA-Z]+-[a-zA-Z]+/;
-  const match = partes.find(p => regex.test(p));
+  if (typeof url !== 'string') return fallback();
 
-  const URL_nombre = match || false;
-  const URL_dir = url.split('//')[1]?.split('.')[0] || 'desconocido';
+  let u;
+  try {
+    u = new URL(url);
+  } catch {
+    return fallback();
+  }
 
+  const URL_dir = u.hostname;
+  const partes = u.pathname.split('/').filter(Boolean);
+
+  if (partes.length < 2) return fallback();
+
+  const last = partes.at(-1);
+  const prev = partes.at(-2);
+
+  const isNumeric = /^\d+$/.test(last);
+  const capitulo = isNumeric ? parseInt(last) : null;
+
+  const animeSegment = isNumeric ? prev : last;
+  const URL_anime = animeSegment;
+  const nombre = animeSegment.replace(/-/g, ' ');
+
+  // Temporada: detecta "s2", "2nd-season", etc.
+  const temporadaMatch = animeSegment.match(/(?:s|season-)?(\d+)(?:nd|st|rd|th)?-season?/i);
+  const temporada = temporadaMatch ? parseInt(temporadaMatch[1]) : capitulo ? 1 : 0;
   return {
-    URL_nombre,
     URL_dir,
-    nombre: URL_nombre.replace(/-/g, ' '),
+    URL_anime,
+    nombre,
+    temporada,
+    capitulo
+  };
+}
+
+function fallback() {
+  return {
+    URL_dir: null,
+    URL_anime: null,
+    nombre: null,
     temporada: 0,
-    capitulo: 0
+    capitulo: null
   };
 }
