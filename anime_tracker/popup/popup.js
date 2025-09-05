@@ -40,15 +40,15 @@ chrome.tabs.query({ active: true, currentWindow: true }, async function(tabs) {
   const url = activeTab.url || "No disponible";
   urlActual.textContent = url;
 
-  const {URL_dir, URL_anime, nombre, temporada, capitulo} = await obj_route('parse.parse_url', { url });
-  console.warn("PAREADO:", {URL_dir, URL_anime, nombre, temporada, capitulo});
+  const {URL_dir, URL_nombre, nombre, temporada, capitulo} = await obj_route('parse.parse_url', { url });
+  console.warn("PARSEADO:", {URL_dir, URL_nombre, nombre, temporada, capitulo});
   
-  const resultado = await obj_route('search.conseguir_anime', URL_anime);
+  const resultado = await obj_route('search.conseguir_anime', URL_nombre);
 
-  if (!resultado || !URL_anime) {
-    inputNombreAnime.value = URL_anime;
+  if (!resultado || !URL_nombre) {
+    inputNombreAnime.value = URL_nombre;
     console.warn("Anime no encontrado en DB ni API");
-    prevista_generica(URL_anime, nombre, temporada, capitulo);
+    prevista_generica(URL_nombre, nombre, temporada, capitulo);
     return;
   }
   // mostrar todo resultado en consola
