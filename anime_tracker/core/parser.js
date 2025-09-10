@@ -23,81 +23,109 @@ export function parse_url({ url }) {
 
   const last = partes.at(-1)?.replace(/\.html$/, '') ?? '';
   const prev = partes.at(-2) ?? '';
-  let season_patron = "";
 
-  console.warn({ prev, last });
   // 🧩 Unificación de patrones
-  const patterns = [
+  const patterns_length_1 = [
+    {
+      name: 'nombre/>',
+      match: true,
+      extract: () => {
+        URL_nombre = last;
+      }
+    },
     {
       name: 'nombre-<capítulo>',
       match: /^(.+)-(\d{1,3})$/.test(last),
       extract: () => {
         const m = last.match(/^(.+)-(\d{1,3})$/);
-        URL_nombre = m[1];
         capitulo = parseInt(m[2]);
+      }
+    },
+    {
+      name: 'nombre-<capítulo>',
+      match: /^(.+)-(\d{1,3})x(\d{1,3})$/.test(last),
+      extract: () => {
+        const m = last.match(/^(.+)-(\d{1,3})x(\d{1,3})$/);
+        URL_nombre = m[1];
+        temporada = parseInt(m[2]);
+        capitulo = parseInt(m[3]);
+        console.log(URL_nombre);
       }
     },
     {
       name: 'nombre-<ordinal>-season<pueden haber más cosas>',
-      match: /^(.+)-(\d{1,2})(st|nd|rd|th)-season/i.test(prev) 
-          || /^(.+)-(\d{1,2})(st|nd|rd|th)-season/i.test(last),
+      match: /^(.+)-(\d{1,2})(st|nd|rd|th)-season/i.test(last),
       extract: () => {
-        const m1 = prev.match(/^(.+)-(\d{1,2})(st|nd|rd|th)-season/i)
-                || last.match(/^(.+)-(\d{1,2})(st|nd|rd|th)-season/i);
-        console.log(m1);
-        temporada = parseInt(m1[2]);
-        URL_nombre = m1[1];
+        const m = last.match(/^(.+)-(\d{1,2})(st|nd|rd|th)-season/i);
+        temporada = parseInt(m[2]);
+        URL_nombre = m[1];
 
-        const season_patron = new RegExp("-" + m1[2] + m1[3] + "-season", 'i');
+        const season_patron = new RegExp("-" + m[2] + m[3] + "-season", 'i');
         URL_nombre = URL_nombre?.replace(season_patron, '');
       }
     },
     {
-      name: 'nombre-s<ordinal>-<pueden haber más cosas>',
-      match: /^(.+)-s(\d{1,2})/i.test(prev) 
-          || /^(.+)-s(\d{1,2})/i.test(last),
+      name: 'nombre-s<temporada>-<más cosas>',
+      match: /^(.+)-s(\d{1,2})/i.test(last),
       extract: () => {
-        const m1 = prev.match(/^(.+)-s(\d{1,2})/i)
-                || last.match(/^(.+)-s(\d{1,2})/i);
-        console.log(m1);
-        temporada = parseInt(m1[2]);
-        URL_nombre = m1[1];
-      }
-    },
-    {
-      name: '<temporada>(algo)<capítulo>',
-      match: /^(\d{1,2})x(\d{1,3})$/.test(last),
-      extract: () => {
-        const m = last.match(/^(\d{1,2})x(\d{1,3})$/);
-        temporada = parseInt(m[1]);
-        capitulo = parseInt(m[2]);
-      }
-    },
-    {
-      name: 'prev/<capítulo>',
-      match: /^\d{1,3}$/.test(last),
-      extract: () => {
-        capitulo = parseInt(last);
+        const m = last.match(/^(.+)-s(\d{1,2})/i);
+        capitulo = parseInt(m[1]);
       }
     }
   ];
 
-  // 🧩 Evaluar patrones en orden
-  for (const p of patterns) {
-    if (p.match) {
-      p.extract();
-      console.warn(`Patrón detectado: ${p.name}`);
+  const patterns_length_2 = [
+    {
+      name: 'nombre/>',
+      match: true,
+      extract: () => {
+        URL_nombre = prev;
+      }
+    },
+    {
+      name: 'nombre/<capítulo>',
+      match: /^\d{1,3}$/.test(last),
+      extract: () => {
+        capitulo = parseInt(last);
+      }
+    },
+    {
+      name: 'nombre-<ordinal>-season<pueden haber más cosas>',
+      match: /^(.+)-(\d{1,2})(st|nd|rd|th)-season/i.test(prev),
+      extract: () => {
+        const m = prev.match(/^(.+)-(\d{1,2})(st|nd|rd|th)-season/i);
+        temporada = parseInt(m[2]);
+        URL_nombre = m[1];
+
+        const season_patron = new RegExp("-" + m[2] + m[3] + "-season", 'i');
+        URL_nombre = URL_nombre?.replace(season_patron, '');
+      }
+    }
+  ];
+
+  if (partes.length <2) {
+    for (const p of patterns_length_1) {
+      if (p.match) {
+        p.extract();
+        // console.warn(`Patrón de 1 detectado: ${p.name}`);
+      }
+    }
+  } else {
+        console.warn(`Patrón de 2 detectado`);
+    for (const p of patterns_length_2) {
+      if (p.match) {
+        p.extract();
+        // console.warn(`Patrón de 2 detectado: ${p.name}`);
+      }
     }
   }
-  if (URL_nombre === null){
-    URL_nombre = prev;
-  }
-  console.log(URL_nombre);
+
   // 🧩 Normalizar nombre
   nombre = URL_nombre?.replace(/-/g, ' ')
             .trim() ?? null;
   const capitalizar = str => str?.charAt(0).toUpperCase() + str?.slice(1).toLowerCase();
   nombre = capitalizar(nombre);
+  temporada = (u.pathname.split('/').filter(Boolean)[0]=="pelicula") ? 0 : temporada;
   return {
     URL_dir,
     URL_nombre,
@@ -113,7 +141,7 @@ function fallback() {
     URL_dir: null,
     URL_nombre: null,
     nombre: null,
-    temporada: 0,
+    temporada: 1,
     capitulo: 0
   };
 }
