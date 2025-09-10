@@ -41,7 +41,6 @@ chrome.tabs.query({ active: true, currentWindow: true }, async function(tabs) {
   urlActual.textContent = url;
 
   const {URL_dir, URL_nombre, nombre, temporada, capitulo} = await obj_route('parse.parse_url', { url });
-  console.warn("PARSEADO:", {URL_dir, URL_nombre, nombre, temporada, capitulo});
   
   const resultado = await obj_route('search.conseguir_anime', URL_nombre);
 
@@ -69,14 +68,14 @@ btnBuscar.addEventListener("click", async () => {
 // 🗃️ Guardar anime en IndexedDB
 btnGuardar.addEventListener("click", async () => {
   const anime = {
+    url_anime: inputNombreAnime.value.trim(),
     nombre: animeNombre.textContent,
-    estado: animeEstado.textContent,
-    temporada: animeTempoCap.textContent,
+    estado: animeEstado.textContent.includes,
+    capitulo: animeTempoCap.value,
     viendo: animeEstadoViendo.textContent,
     portada: animePortada.src,
     url: urlActual.textContent,
-    fecha: new Date().toISOString(),
-    URL_nombre: animeNombre.textContent // clave para IndexedDB
+    completo: false
   };
 
   await obj_route('db.guardar_anime', anime);

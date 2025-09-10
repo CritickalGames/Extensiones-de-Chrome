@@ -12,22 +12,42 @@ export async function abrirDB(objectStoreName = null, accion = null) {
       : dbInstance;
   }
 
-  dbInstance = await new Promise((resolve, reject) => {
+  dbInstance = await crearDB();
+  return objectStoreName && accion
+    ? dbInstance.transaction(objectStoreName, accion).objectStore(objectStoreName)
+    : dbInstance;
+}
+
+// Estructura que tendrá la base de datos
+const storesSchema = [
+  {
+    name: "animes",
+    options: { keyPath: "url_anime" },
+    indices: [
+      { name: "url_dir", keyPath: "url_dir", options: { unique: false } }
+    ]
+  }
+];
+
+// 🧱 Función interna para crear la base y sus stores
+async function crearDB() {
+  return new Promise((resolve, reject) => {
     const req = indexedDB.open("AnimeIsAlive2", 1);
 
     req.onupgradeneeded = (e) => {
       const db = e.target.result;
-      const store = db.createObjectStore("animes", { keyPath: "URL_nombre" });
-      store.createIndex("URL_dir", "URL_dir", { unique: false });
+
+      storesSchema.forEach(storeDef => {
+        const store = db.createObjectStore(storeDef.name, storeDef.options);
+        storeDef.indices.forEach(index =>
+          store.createIndex(index.name, index.keyPath, index.options)
+        );
+      });
     };
 
     req.onsuccess = (e) => resolve(e.target.result);
     req.onerror = () => reject("❌ Error al abrir la base de datos.");
   });
-
-  return objectStoreName && accion
-    ? dbInstance.transaction(objectStoreName, accion).objectStore(objectStoreName)
-    : dbInstance;
 }
 
 /**
@@ -37,14 +57,17 @@ export async function guardar_anime(anime) {
   try {
     const store = await abrirDB("animes", "readwrite");
 
+    console.warn(anime);
+    console.warn(anime.url_anime);
     const existente = await new Promise((resolve) => {
-      const req = store.get(anime.URL_nombre);
+      
+      const req = store.get(anime.url_anime);
       req.onsuccess = () => resolve(req.result);
       req.onerror = () => resolve(null);
     });
 
     if (existente) {
-      console.info(`🔁 Actualizando anime existente: ${anime.URL_nombre}`);
+      console.info(`🔁 Actualizando anime existente: ${anime.url_anime}`);
     }
 
     store.put(anime);
@@ -72,14 +95,14 @@ export async function getAllAnimes() {
 }
 
 /**
- * Elimina un anime por su clave URL_nombre.
+ * Elimina un anime por su clave url_anime.
  */
-export async function deleteAnime(URL_nombre) {
+export async function deleteAnime(url_anime) {
   try {
     const store = await abrirDB("animes", "readwrite");
-
+    
     return await new Promise((resolve, reject) => {
-      const request = store.delete(URL_nombre);
+      const request = store.delete(url_anime);
       request.onsuccess = () => resolve();
       request.onerror = () => reject("❌ No se pudo borrar el anime.");
     });
@@ -89,13 +112,13 @@ export async function deleteAnime(URL_nombre) {
 }
 
 /**
- * Busca un anime por su clave URL_nombre.
+ * Busca un anime por su clave url_anime.
  */
-export async function buscar_en_db(URL_nombre) {
+export async function buscar_en_db(url_anime) {
   const store = await abrirDB("animes", "readonly");
 
   const resultado = await new Promise((resolve) => {
-    const req = store.get(URL_nombre);
+    const req = store.get(url_anime);
     req.onsuccess = () => resolve(req.result || false);
     req.onerror = () => resolve(false);
   });
@@ -103,7 +126,7 @@ export async function buscar_en_db(URL_nombre) {
   if (resultado) return resultado;
 
   // Buscar en API si no está en DB
-  const api_resultado = await obj_route('api.buscar_en_api', URL_nombre);
+  const api_resultado = await obj_route('api.buscar_en_api', url_anime);
   if (!api_resultado) return false;
 
   // Guardar en DB si lo encontrás

@@ -25,25 +25,24 @@ function renderTabla(animes) {
         <th>Nombre</th>
         <th>Estado</th>
         <th>Temporada</th>
-        <th>Estado Vista</th>
-        <th>Fecha</th>
+        <th>Visto</th>
         <th>Url</th>
       </tr>
     </thead>
     <tbody>
       ${animes.map(anime => `
         <tr>
-          <td><img src="${anime.portada}" alt="${anime.nombre}" width="100"></td>
-          <td>${anime.nombre}</td>
+          <td><img src="${anime.portada}" alt="${anime.nombre}" style="max-width: 80px;"></td>
+          <td style="font-weight: bold; width: 100px; font-size: 1.1em; color: #2c3e50;">${anime.url_anime}</td>
           <td>${anime.estado}</td>
-          <td>${anime.temporada}</td>
-          <td>${anime.viendo}</td>
-          <td>${new Date(anime.fecha).toLocaleString()}</td>
-          <td>${anime.url}</td>
+          <td>${anime.capitulo}</td>
+          <td>${anime.viendo.includes('❌') ? '❌' : '✅'}</td>
+          <td><a href="${anime.url}" target="_blank" title="${anime.url}">🌐 Ver</a></td>
         </tr>
       `).join("")}
     </tbody>
   `;
+
 
   contenedor.appendChild(tabla);
 
@@ -58,6 +57,7 @@ function renderTabla(animes) {
 
 // 🗑️ Borrar anime por nombre
 async function borrarAnime(nombre) {
+  nombre = nombre.trim().replace(/\s+/g, '-').toLowerCase();
   try {
     await obj_route("db.deleteAnime", nombre);
     const actualizados = await obj_route("db.getAllAnimes");
