@@ -7,7 +7,7 @@ const btnVolver = document.getElementById("btn_volver");
 const btnBorrar = document.getElementById("btn_borrar");
 
 // 🧱 Renderizar tabla
-function renderTabla(animes) {
+function renderLista(animes) {
   contenedor.innerHTML = "";
 
   if (!animes.length) {
@@ -15,45 +15,50 @@ function renderTabla(animes) {
     return;
   }
 
-  const tabla = document.createElement("table");
-  tabla.border = "1";
-  tabla.style.width = "100%";
-  tabla.innerHTML = `
-    <thead>
-      <tr>
-        <th>Imagen</th>
-        <th>Nombre</th>
-        <th>Estado</th>
-        <th>Temporada</th>
-        <th>Visto</th>
-        <th>Url</th>
-      </tr>
-    </thead>
-    <tbody>
-      ${animes.map(anime => `
-        <tr>
-          <td><img src="${anime.portada}" alt="${anime.nombre}" style="max-width: 80px;"></td>
-          <td style="font-weight: bold; width: 100px; font-size: 1.1em; color: #2c3e50;">${anime.url_anime}</td>
-          <td>${anime.estado}</td>
-          <td>${anime.capitulo}</td>
-          <td>${anime.viendo.includes('❌') ? '❌' : '✅'}</td>
-          <td><a href="${anime.url}" target="_blank" title="${anime.url}">🌐 Ver</a></td>
-        </tr>
-      `).join("")}
-    </tbody>
-  `;
+  animes.forEach(anime => {
+    const item = document.createElement("div");
+    item.className = "anime-item";
+    item.style.display = "flex";
+    item.style.alignItems = "center";
+    item.style.gap = "12px";
+    item.style.padding = "8px";
+    item.style.borderBottom = "1px solid #ccc";
 
+    item.innerHTML = `
+      <img class="portada" src="${anime.portada}" alt="${anime.nombre}" style="max-width: 80px; border-radius: 4px;">
+      <div style="flex: 1;">
+        <div>
+          <a href="${anime.url_dir}" 
+            target="_blank" 
+            title="${anime.url_anime}">
+            ${anime.nombre}
+          </a>
+        </div>
+        <div>
+          <label for="seguimiento_${anime.nombre}">seguimiento:</label>
+          <select id="seguimiento_${anime.nombre}" name="seguimiento">
+            <option value="ver" ${anime.seguimiento === "ver" ? "selected" : ""}>ver</option>
+            <option value="viendo" ${anime.seguimiento === "viendo" ? "selected" : ""}>viendo</option>
+            <option value="completa" ${anime.seguimiento === "completa" ? "selected" : ""}>completa</option>
+            <option value="abandonada" ${anime.seguimiento === "abandonada" ? "selected" : ""}>abandonada</option>
+          </select>
+        </div>
+      </div>
+    `;
 
-  contenedor.appendChild(tabla);
+    // 🎯 Evento sobre la portada (img)
+    const portada = item.querySelector(".portada");
+    if (portada) {
+      portada.addEventListener("click", () => {
+        inputBuscar.value = anime.url_anime;
+        inputBuscar.focus();
+      });
+    }
 
-  tabla.querySelectorAll("tbody tr").forEach(row => {
-    row.addEventListener("click", () => {
-      const nombre = row.children[1].textContent;
-      inputBuscar.value = nombre;
-      inputBuscar.focus();
-    });
+    contenedor.appendChild(item);
   });
 }
+
 
 // 🗑️ Borrar anime por nombre
 async function borrarAnime(nombre) {
@@ -61,7 +66,7 @@ async function borrarAnime(nombre) {
   try {
     await obj_route("db.deleteAnime", nombre);
     const actualizados = await obj_route("db.getAllAnimes");
-    renderTabla(actualizados);
+    renderLista(actualizados);
   } catch (err) {
     alert("❌ Error al borrar anime: " + err);
   }
@@ -71,7 +76,7 @@ async function borrarAnime(nombre) {
 async function init() {
   try {
     const animes = await obj_route("db.getAllAnimes");
-    renderTabla(animes);
+    renderLista(animes);
 
     // Restaurar último anime buscado desde popup
     chrome.storage.local.get("animeActual", ({ animeActual }) => {

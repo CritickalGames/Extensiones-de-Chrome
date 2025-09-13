@@ -23,12 +23,12 @@ Creo que debo cambiar los datos que guardo en la base de datos.
 //* La clave primaria se mantiene
 //* Las propiedades que se mantienen son:
 -nombre
--url_anime
 -url_dir
 -portada
--capitulo
+-seguimiento(ver, viendo, completado)
 //* base de datos segundarias
--emision: FK:anime; emision (emitiendose, finalizado, pelicula)
+-capitulo: FK:anime; capitulo(tem-cap); visto;url_anime;
+-emision: FK:anime; emision (emitiendose, finalizado, pelicula);
 -visto: FK:anime; visto (viendo, completado, pendiente);
 -tags: FK:anime; tipo (serie, pelicula, ova, etc);
 -temporada: FK:anime; temporada (primavera, verano, etc); año;

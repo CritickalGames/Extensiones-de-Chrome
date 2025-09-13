@@ -1,4 +1,5 @@
 import { obj_route } from "./router.js";
+import { storesSchema } from "./db/estructuras.js";
 let dbInstance = null;
 
 /**
@@ -17,17 +18,6 @@ export async function abrirDB(objectStoreName = null, accion = null) {
     ? dbInstance.transaction(objectStoreName, accion).objectStore(objectStoreName)
     : dbInstance;
 }
-
-// Estructura que tendrá la base de datos
-const storesSchema = [
-  {
-    name: "animes",
-    options: { keyPath: "url_anime" },
-    indices: [
-      { name: "url_dir", keyPath: "url_dir", options: { unique: false } }
-    ]
-  }
-];
 
 // 🧱 Función interna para crear la base y sus stores
 async function crearDB() {
@@ -53,6 +43,19 @@ async function crearDB() {
 /**
  * Guarda o actualiza un anime en la base de datos.
  */
+function limpiarParaIndexedDB(obj) {
+  const limpio = {};
+  for (const key in obj) {
+    const val = obj[key];
+    if (typeof val !== "function" && typeof val !== "symbol") {
+      limpio[key] = val;
+    } else {
+      console.warn(`⚠️ Propiedad no clonable eliminada: ${key}`);
+    }
+  }
+  return limpio;
+}
+
 export async function guardar_anime(anime) {
   try {
     const store = await abrirDB("animes", "readwrite");
@@ -70,7 +73,7 @@ export async function guardar_anime(anime) {
       console.info(`🔁 Actualizando anime existente: ${anime.url_anime}`);
     }
 
-    store.put(anime);
+    store.put(limpiarParaIndexedDB(anime));
   } catch (err) {
     console.error("❌ Error al guardar anime:", err);
   }
