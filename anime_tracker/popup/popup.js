@@ -1,6 +1,8 @@
 // 📦 Importaciones
 import { obj_route } from '../core/router.js';
 import { guardarAnimeDesdePopup } from "./submodulos/guardar.js";
+import { fnCapituloVisto } from "./submodulos/btnCapituloVisto.js";
+import { iniciar } from "./submodulos/tabQuery.js";
 import {
   obtenerInputsAnime,
   obtenerBotonesAnime,
@@ -42,29 +44,20 @@ function actualizarDOM(resultado, temporada = 0, capitulo = 0) {
   animeEstadoViendo.style.color = resultado.viendo === "Visto ✔" ? "green" : "red";
 }
 
-// 🧪 Vista genérica si no se encuentra el anime
-function prevista_generica(URL_anime, name, temporada, capitulo) {
-  animeNombre.textContent = (name ? name:"Anime Génerico")
-  animeEstado.textContent = "? Desconocido";
-  animeTempoCap.value = `T${temporada}/E${capitulo}`;
-  inputNombreAnime.value = URL_anime;
-}
-
 // 🌐 Obtener URL de la pestaña activa y cargar datos
 chrome.tabs.query({ active: true, currentWindow: true }, async function(tabs) {
-  const activeTab = tabs[0];
-  const url = activeTab.url || "No disponible";
-  urlActual.textContent = url;
+  iniciar(obj_route, tabs,
+    {
+      urlActual,
+      animeNombre,
+      animeEstado,
+      animeTempoCap,
+      animeEstadoViendo,
+      animePortada,
+      inputNombreAnime,
 
-  const { URL_dir, URL_nombre, nombre, temporada, capitulo } = await obj_route('parse.parse_url', { url });
-  const resultado = await obj_route('search.conseguir_anime', URL_nombre);
-  
-  if (resultado) {
-    actualizarDOM(resultado, temporada, capitulo);
-  }
-  console.log(URL_nombre);
-  inputNombreAnime.value = URL_nombre;
-  prevista_generica(URL_nombre, nombre, temporada, capitulo);
+    }
+  );
   return;
 });
 
@@ -90,12 +83,10 @@ btnMostrarCarpetas.addEventListener("click", () => {
 
 // ✅ Alternar estado de capítulo visto
 btnCapituloVisto.addEventListener("click", () => {
-  const actual = animeEstadoViendo.textContent;
-  const nuevoEstado = actual === "Visto ✔" ? "No visto ❌" : "Visto ✔";
-  animeEstadoViendo.textContent = nuevoEstado;
-  animeEstadoViendo.style.color = nuevoEstado === "Visto ✔" ? "green" : "red";
+  fnCapituloVisto(animeEstadoViendo);
 });
 
+//!PRENDIENTE
 // 🔍 Buscar manualmente
 btnBuscar.addEventListener("click", async () => {
   const nombre = inputBuscarAnime.value.trim();
