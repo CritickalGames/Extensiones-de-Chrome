@@ -126,6 +126,9 @@ export function parse_url({ url }) {
   const capitalizar = str => str?.charAt(0).toUpperCase() + str?.slice(1).toLowerCase();
   nombre = capitalizar(nombre);
   temporada = (u.pathname.split('/').filter(Boolean)[0]=="pelicula") ? 0 : (capitulo<1? 0: temporada);
+  if (nombre == ""){
+    fallback();
+  }
   return {
     URL_dir,
     URL_nombre,

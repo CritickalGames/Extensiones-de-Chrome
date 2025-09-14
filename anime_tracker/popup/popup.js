@@ -43,8 +43,7 @@ function actualizarDOM(resultado, temporada = 0, capitulo = 0) {
 }
 
 // 🧪 Vista genérica si no se encuentra el anime
-function prevista_generica(URL_anime, nombre, temporada, capitulo) {
-  animeNombre.textContent = nombre;
+function prevista_generica(URL_anime, temporada, capitulo) {
   animeEstado.textContent = "? Desconocido";
   animeTempoCap.value = `T${temporada}/E${capitulo}`;
   inputNombreAnime.value = URL_anime;
@@ -61,7 +60,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, async function(tabs) {
 
   if (!resultado || !URL_nombre) {
     inputNombreAnime.value = URL_nombre;
-    prevista_generica(URL_nombre, nombre, temporada, capitulo);
+    prevista_generica(URL_nombre, temporada, capitulo);
     return;
   }
 

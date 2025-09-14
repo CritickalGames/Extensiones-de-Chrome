@@ -43,7 +43,7 @@ async function crearDB() {
 /**
  * Guarda o actualiza un anime en la base de datos.
  */
-function limpiarParaIndexedDB(obj) {
+function limpiarParaIndexedDB(obj) {//Medida extra de protección
   const limpio = {};
   for (const key in obj) {
     const val = obj[key];
@@ -60,8 +60,6 @@ export async function guardar_anime(anime) {
   try {
     const store = await abrirDB("animes", "readwrite");
 
-    console.warn(anime);
-    console.warn(anime.url_anime);
     const existente = await new Promise((resolve) => {
       
       const req = store.get(anime.url_anime);
