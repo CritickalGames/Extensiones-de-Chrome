@@ -13,21 +13,65 @@
 
   <button id="guardar">Guardar anime</button>
   <button id="mostrarCarpetas">Mostrar carpetas</button>
-
+<hr>
   <div class="container">
     <div class="iz-panel">
         <img id="anime_portada" src="https://lh3.googleusercontent.com/-tGHmZ6GF0cc/WpohCECY6kI/AAAAAAABdDI/fdZBbrmha_A9gOQ9wp-qKgThLFr1rUq0QCHMYCw/s0/ef3ba899fa0c572bebb18586d81b151c2d72f2bf.jpg">
     </div>
     <div class="dr-panel">
         <h1 id="anime_nombre">Anime Génerico</h1>
-        <h2 id="anime_estado">Emisión/Finalizado</h2>
-        <input type="text" id="anime_tempo_cap" placeholder="Temporada/Capítulo">
+        
+        <div>
+          <label for="lista_anime_estado" style="color: red;">Estado de emisión:</label>
+          <select id="lista_anime_estado" name="lista_anime_estado">
+            <option value="desconocido">? Desconocido</option>
+            <option value="emisión">Emisión</option>
+            <option value="completo">Completo</option>
+            <option value="cancelada">Cancelada</option>
+            <option value="peli-ova">Película/Ova</option>
+          </select>
+        </div>
+        <div>
+          <label for="lista_serie_viendo">Serie seguimiento:</label>
+          <select id="lista_serie_viendo" name="lista_serie_viendo">
+            <option value="ver">ver</option>
+            <option value="viendo">viendo</option>
+            <option value="visto">visto</option>
+          </select>
+        </div>
+        <div>
+          <label for="cap_visto">¿Capítulo visto?</label>
+          <input type="checkbox" id="cap_visto" name="cap_visto">
+          <input type="text" id="capitulo_temp_cap" placeholder="Temporada/Capítulo">
+        </div>
+        <div>
+          <label for="doblaje">Doblaje:</label>
+          <select id="doblaje" name="doblaje">
+            <option value="es">Español</option>
+            <option value="jp">Japonés</option>
+            <option value="en">Inglés</option>
+            <option value="kr">Coreano</option>
+            <option value="cn">Chino</option>
+            <option value="tr">Turco</option>
+          </select>
+
+          <label for="subtitulos">Subtítulos:</label>
+          <select id="subtitulos" name="subtitulos">
+            <option value="-">No</option>
+            <option value="es">Español</option>
+            <option value="jp">Japonés</option>
+            <option value="en">Inglés</option>
+            <option value="kr">Coreano</option>
+            <option value="cn">Chino</option>
+            <option value="tr">Turco</option>
+          </select>
+        </div>
     </div>
   </div>
-  <div class="container">
-        <button id="btn_capitulo_visto">Capítulo visto</button>
-        <h3 style="color: red" id="anime_estado_viendo">No visto ❌</h3>
-  </div>
+<hr>
+<center>
+<h1 style="color: red">PENDIENTE</h1>
+</center>
   <div class="container">
       <h2>Buscar anime</h2>
       <input id="url_anime_buscar" type="text" placeholder="Nombre de la url">
@@ -35,28 +79,7 @@
   </div>
   <div>
     <h2>Animes encontrados</h2>
-    <table border="1">
-      <thead>
-        <tr>
-          <th>Imagen</th>
-          <th>Nombre</th>
-          <th>Lanzamiento</th>
-          <th>Vida</th>
-          <th>Estado</th>
-          <th>Estado Vista</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><img src="https://lh3.googleusercontent.com/-tGHmZ6GF0cc/WpohCECY6kI/AAAAAAABdDI/fdZBbrmha_A9gOQ9wp-qKgThLFr1rUq0QCHMYCw/s0/ef3ba899fa0c572bebb18586d81b151c2d72f2bf.jpg" alt="Dr Stone"></td>
-          <td>Dr Stone</td>
-          <td>1/2025 - 7/2025</td>
-          <td>T4/E20</td>
-          <td>Fin</td>
-          <td>Ver</td>
-        </tr>
-      </tbody>
-    </table>
+    PENDIENTE DE DESARROLLO
   </div>
 </body>
 <script type="module" src="popup.js"></script>

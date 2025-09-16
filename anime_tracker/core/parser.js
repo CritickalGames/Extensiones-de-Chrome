@@ -42,7 +42,7 @@ export function parse_url({ url }) {
       }
     },
     {
-      name: 'nombre-<capítulo>',
+      name: 'nombre-<tempr>x<cap>',
       match: /^(.+)-(\d{1,3})x(\d{1,3})$/.test(last),
       extract: () => {
         const m = last.match(/^(.+)-(\d{1,3})x(\d{1,3})$/);

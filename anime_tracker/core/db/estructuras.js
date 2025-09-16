@@ -26,27 +26,25 @@ export const storesSchema = [
   },
   {
     name: "emision", // 📡 Estado de emisión
-    // Guarda: url_anime (FK), estado ("emitiéndose", "finalizado", "película")
-    options: { keyPath: "url_anime" },
-    indices: [{ name: "estado", keyPath: "estado" }]
-  },
-  {
-    name: "visto", // 👀 Estado de visualización
-    // Guarda: url_anime (FK), estado ("viendo", "completado", "pendiente")
+    // Guarda: url_anime (FK), estado ("emitiéndose", "finalizado")
     options: { keyPath: "url_anime" },
     indices: [{ name: "estado", keyPath: "estado" }]
   },
   {
     name: "tags", // 🏷️ Clasificación por tipo
-    // Guarda: url_anime (FK), tipo ("serie", "película", "OVA", etc.)
+    //*Guarda: 
+    // url_anime (FK), 
+    // tipo ("serie", "película", "OVA", etc.)
+    // Actualización (no o día de la semana)
     options: { keyPath: ["url_anime", "tipo"] },
     indices: [
       { name: "url_anime", keyPath: "url_anime" },
-      { name: "tipo", keyPath: "tipo" }
+      { name: "tipo", keyPath: "tipo", options:{unique: false} },
+      { name: "dia", keyPath: "dia", options:{unique: false} }
     ]
   },
   {
-    name: "temporadas", // 🌸 Temporada de emisión
+    name: "estreno", // 🌸 Temporada de emisión
     // Guarda: url_anime (FK), temporada ("primavera", "verano", etc.), año
     options: { keyPath: "url_anime" },
     indices: [
@@ -65,18 +63,12 @@ export const storesSchema = [
   },
   {
     name: "relaciones", // 🔗 Vínculos entre animes
-    // Guarda: url_anime (FK), relacion ("secuela", "precuela", "spin-off", etc.)
-    options: { keyPath: ["url_anime", "relacion"] },
+    // Guarda: url_anime1 (origen), url_anime2 (destino), relacion ("secuela", etc.)
+    options: { keyPath: ["url_anime1", "url_anime2"] },
     indices: [
-      // Podés agregar: { name: "url_anime", keyPath: "url_anime" }, { name: "relacion", keyPath: "relacion" }
-    ]
-  },
-  {
-    name: "actualizaciones", // 📅 Día de actualización
-    // Guarda: url_anime (FK), dia ("lunes", "martes", etc.)
-    options: { keyPath: "url_anime" },
-    indices: [
-      { name: "dia", keyPath: "dia" }
+      { name: "url_anime1", keyPath: "url_anime1", options: { unique: false } },
+      { name: "url_anime2", keyPath: "url_anime2", options: { unique: false } },
+      { name: "relacion", keyPath: "relacion", options: { unique: false } }
     ]
   },
   {

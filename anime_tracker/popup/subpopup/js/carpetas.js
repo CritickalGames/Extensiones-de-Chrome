@@ -23,20 +23,30 @@ function renderLista(animes) {
     item.style.gap = "12px";
     item.style.padding = "8px";
     item.style.borderBottom = "1px solid #ccc";
-
+    console.log("Info de la obra: ",anime.nombre,anime);
+    
     item.innerHTML = `
       <img class="portada" src="${anime.portada}" alt="${anime.nombre}" style="max-width: 80px; border-radius: 4px;">
       <div style="flex: 1;">
         <div>
-          <a href="${anime.url_dir}" 
-            target="_blank" 
-            title="${anime.url_anime}">
+          <a href="${anime.url_dir}" target="_blank" title="${anime.url_anime}">
             ${anime.nombre}
           </a>
         </div>
+
+        <div><strong>📡 Emisión:</strong> ${anime.emision}</div>
+        <div><strong>🌸 Estreno:</strong> ${anime.temporada} ${anime.año}</div>
+        <div><strong>📺 Capítulo:</strong> ${anime.capitulo} (${anime.visto})</div>
+        <div><strong>🌍 Idiomas:</strong> Doblaje: ${anime.doblaje}, Subtítulos: ${anime.subtitulos}</div>
+        <div><strong>🎭 Géneros:</strong> ${anime.generos?.join(", ")}</div>
+        <div><strong>🏷️ Tags:</strong> ${anime.tags?.map(t => `${t.tipo} (${t.dia})`).join(", ")}</div>
+        <div><strong>🔗 Relaciones:</strong> ${anime.relaciones?.map(r => r.relacion).join(", ")}</div>
+        <div><strong>📝 Nota:</strong> ${anime.nota}</div>
+        <div><strong>⭐ Favorito:</strong> ${anime.favorito ? "Sí" : "No"}</div>
+
         <div>
-          <label for="seguimiento_${anime.nombre}">seguimiento:</label>
-          <select id="seguimiento_${anime.nombre}" name="seguimiento">
+          <label for="seguimiento_${anime.url_anime}">Seguimiento:</label>
+          <select id="seguimiento_${anime.url_anime}" name="seguimiento">
             <option value="ver" ${anime.seguimiento === "ver" ? "selected" : ""}>ver</option>
             <option value="viendo" ${anime.seguimiento === "viendo" ? "selected" : ""}>viendo</option>
             <option value="completa" ${anime.seguimiento === "completa" ? "selected" : ""}>completa</option>
@@ -45,6 +55,8 @@ function renderLista(animes) {
         </div>
       </div>
     `;
+
+
 
     // 🎯 Evento sobre la portada (img)
     const portada = item.querySelector(".portada");

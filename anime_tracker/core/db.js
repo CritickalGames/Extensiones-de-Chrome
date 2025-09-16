@@ -56,41 +56,130 @@ function limpiarParaIndexedDB(obj) {//Medida extra de protección
   return limpio;
 }
 
-export async function guardar_anime(anime) {
+export async function guardarModulo(storeName, objeto) {
   try {
-    const store = await abrirDB("animes", "readwrite");
+    const store = await abrirDB(storeName, "readwrite");
 
     const existente = await new Promise((resolve) => {
-      
-      const req = store.get(anime.url_anime);
+      const req = store.get(objeto.url_anime);
       req.onsuccess = () => resolve(req.result);
       req.onerror = () => resolve(null);
     });
 
-    if (existente) {
-      console.info(`🔁 Actualizando anime existente: ${anime.url_anime}`);
-    }
+    const limpio = limpiarParaIndexedDB(objeto);
 
-    store.put(limpiarParaIndexedDB(anime));
+    if (existente) {
+      console.info(`🔁 Actualizando en ${storeName}: ${objeto.url_anime}`);
+      const actualizado = { ...existente, ...limpio };
+      store.put(actualizado);
+    } else {
+      console.info(`🆕 Insertando en ${storeName}: ${objeto.url_anime}`);
+      store.put(limpio);
+    }
   } catch (err) {
-    console.error("❌ Error al guardar anime:", err);
+    console.error(`❌ Error al guardar en ${storeName}:`, err);
   }
 }
 
 /**
- * Obtiene todos los animes guardados.
+ * Lectura defensiva por índice.
+ */
+async function leerPorIndice(storeName, indexName, key) {
+  const store = await abrirDB(storeName, "readonly");
+  return await new Promise((resolve) => {    
+    const req = store.index(indexName).getAll(key);
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => resolve([]);
+  });
+}
+
+/**
+ * Lectura defensiva por índice con mapeo.
+ */
+async function leerPorIndiceMap(storeName, indexName, key, mapFn) {
+  const store = await abrirDB(storeName, "readonly");
+  return await new Promise((resolve) => {
+    const req = store.index(indexName).getAll(key);
+    req.onsuccess = () => resolve(req.result.map(mapFn));
+    req.onerror = () => resolve([]);
+  });
+}
+
+/**
+ * Obtiene todos los animes reconstruyendo desde múltiples stores.
  */
 export async function getAllAnimes() {
   try {
-    const store = await abrirDB("animes", "readonly");
+    const baseStore = await abrirDB("animes", "readonly");
+    const baseReq = baseStore.getAll();
 
     return await new Promise((resolve, reject) => {
-      const request = store.getAll();
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject("❌ Error al obtener los animes.");
+      baseReq.onsuccess = async () => {
+        const bases = baseReq.result;
+        const resultado = [];
+
+        for (const base of bases) {
+          const url = base.url_anime;
+
+          const [
+            emisionStore,
+            capitulosStore,
+            idiomasStore,
+            estrenoStore,
+            notasStore,
+            favoritosStore
+          ] = await Promise.all([
+            abrirDB("emision", "readonly"),
+            abrirDB("capitulos", "readonly"),
+            abrirDB("idiomas", "readonly"),
+            abrirDB("estreno", "readonly"),
+            abrirDB("notas", "readonly"),
+            abrirDB("favoritos", "readonly")
+          ]);
+
+          const [
+            emision,
+            capitulos,
+            idiomas,
+            estreno,
+            nota,
+            favorito
+          ] = await Promise.all([
+            emisionStore.get(url),
+            capitulosStore.get(url),
+            idiomasStore.get(url),
+            estrenoStore.get(url),
+            notasStore.get(url),
+            favoritosStore.get(url)
+          ]);
+
+          const tags = await leerPorIndice("tags", "url_anime", url);
+          const relaciones = await leerPorIndice("relaciones", "url_anime1", url);
+          const generos = await leerPorIndiceMap("generos", "url_anime", url, g => g.genero);
+          resultado.push({
+            ...base,
+            emision: emision.result?.estado || "—",
+            capitulo: capitulos.result?.capitulo || "—",
+            visto: (capitulos.result.visto) ? "visto" : "ver", 
+            doblaje: idiomas.result?.doblaje || "—",
+            subtitulos: idiomas.result?.subtitulos || "—",
+            temporada: estreno.result?.temporada || "—",
+            año: estreno.result?.año || "—",
+            nota: nota.result?.nota || "—",
+            favorito: favorito.result?.favorito ? true : false,
+            tags,
+            generos,
+            relaciones
+          });
+        }
+        
+        resolve(resultado);
+      };
+
+      baseReq.onerror = () => reject("❌ Error al obtener los animes.");
     });
   } catch (err) {
-    console.error(err);
+    console.error("❌ Error en getAllAnimes:", err);
     return [];
   }
 }
