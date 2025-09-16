@@ -76,8 +76,20 @@ export async function guardarModulo(storeName, objeto) {
       console.info(`🆕 Insertando en ${storeName}: ${objeto.url_anime}`);
       store.put(limpio);
     }
+    return store;
   } catch (err) {
     console.error(`❌ Error al guardar en ${storeName}:`, err);
+  }
+}
+export async function guardarAnime(objeto) {
+  try {
+    const { cap, ...resto } = objeto;
+
+    // Guardar el anime sin el campo "capitulo"
+    await guardarModulo("animes", resto);
+
+  } catch (err) {
+    console.error(`❌ Error al guardar en animes:`, err);
   }
 }
 
@@ -160,6 +172,7 @@ export async function getAllAnimes() {
             ...base,
             emision: emision.result?.estado || "—",
             capitulo: capitulos.result?.capitulo || "—",
+            cap_url: capitulos.result?.cap_url || "",
             visto: (capitulos.result.visto) ? "visto" : "ver", 
             doblaje: idiomas.result?.doblaje || "—",
             subtitulos: idiomas.result?.subtitulos || "—",

@@ -54,6 +54,13 @@ function renderLista(animes) {
           </select>
         </div>
       </div>
+      <div>
+      BOTONES <br> PENDIENTE DE DESARROLLO
+      <p>-Borrar(quizás)</p>
+      <p>-Editar algo(quizás)</p>
+      <p>-Favoritos</p>
+      <p>-</p>
+      </div>
     `;
 
 

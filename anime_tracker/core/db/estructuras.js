@@ -5,6 +5,7 @@ export const storesSchema = [
     // url_anime (clave primaria), 
     // nombre, 
     // url_dir, 
+    // temporada, 
     // portada, 
     // seguimiento(ver, viendo, abandonado, completado)
     options: { keyPath: "url_anime" },
