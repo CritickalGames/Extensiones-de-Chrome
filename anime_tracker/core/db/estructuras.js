@@ -9,15 +9,18 @@ export const storesSchema = [
     // portada, 
     // seguimiento(ver, viendo, abandonado, completado)
     options: { keyPath: "url_anime" },
-    indices: [
-      { name: "url_dir", keyPath: "url_dir", options: { unique: false } }
-    ]
+    indices: []
   },
   {
     name: "urls_base", // 🔗 URLs múltiples por anime
+    //*Guarda:
+    // url_anime (FK)
+    // url_dir (PK)
+    // relación (secuelas, película, paralela, primera)
     options: { keyPath: ["url_anime", "url_dir"] }, // Clave primaria compuesta
     indices: [
-      { name: "por_url_anime", keyPath: "url_anime" }
+      { name: "por_url_anime", keyPath: "url_anime" },
+      { name: "relacion", keyPath: "relacion", options:{unique: false}},
     ]
   },
   {
@@ -67,16 +70,6 @@ export const storesSchema = [
     indices: [
       { name: "url_anime", keyPath: "url_anime" },
       { name: "genero", keyPath: "genero" }
-    ]
-  },
-  {
-    name: "relaciones", // 🔗 Vínculos entre animes
-    // Guarda: url_anime1 (origen), url_anime2 (destino), relacion ("secuela", etc.)
-    options: { keyPath: ["url_anime1", "url_anime2"] },
-    indices: [
-      { name: "url_anime1", keyPath: "url_anime1", options: { unique: false } },
-      { name: "url_anime2", keyPath: "url_anime2", options: { unique: false } },
-      { name: "relacion", keyPath: "relacion", options: { unique: false } }
     ]
   },
   {

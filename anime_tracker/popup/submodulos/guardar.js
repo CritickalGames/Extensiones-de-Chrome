@@ -27,7 +27,7 @@ export async function guardarAnimeDesdePopup(obj_route, btnGuardar, refs) {
     url_anime,
     url_dir,
     seguimiento: serieViendo?.value || "ver",
-    relación: "temporada"
+    relacion: "primera"
   };
 
   const emision = {
@@ -38,7 +38,8 @@ export async function guardarAnimeDesdePopup(obj_route, btnGuardar, refs) {
   const capitulos = {
     url_anime,
     visto: capVisto?.checked,
-    capitulo: cap
+    capitulo: cap,
+    url_dir
   };
 
   const idiomas = {
