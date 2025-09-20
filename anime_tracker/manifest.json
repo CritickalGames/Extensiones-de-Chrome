@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Anime Tracker",
-  "version": "1.0.0",
+  "version": "0.2.4.1",
   "description": "Detecta y registra episodios de anime desde cualquier URL.",
   "permissions": [
     "activeTab",

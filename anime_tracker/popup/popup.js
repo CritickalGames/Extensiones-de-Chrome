@@ -11,78 +11,47 @@ import {
 } from "./submodulos/extraer.js";
 
 // 🔗 Recolección de referencias DOM
-const {
-  inputNombreAnime,
-  inputBuscarAnime,
-  animeTempoCap,
-  capVisto
-} = obtenerInputsAnime();
+const ref_input = obtenerInputsAnime();
 
-const {
-  btnGuardar,
-  btnMostrarCarpetas,
-  btnBuscar
-  // btnCapituloVisto ← no existe en el DOM actual
-} = obtenerBotonesAnime();
+const ref_botones = obtenerBotonesAnime();
 
-const {
-  animeNombre,
-  animePortada,
-  urlActual
-} = obtenerEstadoAnime();
+const ref_estado = obtenerEstadoAnime();
 
-const {
-  animeEstado,
-  serieViendo,
-  doblaje,
-  subtitulos
-} = obtenerListas();
+const ref_listas = obtenerListas();
 
 // 🌐 Obtener URL de la pestaña activa y cargar datos
 chrome.tabs.query({ active: true, currentWindow: true }, async function(tabs) {
   iniciar(obj_route, tabs, {
-      urlActual,
-      animeNombre,
-      animeEstado,
-      serieViendo,
-      capVisto,
-      animeTempoCap,
-      animePortada,
-      inputNombreAnime
+      ...ref_estado,
+      ...ref_listas,
+      ...ref_input
     }
   );
 });
 
 // 🗃️ Guardar anime en IndexedDB
-btnGuardar.addEventListener("click", () => {
-  guardarAnimeDesdePopup(obj_route, btnGuardar, {
-      inputNombreAnime,   //* url_anime
-      animeNombre,        //* nombre
-      animePortada,       //* portada
-      urlActual,          //* urls_bases.url_dir
-      animeEstado,        //* emision.estado
-      serieViendo,        //* seguimiento
-      capVisto,           //* capitulos.visto
-      animeTempoCap,      //* capitulos.capitulo
-      doblaje,            //* idiomas.doblaje
-      subtitulos          //* idiomas.subtitulos
+ref_botones.btnGuardar.addEventListener("click", () => {
+  guardarAnimeDesdePopup(obj_route, ref_botones.btnGuardar, {
+      ...ref_estado,
+      ...ref_listas,
+      ...ref_input
     }
   );
 });
 
 // 📁 Redirigir a carpetas.html
-btnMostrarCarpetas.addEventListener("click", () => {
+ref_botones.btnCarpetas.addEventListener("click", () => {
   window.location.href = "subpopup/carpetas.html";
 });
 
 //! YA NO ES UN BOTÓN, ES UNA LISTA.
 // ✅ Alternar estado de capítulo visto
-// btnCapituloVisto.addEventListener("click", () => {
+// ref_botones.btnCapituloVisto.addEventListener("click", () => {
 //   fnCapituloVisto(animeEstadoViendo);
 // });
 
-//!PRENDIENTE
+//!PENDIENTE
 // 🔍 Buscar manualmente
-btnBuscar.addEventListener("click", async () => {
+ref_botones.btnBuscar.addEventListener("click", async () => {
 
 });

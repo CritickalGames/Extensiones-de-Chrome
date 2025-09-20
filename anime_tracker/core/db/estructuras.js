@@ -7,9 +7,12 @@ export const storesSchema = [
     // url_dir, 
     // temporada, 
     // portada, 
-    // seguimiento(ver, viendo, abandonado, completado)
+    // seguimiento(ver, viendo, abandonado, completado),
+    // favorito
     options: { keyPath: "url_anime" },
-    indices: []
+    indices: [
+      { name: "favorito", keyPath: "favorito", options:{unique: false}},
+    ]
   },
   {
     name: "urls_base", // 🔗 URLs múltiples por anime
@@ -50,8 +53,7 @@ export const storesSchema = [
     options: { keyPath: ["url_anime", "tipo"] },
     indices: [
       { name: "url_anime", keyPath: "url_anime" },
-      { name: "tipo", keyPath: "tipo", options:{unique: false} },
-      { name: "dia", keyPath: "dia", options:{unique: false} }
+      { name: "tipo", keyPath: "tipo", options:{unique: false} }
     ]
   },
   {
@@ -59,14 +61,15 @@ export const storesSchema = [
     // Guarda: url_anime (FK), temporada ("primavera", "verano", etc.), año
     options: { keyPath: "url_anime" },
     indices: [
-      { name: "temporada", keyPath: "temporada" },
-      { name: "año", keyPath: "año" }
+      { name: "temporada", keyPath: "temporada", options:{unique: false} },
+      { name: "anyo", keyPath: "anyo", options:{unique: false} },
+      { name: "dia", keyPath: "dia", options:{unique: false} }
     ]
   },
   {
     name: "generos", // 🎭 Géneros narrativos
-    // Guarda: url_anime (FK), genero ("acción", "comedia", "drama", etc.)
-    options: { autoIncrement: true },
+    // Guarda: url_anime (FK), genero[PK] ("acción", "comedia", "drama", etc.)
+    options: { keyPath: ["url_anime", "genero"] },
     indices: [
       { name: "url_anime", keyPath: "url_anime" },
       { name: "genero", keyPath: "genero" }
@@ -79,12 +82,6 @@ export const storesSchema = [
     indices: [
       { name: "nota", keyPath: "nota" }
     ]
-  },
-  {
-    name: "favoritos", // ⭐ Marcado como favorito
-    // Guarda: url_anime (FK), favorito (booleano: true/false)
-    options: { keyPath: "url_anime" },
-    indices: []
   },
   {
     name: "idiomas", // 🌍 Idioma de audio y subtítulos

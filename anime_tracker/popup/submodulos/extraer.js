@@ -7,9 +7,17 @@ function getElemento(id) {
 export function obtenerInputsAnime() {
   return {
     inputNombreAnime: getElemento("url_anime"),
-    inputBuscarAnime: getElemento("url_anime_buscar"),
     animeTempoCap: getElemento("capitulo_temp_cap"),
-    capVisto: getElemento("cap_visto")
+    capVisto: getElemento("cap_visto"),
+    urlImagen: getElemento("url_imagen"),
+    relacionUrl: getElemento("relacion_url"),
+    animeRelacionado: getElemento("anime_relacionado"),
+    temporadaEstreno: getElemento("temporada_estreno"),
+    anyoEstreno: getElemento("anyo_estreno"),
+    favoritoCheckbox: getElemento("favorito_checkbox"),
+    notaUsuario: getElemento("nota_usuario"),
+    generosInput: getElemento("generos_input"),
+    tagsTipo: getElemento("tags_tipo")
   };
 }
 
@@ -27,8 +35,10 @@ export function obtenerListas() {
   return {
     animeEstado: getElemento("lista_anime_estado"),
     serieViendo: getElemento("lista_serie_viendo"),
+    capSeguimiento: getElemento("cap_seguimiento"),
     doblaje: getElemento("doblaje"),
-    subtitulos: getElemento("subtitulos")
+    subtitulos: getElemento("subtitulos"),
+    dia: getElemento("tags_dia")
   };
 }
 
@@ -36,8 +46,8 @@ export function obtenerListas() {
 export function obtenerBotonesAnime() {
   return {
     btnGuardar: getElemento("guardar"),
-    btnMostrarCarpetas: getElemento("mostrarCarpetas"),
-    btnBuscar: getElemento("btn_buscar")
+    btnBuscar: getElemento("btn_buscar"),
+    btnCarpetas: getElemento("mostrarCarpetas")
   };
 }
 

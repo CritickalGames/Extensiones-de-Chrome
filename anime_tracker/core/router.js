@@ -42,7 +42,7 @@ export async function obj_route(action, payload) {
     //* Si quieres error, debes enviarlo junto a un result
     //* Parse no manda errores, pero search sí, como ejemplos
     return { 
-            error: result.error? result.error:false,
+            error: result?.error || false,
             result: result.result? result.result: result
            };
   } catch (error) {

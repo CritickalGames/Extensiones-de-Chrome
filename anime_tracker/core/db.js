@@ -168,7 +168,8 @@ const ANIME_ERROR_DEFAULTS = {
   doblaje: "—",
   subtitulos: "—",
   temporada: "—",
-  año: "—",
+  anyo: "—",
+  dia: "",
   nota: "—",
   favorito: false,
   tags: [],
@@ -180,7 +181,7 @@ const ANIME_ERROR_DEFAULTS = {
 /**
  * Obtiene un anime específico con todos sus datos
  */
-export async function getAnimeCompleto(url_anime) {
+async function getAnimeCompleto(url_anime) {
   try {
     // Obtener datos base primero
     const base = await obtenerRegistro("animes", url_anime);
@@ -193,7 +194,6 @@ export async function getAnimeCompleto(url_anime) {
       idiomas,
       estreno,
       nota,
-      favorito,
       tags,
       generos,
       urls
@@ -203,7 +203,6 @@ export async function getAnimeCompleto(url_anime) {
       obtenerRegistro("idiomas", url_anime),
       obtenerRegistro("estreno", url_anime),
       obtenerRegistro("notas", url_anime),
-      obtenerRegistro("favoritos", url_anime),
       leerPorIndice("tags", "url_anime", url_anime),
       leerPorIndice("generos", "url_anime", url_anime),
       leerPorIndice("urls_base", "por_url_anime", url_anime)
@@ -221,10 +220,10 @@ export async function getAnimeCompleto(url_anime) {
       doblaje: idiomas?.doblaje || "—",
       subtitulos: idiomas?.subtitulos || "—",
       temporada: estreno?.temporada || "—",
-      año: estreno?.año || "—",
+      anyo: estreno?.anyo || "—",
+      dia: estreno?.dia || "",
       nota: nota?.nota || "—",
-      favorito: favorito?.favorito ? true : false,
-      tags: tags || [],
+      tags: tags.map(t => t?.tipo || t) || [],
       generos: generos.map(g => g?.genero || g) || [],
       ...urlsOrganizadas // Añade url_principal y otras_urls
     };
@@ -330,15 +329,8 @@ export async function deleteAnime(url_anime) {
  * Busca un anime por su clave url_anime.
  */
 export async function buscar_en_db(url_anime) {
-  const store = await abrirDB("animes", "readonly");
-  console.log("buscar_en_db(",url_anime,")");
   
-  const resultado = await new Promise((resolve) => {
-    const req = store.get(url_anime);
-    req.onsuccess = () => resolve(req.result || false);
-    req.onerror = () => resolve(false);
-  });
-
+  const resultado = await getAnimeCompleto(url_anime);
   return {
       error: !resultado? `No existe ${url_anime}`:false,
       result: resultado

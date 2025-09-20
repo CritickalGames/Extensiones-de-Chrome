@@ -9,24 +9,54 @@
 <body>
   <h2>Anime Tracker</h2>
   <p><strong>URL actual:</strong> <span id="url_actual">Cargando...</span></p>
-  <p><strong>Nombre del anime:</strong> <span id="anime"><input id="url_anime" type="text" placeholder="Nombre de la url"></span></p>
+  <p><strong>Nombre del anime:(El programa formatea el input. No te preocupes)</strong> <span id="anime"><input id="url_anime" type="text" placeholder="Nombre de la url"></span></p>
 
   <button id="guardar">Guardar anime</button>
   <button id="mostrarCarpetas">Mostrar carpetas</button>
 <hr>
   <div class="container">
     <div class="iz-panel">
-        <img id="anime_portada" src="https://lh3.googleusercontent.com/-tGHmZ6GF0cc/WpohCECY6kI/AAAAAAABdDI/fdZBbrmha_A9gOQ9wp-qKgThLFr1rUq0QCHMYCw/s0/ef3ba899fa0c572bebb18586d81b151c2d72f2bf.jpg">
+        <div>
+          <img id="anime_portada" src="https://lh3.googleusercontent.com/-tGHmZ6GF0cc/WpohCECY6kI/AAAAAAABdDI/fdZBbrmha_A9gOQ9wp-qKgThLFr1rUq0QCHMYCw/s0/ef3ba899fa0c572bebb18586d81b151c2d72f2bf.jpg">
+          <label for="url_imagen">Portada:</label>
+          <input type="text" id="url_imagen" name="url_imagen" placeholder="https://ejemplo.com/imagen.jpg">
+        </div>
+        <div>
+          <label for="relacion_url">Relación de URL:</label>
+          <select id="relacion_url" name="relacion_url">
+            <option value="primera">🔗 Primera</option>
+            <option value="secuelas">🔗 Secuelas</option>
+            <option value="paralela">🔗 Paralela</option>
+            <option value="película">🔗 Película</option>
+            <option value="ova">🔗 OVA</option>
+          </select>
+          <label for="anime_relacionado">Anime relacionado:</label>
+          <input type="text" id="anime_relacionado" name="anime_relacionado" placeholder="Nombre del anime relacionado">
+        </div>
+        <div>
+            <label for="temporada_estreno">Temporada de estreno:</label>
+            <select id="temporada_estreno" name="temporada_estreno">
+              <option value="">Seleccionar</option>
+              <option value="primavera">🌸 Primavera</option>
+              <option value="verano">☀️ Verano</option>
+              <option value="otoño">🍂 Otoño</option>
+              <option value="invierno">❄️ Invierno</option>
+            </select>
+            <input type="number" id="anyo_estreno" name="anyo_estreno" placeholder="Año" min="1900" max="2100">
+        </div>
     </div>
     <div class="dr-panel">
-        <h1 id="anime_nombre">Anime Génerico</h1>
-        
         <div>
-          <label for="lista_anime_estado" >Estado de emisión:</label>
+          <h1 id="anime_nombre" style="display: inline-block;">Anime Génerico</h1>
+          <label for="favorito_checkbox" style="margin-left: 10px;">⭐:</label>
+          <input type="checkbox" id="favorito_checkbox" name="favorito_checkbox">
+        </div>
+        <div>
+          <label for="lista_anime_estado">Estado de emisión:</label>
           <select id="lista_anime_estado" name="lista_anime_estado">
             <option value="desconocido">? Desconocido</option>
             <option value="emisión">Emisión</option>
-            <option value="completo">Completo</option>
+            <option value="finalizado">Finalizado</option>
             <option value="cancelada">Cancelada</option>
             <option value="peli-ova">Película/Ova</option>
           </select>
@@ -45,25 +75,58 @@
           <input type="text" id="capitulo_temp_cap" placeholder="Temporada/Capítulo">
         </div>
         <div>
+          <label for="cap_seguimiento">Seguimiento de capítulos:</label>
+          <select id="cap_seguimiento" name="cap_seguimiento">
+            <option value="ver">ver</option>
+            <option value="visto">visto</option>
+            <option value="omitido">omitido</option>
+          </select>
+        </div>
+        <div>
           <label for="doblaje">Doblaje:</label>
           <select id="doblaje" name="doblaje">
-            <option value="es">Español</option>
-            <option value="jp">Japonés</option>
-            <option value="en">Inglés</option>
-            <option value="kr">Coreano</option>
-            <option value="cn">Chino</option>
-            <option value="tr">Turco</option>
+            <option value="es">🇪🇸 Español</option>
+            <option value="jp">🇯🇵 Japonés</option>
+            <option value="en">🇺🇸 Inglés</option>
+            <option value="kr">🇰🇷 Coreano</option>
+            <option value="cn">🇨🇳 Chino</option>
+            <option value="tr">🇹🇷 Turco</option>
           </select>
-
+          <br>
           <label for="subtitulos">Subtítulos:</label>
           <select id="subtitulos" name="subtitulos">
-            <option value="-">No</option>
-            <option value="es">Español</option>
-            <option value="jp">Japonés</option>
-            <option value="en">Inglés</option>
-            <option value="kr">Coreano</option>
-            <option value="cn">Chino</option>
-            <option value="tr">Turco</option>
+            <option value="-">🚫 No</option>
+            <option value="es">🇪🇸 Español</option>
+            <option value="jp">🇯🇵 Japonés</option>
+            <option value="en">🇺🇸 Inglés</option>
+            <option value="kr">🇰🇷 Coreano</option>
+            <option value="cn">🇨🇳 Chino</option>
+            <option value="tr">🇹🇷 Turco</option>
+          </select>
+        </div>
+        
+        <div>
+          <label for="nota_usuario">Nota (1-10):</label>
+          <input type="number" id="nota_usuario" name="nota_usuario" min="1" max="10" placeholder="Calificación">
+        </div>
+        <div>
+          <label for="generos_input">Géneros (separados por comas):</label>
+          <input type="text" id="generos_input" name="generos_input" placeholder="acción, aventura, comedia">
+        </div>
+        <div>
+          <div>
+            <label for="tags_tipo">Tipo de tag:</label>
+            <input type="text" id="tags_tipo" name="tags_tipo" placeholder="serie, pelicula, ova, etc.">
+          </div>
+          <select id="tags_dia" name="tags_dia">
+            <option value="">Días de estreno</option>
+            <option value="lunes">lunes</option>
+            <option value="martes">martes</option>
+            <option value="miercoles">miércoles</option>
+            <option value="jueves">jueves</option>
+            <option value="viernes">viernes</option>
+            <option value="sabado">sábado</option>
+            <option value="domingo">domingo</option>
           </select>
         </div>
     </div>
