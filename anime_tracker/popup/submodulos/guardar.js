@@ -13,17 +13,21 @@ export async function guardarAnimeDesdePopup(obj_route, btnGuardar, refs) {
   } = refs;
 
   const url_anime = inputNombreAnime?.value.trim().toLowerCase().replace(/\s+/g, "-");
-  const url_actual = urlActual?.textContent?.trim();
+  const url_dir = urlActual?.textContent?.trim();
   const cap = animeTempoCap?.value?.trim() || "";
-  const match = cap.match(/(.*?)(\d+)(.*?)(\d+)/);
-  const e = match[2];
-  const t = match[4];
+  const EPISODIO = cap.match(/(.*?)(\d+)(.*?)(\d+)/)[2];
+
   const anime_base = {
     url_anime,
     nombre: animeNombre?.textContent?.trim(),
     portada: animePortada?.src,
-    url_dir: url_actual,
     seguimiento: serieViendo?.value || "ver"
+  };
+  const url ={
+    url_anime,
+    url_dir,
+    seguimiento: serieViendo?.value || "ver",
+    relación: "temporada"
   };
 
   const emision = {
@@ -48,6 +52,9 @@ export async function guardarAnimeDesdePopup(obj_route, btnGuardar, refs) {
   await obj_route("db.guardarModulo", ["emision", emision]);
   await obj_route("db.guardarModulo", ["capitulos", capitulos]);
   await obj_route("db.guardarModulo", ["idiomas", idiomas]);
+  if (EPISODIO==0){
+    await obj_route("db.guardarModulo",["urls_base",url]);
+  }
 
   btnGuardar.textContent = "Guardado ✔";
   setTimeout(() => btnGuardar.textContent = "Guardar anime", 1500);

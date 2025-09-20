@@ -14,6 +14,13 @@ export const storesSchema = [
     ]
   },
   {
+    name: "urls_base", // 🔗 URLs múltiples por anime
+    options: { keyPath: ["url_anime", "url_dir"] }, // Clave primaria compuesta
+    indices: [
+      { name: "por_url_anime", keyPath: "url_anime" }
+    ]
+  },
+  {
     name: "capitulos", // 📺 Episodios individuales
     //*Guarda: 
     // url_anime (FK), 

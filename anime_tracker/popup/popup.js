@@ -59,10 +59,10 @@ btnGuardar.addEventListener("click", () => {
       inputNombreAnime,   //* url_anime
       animeNombre,        //* nombre
       animePortada,       //* portada
-      urlActual,          //* url
+      urlActual,          //* urls_bases.url_dir
       animeEstado,        //* emision.estado
       serieViendo,        //* seguimiento
-      capVisto,     //* capitulos.visto
+      capVisto,           //* capitulos.visto
       animeTempoCap,      //* capitulos.capitulo
       doblaje,            //* idiomas.doblaje
       subtitulos          //* idiomas.subtitulos
@@ -77,9 +77,9 @@ btnMostrarCarpetas.addEventListener("click", () => {
 
 //! YA NO ES UN BOTÓN, ES UNA LISTA.
 // ✅ Alternar estado de capítulo visto
-btnCapituloVisto.addEventListener("click", () => {
-  fnCapituloVisto(animeEstadoViendo);
-});
+// btnCapituloVisto.addEventListener("click", () => {
+//   fnCapituloVisto(animeEstadoViendo);
+// });
 
 //!PRENDIENTE
 // 🔍 Buscar manualmente

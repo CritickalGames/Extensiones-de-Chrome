@@ -94,7 +94,9 @@ async function borrarAnime(nombre) {
 // 🚀 Inicializar flujo
 async function init() {
   try {
-    const animes = await obj_route("db.getAllAnimes");
+    const animes = (await obj_route("db.getAllAnimes")).result;
+    console.log(animes);
+    
     renderLista(animes);
 
     // Restaurar último anime buscado desde popup

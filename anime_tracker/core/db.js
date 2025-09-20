@@ -86,7 +86,7 @@ export async function guardarAnime(objeto) {
     const { cap, ...resto } = objeto;
 
     // Guardar el anime sin el campo "capitulo"
-    await guardarModulo("animes", resto);
+    return await guardarModulo("animes", resto);
 
   } catch (err) {
     console.error(`❌ Error al guardar en animes:`, err);
@@ -219,23 +219,18 @@ export async function deleteAnime(url_anime) {
  */
 export async function buscar_en_db(url_anime) {
   const store = await abrirDB("animes", "readonly");
-
+  console.log("buscar_en_db(",url_anime,")");
+  
   const resultado = await new Promise((resolve) => {
     const req = store.get(url_anime);
     req.onsuccess = () => resolve(req.result || false);
     req.onerror = () => resolve(false);
   });
 
-  if (resultado) return resultado;
-
-  // Buscar en API si no está en DB
-  const api_resultado = await obj_route('api.buscar_en_api', url_anime);
-  if (!api_resultado) return false;
-
-  // Guardar en DB si lo encontrás
-  //! Aún no lo decido: await obj_route('db.guardar_anime', api_resultado);
-
-  return api_resultado;
+  return {
+      error: !resultado? `No existe ${url_anime}`:false,
+      result: resultado
+    };
 }
 
 // EXPORTAR E IMPORTAR

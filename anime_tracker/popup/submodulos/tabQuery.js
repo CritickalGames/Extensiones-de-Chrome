@@ -10,7 +10,6 @@ export async function iniciar(obj_route, tabs, ref) {
   if (resultado) {
     actualizarDOM(ref, resultado, temporada, capitulo);
   } else {
-    ref.inputNombreAnime.value = URL_nombre || "";
     prevista_generica(ref, URL_nombre, nombre, temporada, capitulo);
   }
 }
@@ -20,11 +19,32 @@ async function fn(obj_route, tabs, ref) {
   const url = activeTab.url || "No disponible";
   ref.urlActual.textContent = url;
 
-  const { URL_dir, URL_nombre, nombre, temporada, capitulo } = await obj_route('parse.parse_url', { url });
-  const resultado = await obj_route('search.conseguir_anime', URL_nombre);
+  const parseo = await obj_route('parse.parse_url', { url });
+  // Con el nuevo router: error === false significa éxito
+  if (parseo.error !== false) {
+    console.error("Error al parsear ", url);
+    console.info(parseo.result);
+    return false;
+  }  
+  const {
+    _URL_dir,
+    URL_nombre,
+    nombre,
+    temporada,
+    capitulo 
+  } = parseo.result;
 
-  // Guardamos los datos extraídos en ref para trazabilidad
-  Object.assign(ref, { URL_dir, URL_nombre, nombre, temporada, capitulo });
+  const busqueda = await obj_route('search.conseguir_anime', URL_nombre);
+  console.warn(busqueda);
+  
+  // Con el nuevo router: error === false significa éxito
+  let resultado = null;
+  if (!busqueda.error) {
+    resultado = parseo.result;
+    console.log('Anime encontrado:', busqueda.result);
+  } else {
+    console.warn('No se encontró al buscar el anime:', busqueda.result);
+  }
 
   return { resultado, URL_nombre, nombre, temporada, capitulo };
 }
@@ -35,7 +55,7 @@ function actualizarDOM(ref, resultado, temporada = 0, capitulo = 0) {
 
   ref.animeNombre.textContent = resultado.nombre;
   ref.inputNombreAnime.value = resultado.nombre;
-  ref.animePortada.src = resultado.portada;
+  if (resultado.portada) ref.animePortada.src = resultado.portada;
 
   // Aseguramos que el estado se refleje en el <select>
   if (ref.animeEstado instanceof HTMLSelectElement) {
