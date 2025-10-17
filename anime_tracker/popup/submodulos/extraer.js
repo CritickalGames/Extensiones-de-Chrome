@@ -35,7 +35,6 @@ export function obtenerListas() {
   return {
     animeEstado: getElemento("lista_anime_estado"),
     serieViendo: getElemento("lista_serie_viendo"),
-    capSeguimiento: getElemento("cap_seguimiento"),
     doblaje: getElemento("doblaje"),
     subtitulos: getElemento("subtitulos"),
     dia: getElemento("tags_dia")

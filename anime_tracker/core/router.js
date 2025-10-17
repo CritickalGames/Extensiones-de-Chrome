@@ -35,15 +35,16 @@ export async function obj_route(action, payload) {
       console.log("Payload como array:", payload);
       result = await mod[funcion](...payload);
     } else {
+      console.log("Payload sin array", payload);
       result = await mod[funcion](payload);
     }
     
     //* Si sólo es "return", error: false
     //* Si quieres error, debes enviarlo junto a un result
-    //* Parse no manda errores, pero search sí, como ejemplos
+    //* Parse no manda errores, pero search sí, como ejemplos    
     return { 
             error: result?.error || false,
-            result: result.result? result.result: result
+            result: result.result? result.result: result? result:null
            };
   } catch (error) {
     console.error(`para ${action} y ${payload}; Error en obj_route:`, error);

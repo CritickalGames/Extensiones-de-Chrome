@@ -2,8 +2,7 @@ export async function guardarAnimeDesdePopup(obj_route, btnGuardar, refs) {
   const url_anime = refs.inputNombreAnime?.value.trim().toLowerCase().replace(/\s+/g, "-");
   const url_dir = refs.urlActual?.textContent?.trim();
   const cap = refs.animeTempoCap?.value?.trim() || "";
-  const EPISODIO = cap.match(/(.*?)(\d+)(.*?)(\d+)/)?.[2] || 0;
-
+  const EPISODIO = cap.match(/(.*?)(\d+)(.*?)(\d+)/)?.[4] || 0;
   // Datos base del anime
   const anime_base = {
     url_anime,
@@ -16,10 +15,14 @@ export async function guardarAnimeDesdePopup(obj_route, btnGuardar, refs) {
   // URL base
   const url = {
     url_anime,
-    url_dir,
+    url_dir: EPISODIO==0?url_dir:"",
+    url_ultima: EPISODIO!=0?url_dir:"",
+    url_relacion:refs.animeRelacionado?.value || url_anime,
     relacion: refs.relacionUrl?.value || "primera"
   };
 
+  console.warn(cap.match(/(.*?)(\d+)(.*?)(\d+)/), EPISODIO, url);
+  
   // Estado de emisión
   const emision = {
     url_anime,
@@ -30,8 +33,7 @@ export async function guardarAnimeDesdePopup(obj_route, btnGuardar, refs) {
   const capitulos = {
     url_anime,
     visto: refs.capVisto?.checked,
-    capitulo: cap,
-    url_dir
+    capitulo: cap
   };
 
   // Idiomas
@@ -65,9 +67,7 @@ export async function guardarAnimeDesdePopup(obj_route, btnGuardar, refs) {
   await obj_route("db.guardarModulo", ["notas", nota]);
   
   // Guardar URL base (es donde está toda la lista de capítulos)
-  if (EPISODIO == 0) {
-    await obj_route("db.guardarModulo", ["urls_base", url]);
-  }
+  await obj_route("db.guardarURL", url);
   
   // Guardar géneros (múltiples)
   if (refs.generosInput?.value) {

@@ -4,7 +4,7 @@ export async function conseguir_anime(URL_nombre) {
   // Buscar en base de datos
   //? Si DB falla, busca en API automaticamente
   const resultado = await obj_route('db.buscar_en_db', URL_nombre);
-  console.log(`Error: ${resultado.error} \n`,"Resultado DB:", resultado);
+  console.log(`Error: ${resultado.error}\n`,"Resultado DB:", resultado);
   
   // Con el nuevo router: !resultado.error significa éxito
   if (!resultado.error) return resultado.result;

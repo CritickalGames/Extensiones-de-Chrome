@@ -18,12 +18,15 @@ export const storesSchema = [
     name: "urls_base", // 🔗 URLs múltiples por anime
     //*Guarda:
     // url_anime (FK)
-    // url_dir (PK)
+    // url_relacion (PK)
+    // url_dir
+    // url_ultima //la última en ser guardada
     // relación (secuelas, película, paralela, primera)
-    options: { keyPath: ["url_anime", "url_dir"] }, // Clave primaria compuesta
+    options: { keyPath: ["url_anime", "url_relacion"] }, // Clave primaria compuesta
     indices: [
-      { name: "por_url_anime", keyPath: "url_anime" },
+      { name: "url_anime", keyPath: "url_anime" },
       { name: "relacion", keyPath: "relacion", options:{unique: false}},
+      { name: "url_relacion", keyPath: "url_relacion", options:{unique: false}},
     ]
   },
   {

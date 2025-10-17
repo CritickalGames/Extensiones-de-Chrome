@@ -23,7 +23,7 @@ async function fn(obj_route, tabs, ref) {
 
   const parseo = await obj_route('parse.parse_url', { url });
   // Con el nuevo router: error === false significa éxito
-  if (parseo.error !== false) {
+  if (parseo.error) {
     console.error("Error al parsear ", url);
     console.info(parseo.result);
     return false;
@@ -42,7 +42,7 @@ async function fn(obj_route, tabs, ref) {
   let resultado = null;
   if (busqueda.error === false) {
     resultado = busqueda.result;
-    console.log('Anime encontrado:', resultado);
+    console.log('Anime encontrado; Actualizando DOM con:', resultado);
   } else {
     console.warn('No se encontró al buscar el anime:', busqueda.error);
   }
@@ -52,56 +52,51 @@ async function fn(obj_route, tabs, ref) {
 
 // 🧩 Actualizar DOM con datos de anime
 function actualizarDOM(ref, resultado, temporada = 0, capitulo = 0) {
-  console.log(`Actualizando DOM con: `, resultado);
-  
-  ref.animeNombre.textContent = resultado.nombre;
-  ref.inputNombreAnime.value = resultado.nombre;
+  ref.animeNombre.textContent = resultado.anime.nombre;
+  ref.inputNombreAnime.value = resultado.anime.nombre;
   ref.animeTempoCap.value = `T${temporada}/E${capitulo}`;
-  ref.anyoEstreno.value = resultado.anyo;
-  ref.favoritoCheckbox.checked = resultado.favorito;
-  ref.tagsTipo.value = resultado.tags;
-  if (resultado.portada) ref.animePortada.src = resultado.portada;
+  ref.anyoEstreno.value = resultado.estreno.anyo;
+  ref.favoritoCheckbox.checked = resultado.anime.favorito;
+  ref.tagsTipo.value = resultado.tags.tags.join(", ");
+
+  if (resultado.anime.portada) ref.animePortada.src = resultado.anime.portada;
 
   // Aseguramos que el estado se refleje en el <select>
   if (ref.animeEstado instanceof HTMLSelectElement) {
-    ref.animeEstado.value = resultado.estado || "desconocido";
+    ref.animeEstado.value = resultado.emision.estado || "desconocido";
   }
 
   if (ref.serieViendo instanceof HTMLSelectElement) {
-    ref.serieViendo.value = resultado.seguimiento || "ver";
-  }
-
-  if (ref.capSeguimiento instanceof HTMLSelectElement) {
-    ref.capSeguimiento.value = resultado.cap_estado || "ver";
+    ref.serieViendo.value = resultado.anime.seguimiento || "ver";
   }
 
   if (ref.dia instanceof HTMLSelectElement) {
-    ref.dia.value = resultado.dia;
+    ref.dia.value = resultado.estreno.dia || "";
   }
 
   if (ref.temporadaEstreno instanceof HTMLSelectElement) {
-    ref.temporadaEstreno.value = resultado.temporada;
+    ref.temporadaEstreno.value = resultado.estreno.temporada || "";
   }
-  
-  if (resultado.nota && ref.notaUsuario) {
-    ref.notaUsuario.value = resultado.nota;
+
+  if (ref.notaUsuario) {
+    ref.notaUsuario.value = resultado.notas.nota;
   }
-  
-  if (resultado.doblaje && ref.doblaje) {
-    ref.doblaje.value = resultado.doblaje;
+
+  if (ref.doblaje) {
+    ref.doblaje.value = resultado.idiomas.doblaje;
   }
-  
-  if (resultado.subtitulos && ref.subtitulos) {
-    ref.subtitulos.value = resultado.subtitulos;
+
+  if (ref.subtitulos) {
+    ref.subtitulos.value = resultado.idiomas.subtitulos;
   }
-  
-  if (resultado.generos && ref.generosInput) {
-    ref.generosInput.value = resultado.generos.join(", ");
+
+  if (ref.generosInput) {
+    ref.generosInput.value = resultado.generos.generos.join(", ");
   }
-  
+
   // Si hay URL principal, usarla para la imagen
-  if (resultado.url_principal && ref.urlImagen) {
-    ref.urlImagen.value = resultado.url_principal;
+  if (ref.urlImagen) {
+    ref.urlImagen.value = resultado.urls_base.url_principal;
   }
 }
 
@@ -110,5 +105,5 @@ function prevista_generica(ref, URL_anime, name, temporada, capitulo) {
   ref.animeNombre.textContent = name || "Anime Genérico";
   ref.animeTempoCap.value = `T${temporada}/E${capitulo}`;
   ref.inputNombreAnime.value = URL_anime;
-  ref.favoritoCheckbox.checked = true;
+  ref.notaUsuario.value = 1;
 }

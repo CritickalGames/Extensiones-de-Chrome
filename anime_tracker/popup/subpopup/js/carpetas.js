@@ -14,9 +14,15 @@ function renderLista(animes) {
     contenedor.innerHTML = "<p>No hay animes guardados.</p>";
     return;
   }
-
+  // Mapeo de temporadas a símbolos
+  const simboloTemporada = {
+    primavera: "🌸",
+    verano: "☀️",
+    otoño: "🍂",
+    invierno: "❄️"
+  };
   animes.forEach(anime => {
-    console.log("Info de la obra: ",anime.nombre,anime);
+    console.log("Info de la obra: ", anime.anime.nombre, anime);
     
     const item = document.createElement("div");
     item.className = "anime-item";
@@ -27,44 +33,42 @@ function renderLista(animes) {
     item.style.borderBottom = "1px solid #ccc";
 
     item.innerHTML = `
-      <img class="portada" src="${anime.portada || 'placeholder.jpg'}" alt="${anime.nombre}" style="max-width: 80px; border-radius: 4px;">
-      <div style="flex: 1;">
+      <div>
         <div>
           <a href="${
-            anime.url_principal || anime.cap_url || "#"
-          }" target="_blank" title="${anime.nombre}">
-            ${anime.nombre}
+            anime.urls_base.url_dir || anime.urls_base.url_ultima || "#"
+          }" target="_blank" title="${anime.anime.nombre}">
+            ${anime.anime.nombre}
           </a>
         </div>
-
-        <div><strong>📡 Emisión:</strong> ${anime.emision || "—"}</div>
-        <div><strong>🌸 Estreno:</strong> ${anime.temporada ? `${anime.temporada} ${anime.año || ""}` : "—"}</div>
-        <div><strong>📺 Capítulo:</strong> ${anime.capitulo || "—"} 
-          (<a href="${anime.cap_url || "#"}" target="_blank">${anime.visto || "ver"}</a>)
+        <img class="portada" src="${anime.anime.portada || 'placeholder.jpg'}" alt="${anime.anime.nombre}" style="max-width: 80px; border-radius: 4px;">
+        <div><strong>📡 Emisión:</strong> ${anime.emision.estado || "—"}</div>
+        <div><strong>🌸 Estreno:</strong> ${simboloTemporada[anime.estreno.temporada.toLowerCase()] || "—" } ${anime.estreno.anyo || ""}</div>
+        <div><strong>📺 Capítulo:</strong> ${anime.capitulos.capitulo || "—"} 
+          (<a href="${anime.capitulos.cap_url || "#"}" target="_blank">${anime.capitulos.visto? "visto":"ver"}</a>)
         </div>
-        <div><strong>🌍 Idiomas:</strong> Doblaje: ${anime.doblaje || "—"}, Subtítulos: ${anime.subtitulos || "—"}</div>
-        <div><strong>🎭 Géneros:</strong> ${anime.generos && anime.generos.length > 0 ? anime.generos.join(", ") : "—"}</div>
-        <div><strong>🏷️ Tags:</strong> ${anime.tags && anime.tags.length > 0 ? anime.tags.map(t => `${t.tipo} (${t.dia || "—"})`).join(", ") : "—"}</div>
-        <div><strong>🔗 Relación:</strong> ${anime.relacion || "—"}</div>
-        <div><strong>📝 Nota:</strong> ${anime.nota || "—"}</div>
-        <div><strong>⭐ Favorito:</strong> ${anime.favorito ? "Sí" : "No"}</div>
-
-        <div>
-          <label for="seguimiento_${anime.url_anime}">Seguimiento:</label>
-          <select id="seguimiento_${anime.url_anime}" name="seguimiento">
-            <option value="ver" ${anime.seguimiento === "ver" ? "selected" : ""}>ver</option>
-            <option value="viendo" ${anime.seguimiento === "viendo" ? "selected" : ""}>viendo</option>
-            <option value="completa" ${anime.seguimiento === "completa" ? "selected" : ""}>completa</option>
-            <option value="abandonada" ${anime.seguimiento === "abandonada" ? "selected" : ""}>abandonada</option>
-          </select>
-        </div>
+      </div>
+      <div style="flex: 1;">
+        <div><strong>🌍 Idiomas:</strong> Doblaje: ${anime.idiomas.doblaje || "—"}, Subtítulos: ${anime.idiomas.subtitulos || "—"}</div>
+        <div><strong>🎭 Géneros:</strong> ${anime.generos.generos && anime.generos.generos.length > 0 ? anime.generos.generos.join(", ") : "—"}</div>
+        <div><strong>🏷️ Tags:</strong> ${anime.tags.tags && anime.tags.tags.length > 0 ? anime.tags.tags.join(", ") : "—"}</div>
+        <div><strong>🔗 Relación:</strong> ${anime.urls_base.relacion || "—"}</div>
+        <div><strong>📝 Nota:</strong> ${anime.notas.nota || "—"}</div>
+        <div><strong>⭐ Favorito:</strong> ${anime.anime.favorito ? "Sí" : "No"}</div>
+        <div><p>Seguimiento: ${anime.anime.seguimiento}</p></div>
       </div>
       <div>
         <strong>🔗 Otras URLs:</strong>
-        <ul>
-          ${anime.otras_urls && anime.otras_urls.length > 0 ? 
-            anime.otras_urls.map(url => 
-              `<li><a href="${url.url_dir}" target="_blank">${url.relacion}</a></li>`
+        <ul style="padding: 0;">
+          ${anime.urls_base.otras_urls && anime.urls_base.otras_urls.length > 0 ? 
+            anime.urls_base.otras_urls.map(url => 
+              `<li><strong>${url.relacion}:</strong></li>
+              <ul style="padding: 0;">
+              <li>
+                -<a href="${url.url_dir? url.url_dir:url.url_ultima}" target="_blank">${url.url_anime}</a>
+              </li>
+              </ul>
+              `
             ).join('') : 
             '<li>No hay otras URLs</li>'
           }
@@ -78,7 +82,7 @@ function renderLista(animes) {
     const portada = item.querySelector(".portada");
     if (portada) {
       portada.addEventListener("click", () => {
-        inputBuscar.value = anime.url_anime;
+        inputBuscar.value = anime.anime.url_anime;
         inputBuscar.focus();
       });
     }
@@ -94,16 +98,18 @@ async function borrarAnime(nombre) {
   try {
     await obj_route("db.deleteAnime", nombre);
     const actualizados = await obj_route("db.getAllAnimes");
-    renderLista(actualizados);
+    const animes = actualizados.result?.data || actualizados.data || [];
+    renderLista(animes); // Asumiendo que aquí accedemos a .data
   } catch (err) {
-    alert("❌ Error al borrar anime: " + err);
+    alert("❌ [carpetas_js.borrarAnime]Error al borrar anime: " + err);
   }
 }
 
 // 🚀 Inicializar flujo
 async function init() {
   try {
-    const animes = (await obj_route("db.getAllAnimes")).result.data;
+    const respuesta = await obj_route("db.getAllAnimes");
+    const animes = respuesta.result?.data || respuesta.data || [];
     renderLista(animes);
 
     // Restaurar último anime buscado desde popup
