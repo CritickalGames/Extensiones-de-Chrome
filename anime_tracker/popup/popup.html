@@ -7,137 +7,173 @@
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <h2>Anime Tracker</h2>
-  <p><strong>URL actual:</strong> <span id="url_actual">Cargando...</span></p>
-  <p><strong>Nombre del anime:(El programa formatea el input. No te preocupes)</strong> <span id="anime"><input id="url_anime" type="text" placeholder="Nombre de la url"></span></p>
 
-  <button id="guardar">Guardar anime</button>
-  <button id="mostrarCarpetas">Mostrar carpetas</button>
-<hr>
-  <div class="container">
-    <div class="iz-panel">
-        <div>
-          <img id="anime_portada" src="https://lh3.googleusercontent.com/-tGHmZ6GF0cc/WpohCECY6kI/AAAAAAABdDI/fdZBbrmha_A9gOQ9wp-qKgThLFr1rUq0QCHMYCw/s0/ef3ba899fa0c572bebb18586d81b151c2d72f2bf.jpg">
-          <label for="url_imagen">Portada:</label>
-          <input type="text" id="url_imagen" name="url_imagen" placeholder="https://ejemplo.com/imagen.jpg">
-        </div>
-        <div>
-          <label for="relacion_url">Relación de URL:</label>
-          <select id="relacion_url" name="relacion_url">
-            <option value="primera">🔗 Primera</option>
-            <option value="secuela">🔗 Secuela</option>
-            <option value="precuela">🔗 Precuela</option>
-            <option value="paralela">🔗 Paralela</option>
-            <option value="película">🔗 Película</option>
-            <option value="ova">🔗 OVA</option>
-          </select>
-          <label for="anime_relacionado">Anime relacionado:</label>
-          <input type="text" id="anime_relacionado" name="anime_relacionado" placeholder="Nombre del anime relacionado">
-        </div>
-        <div>
-            <label for="temporada_estreno">Temporada de estreno:</label>
-            <select id="temporada_estreno" name="temporada_estreno">
-              <option value="">Seleccionar</option>
-              <option value="primavera">🌸 Primavera</option>
-              <option value="verano">☀️ Verano</option>
-              <option value="otoño">🍂 Otoño</option>
-              <option value="invierno">❄️ Invierno</option>
-            </select>
-            <input type="number" id="anyo_estreno" name="anyo_estreno" placeholder="Año" min="1900" max="2100">
-        </div>
-    </div>
-    <div class="dr-panel">
-        <div>
-          <h1 id="anime_nombre" style="display: inline-block;">Anime Génerico</h1>
-          <label for="favorito_checkbox" style="margin-left: 10px;">⭐:</label>
-          <input type="checkbox" id="favorito_checkbox" name="favorito_checkbox">
-        </div>
-        <div>
-          <label for="lista_anime_estado">Estado de emisión:</label>
-          <select id="lista_anime_estado" name="lista_anime_estado">
-            <option value="desconocido">? Desconocido</option>
-            <option value="emisión">Emisión</option>
-            <option value="finalizado">Finalizado</option>
-            <option value="cancelada">Cancelada</option>
-            <option value="peli-ova">Película/Ova</option>
-          </select>
-        </div>
-        <div>
-          <label for="lista_serie_viendo">Serie seguimiento:</label>
-          <select id="lista_serie_viendo" name="lista_serie_viendo">
-            <option value="ver">ver</option>
-            <option value="viendo">viendo</option>
-            <option value="visto">visto</option>
-            <option value="abandonado">abandonado</option>
-          </select>
-        </div>
-        <div>
-          <label for="cap_visto">¿Capítulo visto?</label>
-          <input type="checkbox" id="cap_visto" name="cap_visto">
-          <input type="text" id="capitulo_temp_cap" placeholder="Temporada/Capítulo">
-        </div>
-        <div>
-          <label for="doblaje">Doblaje:</label>
-          <select id="doblaje" name="doblaje">
-            <option value="es">🇪🇸 Español</option>
-            <option value="jp">🇯🇵 Japonés</option>
-            <option value="en">🇺🇸 Inglés</option>
-            <option value="kr">🇰🇷 Coreano</option>
-            <option value="cn">🇨🇳 Chino</option>
-            <option value="tr">🇹🇷 Turco</option>
-          </select>
-          <br>
-          <label for="subtitulos">Subtítulos:</label>
-          <select id="subtitulos" name="subtitulos">
-            <option value="-">🚫 No</option>
-            <option value="es">🇪🇸 Español</option>
-            <option value="jp">🇯🇵 Japonés</option>
-            <option value="en">🇺🇸 Inglés</option>
-            <option value="kr">🇰🇷 Coreano</option>
-            <option value="cn">🇨🇳 Chino</option>
-            <option value="tr">🇹🇷 Turco</option>
-          </select>
-        </div>
-        
-        <div>
-          <label for="nota_usuario">Nota (1-10):</label>
-          <input type="number" id="nota_usuario" name="nota_usuario" min="1" max="10" placeholder="Calificación">
-        </div>
-        <div>
-          <label for="generos_input">Géneros (separados por comas):</label>
-          <input type="text" id="generos_input" name="generos_input" placeholder="acción, aventura, comedia">
-        </div>
-        <div>
-          <div>
-            <label for="tags_tipo">Tipo de tag:</label>
-            <input type="text" id="tags_tipo" name="tags_tipo" placeholder="serie, pelicula, ova, etc.">
-          </div>
-          <select id="tags_dia" name="tags_dia">
-            <option value="">Días de estreno</option>
-            <option value="lunes">lunes</option>
-            <option value="martes">martes</option>
-            <option value="miercoles">miércoles</option>
-            <option value="jueves">jueves</option>
-            <option value="viernes">viernes</option>
-            <option value="sabado">sábado</option>
-            <option value="domingo">domingo</option>
-          </select>
-        </div>
+  <div class="header">
+    <h2>Anime Tracker</h2>
+    <div class="header-buttons">
+      <button id="guardar">Guardar anime</button>
+      <button id="mostrarCarpetas">Mostrar carpetas</button>
     </div>
   </div>
-<hr>
-<center>
-<h1 style="color: red">PENDIENTE</h1>
-</center>
-  <div class="container">
-      <h2>Buscar anime</h2>
+
+  <div class="container main-content">
+    <div class="identity-card">
+      <img id="anime_portada" src="https://lh3.googleusercontent.com/-tGHmZ6GF0cc/WpohCECY6kI/AAAAAAABdDI/fdZBbrmha_A9gOQ9wp-qKgThLFr1rUq0QCHMYCw/s0/ef3ba899fa0c572bebb18586d81b151c2d72f2bf.jpg">
+      <div class="identity-info">
+        <div class="name-fav-container">
+          <div class="fav-container">
+            <input type="checkbox" id="favorito_checkbox" name="favorito_checkbox">
+            <label for="favorito_checkbox">Favorito</label>
+          </div>
+          <h1 id="anime_nombre">Anime Génerico</h1>
+        </div>
+        <div class="url-container">
+          <strong>URL actual:</strong> <span id="url_actual">Cargando...</span>
+        </div>
+        <p>
+          <strong>ID del anime:</strong>
+          <input id="url_anime" type="text" placeholder="Nombre de la url">
+        </p>
+
+        <!-- Nueva sección: Resumen ampliado -->
+        <div class="identity-summary">
+          <div class="summary-item">
+            <label for="lista_anime_estado">Estado:</label>
+            <select id="lista_anime_estado" name="lista_anime_estado">
+              <option value="desconocido">? Desconocido</option>
+              <option value="emisión">Emisión</option>
+              <option value="finalizado">Finalizado</option>
+              <option value="cancelada">Cancelada</option>
+              <option value="peli-ova">Película/Ova</option>
+            </select>
+          </div>
+          <div class="summary-item">
+            <label for="lista_serie_viendo">Sigo:</label>
+            <select id="lista_serie_viendo" name="lista_serie_viendo">
+              <option value="ver">ver</option>
+              <option value="viendo">viendo</option>
+              <option value="visto">visto</option>
+              <option value="abandonado">abandonado</option>
+            </select>
+          </div>
+          <div class="summary-item">
+            <label for="cap_visto">Visto?</label>
+            <input type="checkbox" id="cap_visto" name="cap_visto">
+          </div>
+          <div class="summary-item">
+            <label for="capitulo_temp_cap">T/E:</label>
+            <input type="text" id="capitulo_temp_cap" name="capitulo_temp_cap" placeholder="T#/E#">
+          </div>
+          <div class="summary-item">
+            <label for="nota_usuario">Nota:</label>
+            <input type="number" id="nota_usuario" name="nota_usuario" min="1" max="10" placeholder="1-10">
+          </div>
+          <div class="summary-item">
+            <label for="doblaje">DOB:</label>
+            <select id="doblaje" name="doblaje">
+              <option value="es">ES</option>
+              <option value="jp">JP</option>
+              <option value="en">EN</option>
+              <option value="kr">KR</option>
+              <option value="cn">CN</option>
+              <option value="tr">TR</option>
+            </select>
+          </div>
+          <div class="summary-item">
+            <label for="subtitulos">SUB:</label>
+            <select id="subtitulos" name="subtitulos">
+              <option value="-">-</option>
+              <option value="es">ES</option>
+              <option value="jp">JP</option>
+              <option value="en">EN</option>
+              <option value="kr">KR</option>
+              <option value="cn">CN</option>
+              <option value="tr">TR</option>
+            </select>
+          </div>
+          <div class="summary-item">
+            <label for="relacion_url">Relación:</label>
+            <select id="relacion_url" name="relacion_url">
+              <option value="primera">Prim</option>
+              <option value="secuela">Sec</option>
+              <option value="precuela">Prec</option>
+              <option value="paralela">Par</option>
+              <option value="película">Pel</option>
+              <option value="ova">OVA</option>
+            </select>
+          </div>
+          <div class="summary-item">
+            <label for="anime_relacionado">Relacionado:</label>
+            <input type="text" id="anime_relacionado" name="anime_relacionado" placeholder="Nombre...">
+          </div>
+        </div>
+        <!-- Fin de la sección de resumen -->
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- Panel izquierdo original (ahora dentro del contenedor principal) -->
+    <div class="iz-panel">
+      <div>
+        <label for="url_imagen">Portada:</label>
+        <input type="text" id="url_imagen" name="url_imagen" placeholder="https://ejemplo.com/imagen.jpg">
+      </div>
+      <div>
+        <label for="temporada_estreno">Temporada de estreno:</label>
+        <select id="temporada_estreno" name="temporada_estreno">
+          <option value="">-</option>
+          <option value="primavera">🌸</option>
+          <option value="verano">☀️</option>
+          <option value="otoño">🍂</option>
+          <option value="invierno">❄️</option>
+        </select>
+        <input type="number" id="anyo_estreno" name="anyo_estreno" placeholder="Año" min="1900" max="2100">
+      </div>
+    </div>
+
+    <!-- Panel derecho original (ahora dentro del contenedor principal) -->
+    <div class="dr-panel">
+      <div>
+        <label for="generos_input">Géneros:</label>
+        <input type="text" id="generos_input" name="generos_input" placeholder="acción, aventura...">
+      </div>
+      <div>
+        <label for="tags_tipo">Tipo:</label>
+        <input type="text" id="tags_tipo" name="tags_tipo" placeholder="serie, peli...">
+        <select id="tags_dia" name="tags_dia">
+          <option value="">-</option>
+          <option value="lunes">Lu</option>
+          <option value="martes">Ma</option>
+          <option value="miercoles">Mi</option>
+          <option value="jueves">Ju</option>
+          <option value="viernes">Vi</option>
+          <option value="sabado">Sa</option>
+          <option value="domingo">Do</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="pendiente">
+    <h1>SECCIÓN EN DESARROLLO</h1>
+  </div>
+
+  <div class="container search-section">
+    <h2>Buscar anime</h2>
+    <div class="busqueda-container">
       <input id="url_anime_buscar" type="text" placeholder="Nombre de la url">
       <button id="btn_buscar">Buscar</button>
+    </div>
   </div>
-  <div>
+
+  <div class="container results-section">
     <h2>Animes encontrados</h2>
-    PENDIENTE DE DESARROLLO
+    <p>PENDIENTE DE DESARROLLO</p>
   </div>
+
+  <script type="module" src="popup.js"></script>
 </body>
-<script type="module" src="popup.js"></script>
 </html>
