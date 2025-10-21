@@ -1,6 +1,6 @@
 /* Estilos generales */
 :root {
-  --primary: #8A2BE2;
+  --primary: #8A2BE2; /* Color púrpura */
   --background-dark: #121212;
   --background-light: #f6f7f8;
   --surface-dark: #1e1e1e;
@@ -34,18 +34,37 @@ body {
   min-height: 100%;
 }
 
-/* Barra de búsqueda superior */
+/* Barra de búsqueda superior (nueva) */
 .search-bar-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 8px; /* Espacio entre botón de menú, input y otros botones */
+  padding: 0 0 4px 0; /* Espacio inferior para separar de la portada */
+}
+
+.menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; /* Ancho fijo */
+  height: 40px; /* Alto fijo */
+  border-radius: var(--border-radius-lg);
+  background-color: var(--surface-dark);
+  color: var(--text-white);
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.menu-btn:focus {
+  outline: none;
 }
 
 .search-input-wrapper {
   display: flex;
   align-items: center;
-  flex: 1;
+  flex: 1; /* Ocupa el espacio restante */
   border: 2px solid var(--primary);
   border-radius: var(--border-radius-lg);
   overflow: hidden;
@@ -73,17 +92,85 @@ body {
   color: var(--text-gray);
 }
 
-.settings-btn {
-  background: none;
-  border: none;
+.header-buttons-container {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Espacio entre botones */
+}
+
+.save-btn-icon, .folder-btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; /* Ancho fijo */
+  height: 40px; /* Alto fijo */
+  border-radius: var(--border-radius-lg);
+  background-color: var(--surface-dark);
   color: var(--text-white);
+  border: none;
   cursor: pointer;
   font-size: 24px;
-  padding: 0;
+}
+
+.save-btn-icon:focus, .folder-btn-icon:focus {
+  outline: none;
+}
+
+.settings-dropdown-container {
+  position: relative;
+}
+
+.settings-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; /* Ancho fijo */
+  height: 40px; /* Alto fijo */
+  border-radius: var(--border-radius-lg);
+  background-color: var(--surface-dark);
+  color: var(--text-white);
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
 }
 
 .settings-btn:focus {
   outline: none;
+}
+
+.settings-dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 10;
+  margin-top: 8px; /* Espacio entre botón y menú */
+  width: 192px; /* Ancho del menú */
+  border-radius: var(--border-radius-md);
+  background-color: var(--surface-dark);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid #444; /* Borde opcional para mejor visibilidad */
+}
+
+.settings-dropdown.hidden {
+  display: none;
+}
+
+.py-1 {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 8px 16px;
+  color: var(--text-white);
+  text-decoration: none;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+  background-color: #2a2a2a;
 }
 
 /* Portada */
@@ -147,8 +234,8 @@ body {
   color: var(--text-white);
 }
 
-/* Switch (Favorito) */
-.switch {
+/* Switch (Favorito) - Diseño Púrpura */
+.switch-purple {
   position: relative;
   display: inline-block;
   width: 51px;
@@ -160,12 +247,12 @@ body {
   cursor: pointer;
 }
 
-.switch:has(input:checked) {
+.switch-purple:has(input:checked) {
   background-color: var(--primary);
   justify-content: flex-end;
 }
 
-.slider {
+.switch-purple .slider {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -177,11 +264,11 @@ body {
   transition: transform 0.2s;
 }
 
-.switch:has(input:checked) .slider {
+.switch-purple:has(input:checked) .slider {
   transform: translate(25%, -50%);
 }
 
-.switch input {
+.switch-purple input {
   opacity: 0;
   width: 0;
   height: 0;
@@ -359,8 +446,13 @@ body {
   margin: 0;
 }
 
-.audio-subs-select-container {
-  position: relative;
+.audio-subs-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.audio-subs-controls .custom-select {
+  flex: 1;
 }
 
 /* Grid (Estreno/Emisión) */
@@ -469,11 +561,19 @@ body {
   gap: 8px;
 }
 
-/* Botón "Añadir" eliminado */
-.related-section .section-header {
+.section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.add-btn {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
 }
 
 .related-controls {
@@ -503,7 +603,7 @@ body {
 }
 
 /* Botón final */
-.save-btn {
+.save-btn-bottom {
   width: 100%;
   padding: 12px;
   border-radius: var(--border-radius-lg);
@@ -523,4 +623,14 @@ button:focus {
 /* Inputs generales */
 input:focus {
   outline: none;
+}
+
+/* Campo oculto original */
+.original-field {
+  display: none;
+}
+
+/* Ajuste para el contenedor de portada si se cambia desde el campo original */
+#cover_container {
+  transition: background-image 0.3s ease;
 }
