@@ -1,315 +1,526 @@
 /* Estilos generales */
+:root {
+  --primary: #8A2BE2;
+  --background-dark: #121212;
+  --background-light: #f6f7f8;
+  --surface-dark: #1e1e1e;
+  --text-white: #ffffff;
+  --text-gray: #A9A9A9;
+  --text-light-gray: #a1a1aa;
+  --border-radius-sm: 0.25rem;
+  --border-radius-md: 0.5rem;
+  --border-radius-lg: 0.75rem;
+  --border-radius-full: 9999px;
+  --font-display: "Arial", sans-serif; /* Fallback */
+}
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: var(--font-display);
+  background-color: var(--background-dark);
+  color: var(--text-white);
   margin: 0;
   padding: 0;
-  background-color: #f5f5f5;
-  max-width: 100%;
-  font-size: 16px; /* Tamaño base aumentado */
-  width: 425px; /* Ancho fijo para la ventana emergente, como en tu CSS anterior */
-  /* min-width: 400px; */ /* Opcional: Si prefieres un ancho mínimo en lugar de fijo */
-  /* height: 600px; */ /* Opcional: También puedes fijar la altura si lo deseas */
-  box-sizing: border-box; /* Incluye padding y border en el ancho total */
+  min-width: 425px; /* Ancho fijo como solicitaste */
+  min-height: 884px; /* Altura mínima para emular el diseño */
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
-.container {
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 8px; /* Aumenté el padding */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  min-height: 100%;
 }
 
-.card {
-  background-color: white;
-  border-radius: 10px; /* Un poco más redondeado */
-  padding: 15px; /* Más espacio interno */
-  margin-bottom: 12px; /* Más espacio entre tarjetas */
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* Sombra un poco más pronunciada */
+/* Barra de búsqueda superior */
+.search-bar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
 }
 
-.header {
-  position: sticky; /* Fijo en la parte superior */
-  top: 0;
-  background-color: #3498db;
-  color: white;
-  padding: 12px; /* Más padding */
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  border: 2px solid var(--primary);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  background-color: transparent;
+}
+
+.search-icon {
+  color: var(--primary);
+  padding: 0 12px;
+  font-size: 24px;
+}
+
+.search-input {
+  flex: 1;
+  background-color: transparent;
+  color: var(--text-white);
+  font-size: 16px;
+  font-weight: normal;
+  padding: 12px;
+  border: none;
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: var(--text-gray);
+}
+
+.settings-btn {
+  background: none;
+  border: none;
+  color: var(--text-white);
+  cursor: pointer;
+  font-size: 24px;
+  padding: 0;
+}
+
+.settings-btn:focus {
+  outline: none;
+}
+
+/* Portada */
+.cover-container {
+  width: 100%;
+  min-height: 240px; /* Altura fija como en el ejemplo */
+  border-radius: var(--border-radius-lg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+/* Información principal */
+.info-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.title-id-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.anime-title {
+  font-size: 24px; /* 2xl en Tailwind */
+  font-weight: bold;
+  color: var(--text-white);
+  margin: 0;
+}
+
+.id-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.anime-id {
+  font-size: 14px; /* text-sm */
+  color: var(--text-gray);
+  margin: 0;
+}
+
+.copy-icon {
+  font-size: 16px; /* text-base */
+  color: var(--text-gray);
+  cursor: pointer;
+}
+
+.favorite-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fav-label {
+  font-size: 14px; /* text-sm */
+  color: var(--text-white);
+}
+
+/* Switch (Favorito) */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 51px;
+  height: 31px;
+  border: none;
+  background-color: var(--surface-dark);
+  border-radius: var(--border-radius-full);
+  padding: 4px;
+  cursor: pointer;
+}
+
+.switch:has(input:checked) {
+  background-color: var(--primary);
+  justify-content: flex-end;
+}
+
+.slider {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 27px;
+  height: 27px;
+  background-color: var(--text-white);
+  border-radius: var(--border-radius-full);
+  transform: translate(-50%, -50%);
+  transition: transform 0.2s;
+}
+
+.switch:has(input:checked) .slider {
+  transform: translate(25%, -50%);
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Temporada/Episodio y Botón */
+.progress-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.season-episode-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.control-label {
+  font-size: 16px; /* text-base */
+  color: var(--text-gray);
+  margin: 0;
+}
+
+.number-control {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.number-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--border-radius-full);
+  background-color: var(--surface-dark);
+  color: var(--text-white);
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.number-input {
+  width: 36px;
   text-align: center;
-  z-index: 1000; /* Asegura que esté encima del scroll */
+  border: none;
+  background: transparent;
+  color: var(--text-white);
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0;
+  -moz-appearance: textfield;
+}
+
+.number-input::-webkit-outer-spin-button,
+.number-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.watched-btn {
+  height: 32px;
+  padding: 0 12px;
+  border-radius: var(--border-radius-md);
+  background-color: var(--primary);
+  color: var(--text-white);
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+}
+
+/* Rating y Seguimiento */
+.rating-status-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.rating-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rating-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: var(--surface-dark);
+  padding: 4px;
+  border-radius: var(--border-radius-md);
+}
+
+.rating-star {
+  color: var(--primary);
+  font-size: 24px;
+}
+
+.rating-value {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.rating-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--border-radius-full);
+  background-color: var(--surface-dark);
+  color: var(--text-white);
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.status-select-container {
+  flex: 1;
+  position: relative;
+}
+
+/* Select personalizado */
+.custom-select {
+  width: 100%;
+  padding: 6px 32px 6px 12px; /* Espacio para la flecha */
+  border-radius: var(--border-radius-md);
+  background-color: var(--surface-dark);
+  color: var(--text-white);
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  appearance: none; /* Oculta el estilo por defecto */
+  cursor: pointer;
+}
+
+.custom-select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary);
+}
+
+/* Flecha para el select */
+.custom-select + .material-symbols-outlined {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; /* No interfiere con el click del select */
+  color: var(--text-white);
+  font-size: 16px;
+}
+
+/* Audio y Subs */
+.audio-subs-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section-label {
+  font-size: 16px; /* text-base */
+  color: var(--text-gray);
+  margin: 0;
+}
+
+.audio-subs-select-container {
+  position: relative;
+}
+
+/* Grid (Estreno/Emisión) */
+.release-schedule-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding-top: 8px;
+}
+
+.grid-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.grid-label {
+  font-size: 14px; /* text-sm */
+  color: var(--text-gray);
+  margin: 0;
+}
+
+.grid-input {
+  padding: 6px 12px;
+  border-radius: var(--border-radius-md);
+  background-color: var(--surface-dark);
+  color: var(--text-white);
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  outline: none;
+}
+
+.grid-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary);
+}
+
+/* Día y Estado */
+.day-status-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.day-select-container,
+.emission-status-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Géneros */
+.genres-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.header h2 {
-  margin: 0;
-  font-size: 1.4em; /* Título más grande */
-}
-
-.header-buttons {
-  display: flex;
-  gap: 8px; /* Más espacio entre botones */
-}
-
-button {
-  padding: 10px 14px; /* Botones más grandes */
+.edit-btn {
+  background: none;
   border: none;
-  border-radius: 6px; /* Bordes más redondeados */
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
-  font-size: 1em; /* Tamaño de fuente más grande */
-  background-color: #3498db;
-  color: white;
 }
 
-button:hover {
-  background-color: #2980b9;
-}
-
-button#guardar {
-  background-color: #27ae60;
-}
-
-button#guardar:hover {
-  background-color: #219653;
-}
-
-button#mostrarCarpetas {
-  background-color: #e67e22;
-}
-
-button#mostrarCarpetas:hover {
-  background-color: #d35400;
-}
-
-button#btn_buscar {
-  background-color: #9b59b6;
-  width: auto;
-  padding: 10px 14px; /* Mismo tamaño que otros botones */
+.genres-list {
+  font-size: 16px;
+  color: var(--text-white);
   margin: 0;
 }
 
-button#btn_buscar:hover {
-  background-color: #8e44ad;
+.genres-input {
+  padding: 6px 12px;
+  border-radius: var(--border-radius-md);
+  background-color: var(--surface-dark);
+  color: var(--text-white);
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  width: 100%;
 }
 
-hr {
-  border: 0;
-  height: 1px;
-  background-color: #ddd;
-  margin: 15px 0; /* Más espacio alrededor del separador */
+.genres-input::placeholder {
+  color: var(--text-gray);
 }
 
-/* Estilo para la tarjeta de identidad */
-.identity-card {
+.genres-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary);
+}
+
+/* Relacionado */
+.related-section {
   display: flex;
-  flex-direction: column; /* Apilamos imagen y texto verticalmente */
-  align-items: center; /* Centramos horizontalmente */
-  text-align: center; /* Centramos el texto dentro */
-  background-color: white;
-  border-radius: 10px; /* Un poco más redondeado */
-  padding: 15px; /* Más espacio interno */
-  margin-bottom: 12px; /* Más espacio entre tarjetas */
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* Sombra un poco más pronunciada */
+  flex-direction: column;
+  gap: 8px;
 }
 
-#anime_portada {
-  width: 120px; /* Imagen más grande */
-  height: 180px;
-  object-fit: cover;
-  border-radius: 6px; /* Bordes más redondeados */
-  margin-bottom: 12px; /* Espacio entre imagen y texto */
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* Pequeña sombra */
-}
-
-.identity-info {
-  width: 100%; /* Asegura que ocupe el ancho disponible */
-}
-
-.name-fav-container {
+/* Botón "Añadir" eliminado */
+.related-section .section-header {
   display: flex;
-  align-items: center; /* Alinea verticalmente el nombre y el favorito */
-  justify-content: flex-start; /* Alinea el grupo nombre+favorito a la izquierda */
-  gap: 10px; /* Espacio entre el favorito y el nombre */
-  margin: 0; /* Elimina el margen por defecto del h2 */
-  width: 100%; /* Asegura que ocupe el ancho completo del contenedor padre */
-  text-align: left; /* Alinea el contenido interno (nombre) a la izquierda */
-}
-
-.fav-container {
-  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 5px; /* Espacio entre checkbox y texto */
-  white-space: nowrap; /* Evita que el texto "Favorito" se parta */
 }
 
-.fav-container label {
-  font-size: 1em; /* Tamaño de fuente más grande para "Favorito" */
-  margin: 0; /* Elimina márgenes extra */
-  color: #555; /* Color del texto */
+.related-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.fav-container input[type="checkbox"] {
-  margin: 0; /* Elimina márgenes extra del checkbox */
-  transform: scale(1.2); /* Hacer el checkbox un poco más grande */
+.related-input {
+  padding: 6px 12px;
+  border-radius: var(--border-radius-md);
+  background-color: var(--surface-dark);
+  color: var(--text-white);
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  outline: none;
 }
 
-#anime_nombre {
-  font-size: 1.6em; /* Nombre más grande */
-  font-weight: bold;
-  margin: 0; /* Elimina el margen por defecto del h2 */
-  color: #2c3e50;
-  flex: 1; /* Permite que el nombre ocupe el espacio disponible a la derecha del favorito */
+.related-input::placeholder {
+  color: var(--text-gray);
 }
 
-/* Contenedor para URL actual, alineado a la derecha */
-.url-container {
-  width: 100%; /* Ocupa todo el ancho */
-  text-align: right; /* Alinea la URL a la derecha */
-  color: #7f8c8d;
-  font-size: 1em; /* Tamaño de fuente más grande */
-  word-break: break-all; /* Rompe la URL si es muy larga */
-  margin-top: 8px; /* Espacio encima de la URL */
+.related-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary);
 }
 
-/* Input de nombre de URL - ESTRECHO */
-#url_anime {
-  width: 100%; /* Ahora ocupa el 100% del ancho del contenedor identity-info */
-  max-width: 250px; /* Limita el ancho máximo a 250px */
-  padding: 8px; /* Más padding */
-  border: 1px solid #ccc;
-  border-radius: 6px; /* Bordes más redondeados */
-  font-size: 1em; /* Tamaño de fuente más grande */
-  margin-top: 10px; /* Espacio encima del input */
-  margin-left: auto; /* Centra el input dentro de identity-info si es posible */
-  margin-right: auto;
-  box-sizing: border-box; /* Incluye padding y border en el ancho total */
-}
-
-/* Nueva sección: Resumen en la tarjeta de identidad */
-.identity-summary {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Dos columnas para el resumen */
-  gap: 10px; /* Más espacio entre elementos */
+/* Botón final */
+.save-btn {
   width: 100%;
-  margin-top: 12px; /* Más espacio encima del resumen */
+  padding: 12px;
+  border-radius: var(--border-radius-lg);
+  background-color: var(--primary);
+  color: var(--text-white);
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
 }
 
-.summary-item {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* Alinea el contenido a la izquierda */
-  text-align: left;
+/* Botones generales */
+button:focus {
+  outline: none;
 }
 
-.summary-item label {
-  font-weight: bold;
-  margin-bottom: 4px; /* Más espacio debajo del label */
-  font-size: 0.95em; /* Tamaño de fuente un poco más grande */
-  color: #555;
-}
-
-.summary-item span, .summary-item input, .summary-item select {
-  font-size: 1em; /* Tamaño de fuente más grande */
-  width: 100%; /* Ocupa el ancho del contenedor */
-  padding: 6px; /* Más padding */
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-.summary-item span {
-  background-color: #f9f9f9;
-  padding: 6px; /* Más padding */
-  border: 1px solid #eee;
-}
-
-.input-group {
-  margin-bottom: 10px; /* Más espacio entre grupos */
-}
-
-label {
-  display: block;
-  font-size: 0.95em; /* Tamaño de fuente un poco más grande */
-  margin-bottom: 4px; /* Más espacio debajo del label */
-  color: #555;
-}
-
-input, select {
-  width: 100%; /* Ocupan el 100% del ancho de su contenedor padre */
-  padding: 8px; /* Más padding */
-  border: 1px solid #ccc;
-  border-radius: 6px; /* Bordes más redondeados */
-  font-size: 1em; /* Tamaño de fuente más grande */
-  box-sizing: border-box; /* Incluye padding y border en el ancho total */
-}
-
-.compact-row {
-  display: flex;
-  gap: 8px; /* Más espacio entre elementos en fila */
-}
-
-.compact-row > div {
-  flex: 1; /* Cada div hijo ocupa el mismo espacio */
-}
-
-.compact-row input, .compact-row select {
-  width: 100%; /* Asegura que ocupe el ancho del div */
-}
-
-.busqueda-container {
-  display: flex;
-  gap: 6px; /* Más espacio entre input y botón */
-}
-
-.busqueda-container > input {
-  flex: 1;
-}
-
-.search-section, .results-section {
-  background-color: white;
-  border-radius: 10px; /* Un poco más redondeado */
-  padding: 15px; /* Más espacio interno */
-  margin-bottom: 12px; /* Más espacio entre tarjetas */
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* Sombra un poco más pronunciada */
-}
-
-.pendiente {
-  text-align: center;
-  color: #e74c3c;
-  font-weight: bold;
-  font-size: 1em; /* Tamaño de fuente más grande */
-  margin: 10px 0; /* Más espacio arriba y abajo */
-}
-
-/* Estilos originales de iz-panel y dr-panel, ajustados */
-.iz-panel, .dr-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 12px; /* Más espacio entre secciones */
-  padding: 12px 0; /* Más espacio interno */
-}
-
-.iz-panel > div, .dr-panel > div {
-  display: flex;
-  flex-direction: column;
-}
-
-.iz-panel input, .iz-panel select,
-.dr-panel input, .dr-panel select {
-  width: 100%;
-  margin-bottom: 8px; /* Más espacio debajo de los elementos */
-}
-
-/* Ajuste para el contenedor principal que ahora incluye los dos paneles */
-.main-content {
-  display: flex;
-  flex-direction: column; /* Apilados en móvil */
-  gap: 12px; /* Más espacio entre paneles */
-}
-
-@media (min-width: 768px) {
-  .main-content {
-    flex-direction: row; /* Lado a lado en pantallas más grandes */
-  }
-  .iz-panel, .dr-panel {
-    flex: 1; /* Cada panel ocupa la mitad */
-  }
+/* Inputs generales */
+input:focus {
+  outline: none;
 }

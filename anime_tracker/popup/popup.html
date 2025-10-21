@@ -1,179 +1,201 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <!-- <meta http-equiv="refresh" content="0; url=subpopup/carpetas.html" /> -->
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Anime Tracker</title>
   <link rel="stylesheet" href="popup.css">
+  <!-- Opcional: Iconos de Material Symbols -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>
 
-  <div class="header">
-    <h2>Anime Tracker</h2>
-    <div class="header-buttons">
-      <button id="guardar">Guardar anime</button>
-      <button id="mostrarCarpetas">Mostrar carpetas</button>
+  <div class="app-container">
+    <!-- Barra de búsqueda superior -->
+    <div class="search-bar-container">
+      <div class="search-input-wrapper">
+        <span class="material-symbols-outlined search-icon">search</span>
+        <input type="text" id="anime_buscar" class="search-input" placeholder="Buscar anime...">
+      </div>
+      <button class="settings-btn">
+        <span class="material-symbols-outlined">settings</span>
+      </button>
     </div>
-  </div>
 
-  <div class="container main-content">
-    <div class="identity-card">
-      <img id="anime_portada" src="https://lh3.googleusercontent.com/-tGHmZ6GF0cc/WpohCECY6kI/AAAAAAABdDI/fdZBbrmha_A9gOQ9wp-qKgThLFr1rUq0QCHMYCw/s0/ef3ba899fa0c572bebb18586d81b151c2d72f2bf.jpg">
-      <div class="identity-info">
-        <div class="name-fav-container">
-          <div class="fav-container">
-            <input type="checkbox" id="favorito_checkbox" name="favorito_checkbox">
-            <label for="favorito_checkbox">Favorito</label>
-          </div>
-          <h1 id="anime_nombre">Anime Génerico</h1>
-        </div>
-        <div class="url-container">
-          <strong>URL actual:</strong> <span id="url_actual">Cargando...</span>
-        </div>
-        <p>
-          <strong>ID del anime:</strong>
-          <input id="url_anime" type="text" placeholder="Nombre de la url">
-        </p>
+    <!-- Portada -->
+    <div class="cover-container" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBW9ev7Xh-YIzoclqtDf7xJCcxdu4trqD8Gat_vH90P_1_1P0KZnQOtGZ6bXNqcsK_XgAYmy699OYDFd2Y-XrIhAXiKQB2biOaTuhPp46fHh_E6KmIXhHzhUyTFkfbAAs9k2ed706PXNUHe5G3blApTKfPL2MG3p0S8hg7wWST4Mp6HS-d8ujLKXJZBhTl3uU7VDf1c9BLTuxbAGQzknq8Iu-wlnwszyMsYo_bOdfnJ29qLJwnub8kLPTTN5LR-XFmXkPybEQb_ZTA");'>
+    </div>
 
-        <!-- Nueva sección: Resumen ampliado -->
-        <div class="identity-summary">
-          <div class="summary-item">
-            <label for="lista_anime_estado">Estado:</label>
-            <select id="lista_anime_estado" name="lista_anime_estado">
-              <option value="desconocido">? Desconocido</option>
-              <option value="emisión">Emisión</option>
-              <option value="finalizado">Finalizado</option>
-              <option value="cancelada">Cancelada</option>
-              <option value="peli-ova">Película/Ova</option>
-            </select>
-          </div>
-          <div class="summary-item">
-            <label for="lista_serie_viendo">Sigo:</label>
-            <select id="lista_serie_viendo" name="lista_serie_viendo">
-              <option value="ver">ver</option>
-              <option value="viendo">viendo</option>
-              <option value="visto">visto</option>
-              <option value="abandonado">abandonado</option>
-            </select>
-          </div>
-          <div class="summary-item">
-            <label for="cap_visto">Visto?</label>
-            <input type="checkbox" id="cap_visto" name="cap_visto">
-          </div>
-          <div class="summary-item">
-            <label for="capitulo_temp_cap">T/E:</label>
-            <input type="text" id="capitulo_temp_cap" name="capitulo_temp_cap" placeholder="T#/E#">
-          </div>
-          <div class="summary-item">
-            <label for="nota_usuario">Nota:</label>
-            <input type="number" id="nota_usuario" name="nota_usuario" min="1" max="10" placeholder="1-10">
-          </div>
-          <div class="summary-item">
-            <label for="doblaje">DOB:</label>
-            <select id="doblaje" name="doblaje">
-              <option value="es">ES</option>
-              <option value="jp">JP</option>
-              <option value="en">EN</option>
-              <option value="kr">KR</option>
-              <option value="cn">CN</option>
-              <option value="tr">TR</option>
-            </select>
-          </div>
-          <div class="summary-item">
-            <label for="subtitulos">SUB:</label>
-            <select id="subtitulos" name="subtitulos">
-              <option value="-">-</option>
-              <option value="es">ES</option>
-              <option value="jp">JP</option>
-              <option value="en">EN</option>
-              <option value="kr">KR</option>
-              <option value="cn">CN</option>
-              <option value="tr">TR</option>
-            </select>
-          </div>
-          <div class="summary-item">
-            <label for="relacion_url">Relación:</label>
-            <select id="relacion_url" name="relacion_url">
-              <option value="primera">Prim</option>
-              <option value="secuela">Sec</option>
-              <option value="precuela">Prec</option>
-              <option value="paralela">Par</option>
-              <option value="película">Pel</option>
-              <option value="ova">OVA</option>
-            </select>
-          </div>
-          <div class="summary-item">
-            <label for="anime_relacionado">Relacionado:</label>
-            <input type="text" id="anime_relacionado" name="anime_relacionado" placeholder="Nombre...">
-          </div>
+    <!-- Información principal -->
+    <div class="info-section">
+      <div class="title-id-container">
+        <h1 id="anime_nombre" class="anime-title">Attack on Titan</h1>
+        <div class="id-container">
+          <p class="anime-id">ID: attack-on-titan</p>
+          <span class="material-symbols-outlined copy-icon">content_copy</span>
         </div>
-        <!-- Fin de la sección de resumen -->
+      </div>
+
+      <!-- Favorito -->
+      <div class="favorite-container">
+        <span class="fav-label">Favorite</span>
+        <label class="switch">
+          <input type="checkbox" id="favorito_checkbox" checked>
+          <span class="slider"></span>
+        </label>
       </div>
     </div>
 
-    <hr>
-
-    <!-- Panel izquierdo original (ahora dentro del contenedor principal) -->
-    <div class="iz-panel">
-      <div>
-        <label for="url_imagen">Portada:</label>
-        <input type="text" id="url_imagen" name="url_imagen" placeholder="https://ejemplo.com/imagen.jpg">
+    <!-- Temporada/Episodio y Botón -->
+    <div class="progress-section">
+      <div class="season-episode-controls">
+        <div class="control-group">
+          <p class="control-label">S</p>
+          <div class="number-control">
+            <button class="number-btn">-</button>
+            <input type="number" id="temporada_actual" class="number-input" value="1" min="1">
+            <button class="number-btn">+</button>
+          </div>
+        </div>
+        <div class="control-group">
+          <p class="control-label">E</p>
+          <div class="number-control">
+            <button class="number-btn">-</button>
+            <input type="number" id="episodio_actual" class="number-input" value="5" min="1">
+            <button class="number-btn">+</button>
+          </div>
+        </div>
       </div>
-      <div>
-        <label for="temporada_estreno">Temporada de estreno:</label>
-        <select id="temporada_estreno" name="temporada_estreno">
-          <option value="">-</option>
-          <option value="primavera">🌸</option>
-          <option value="verano">☀️</option>
-          <option value="otoño">🍂</option>
-          <option value="invierno">❄️</option>
-        </select>
-        <input type="number" id="anyo_estreno" name="anyo_estreno" placeholder="Año" min="1900" max="2100">
-      </div>
+      <button id="cap_visto" class="watched-btn">Episode Watched</button>
     </div>
 
-    <!-- Panel derecho original (ahora dentro del contenedor principal) -->
-    <div class="dr-panel">
-      <div>
-        <label for="generos_input">Géneros:</label>
-        <input type="text" id="generos_input" name="generos_input" placeholder="acción, aventura...">
+    <!-- Rating y Seguimiento -->
+    <div class="rating-status-section">
+      <div class="rating-container">
+        <p class="control-label">Rating</p>
+        <div class="rating-controls">
+          <span class="material-symbols-outlined rating-star">star</span>
+          <span class="rating-value">8</span>
+          <button class="rating-btn">-</button>
+          <button class="rating-btn">+</button>
+        </div>
       </div>
-      <div>
-        <label for="tags_tipo">Tipo:</label>
-        <input type="text" id="tags_tipo" name="tags_tipo" placeholder="serie, peli...">
-        <select id="tags_dia" name="tags_dia">
-          <option value="">-</option>
-          <option value="lunes">Lu</option>
-          <option value="martes">Ma</option>
-          <option value="miercoles">Mi</option>
-          <option value="jueves">Ju</option>
-          <option value="viernes">Vi</option>
-          <option value="sabado">Sa</option>
-          <option value="domingo">Do</option>
+      <div class="status-select-container">
+        <select id="lista_serie_viendo" class="custom-select">
+          <option value="ver">Ver</option>
+          <option value="viendo" selected>Viendo</option>
+          <option value="visto">Visto</option>
+          <option value="abandonado">Abandonado</option>
         </select>
       </div>
     </div>
-  </div>
 
-  <hr>
-
-  <div class="pendiente">
-    <h1>SECCIÓN EN DESARROLLO</h1>
-  </div>
-
-  <div class="container search-section">
-    <h2>Buscar anime</h2>
-    <div class="busqueda-container">
-      <input id="url_anime_buscar" type="text" placeholder="Nombre de la url">
-      <button id="btn_buscar">Buscar</button>
+    <!-- Audio y Subs -->
+    <div class="audio-subs-section">
+      <p class="section-label">Audio & Subtitles</p>
+      <div class="audio-subs-select-container">
+        <select id="doblaje_sub" class="custom-select">
+          <option value="sub">Sub</option>
+          <option value="dub_en" selected>Dub (En)</option>
+          <option value="dub_es">Dub (Es)</option>
+          <option value="dub_jp">Dub (Jp)</option>
+        </select>
+      </div>
     </div>
-  </div>
 
-  <div class="container results-section">
-    <h2>Animes encontrados</h2>
-    <p>PENDIENTE DE DESARROLLO</p>
+    <!-- Estreno y Emisión -->
+    <div class="release-schedule-grid">
+      <div class="grid-item">
+        <p class="grid-label">Estreno</p>
+        <input type="text" id="estreno_input" class="grid-input" value="Fall 2023">
+      </div>
+      <div class="grid-item">
+        <p class="grid-label">Emisión</p>
+        <input type="text" id="emision_input" class="grid-input" value="Sundays">
+      </div>
+    </div>
+
+    <!-- Día de estreno y Estado de emisión -->
+    <div class="day-status-section">
+      <div class="day-select-container">
+        <p class="section-label">Día de estreno</p>
+        <select id="tags_dia" class="custom-select">
+          <option value="lunes">Lunes</option>
+          <option value="martes">Martes</option>
+          <option value="miercoles">Miércoles</option>
+          <option value="jueves">Jueves</option>
+          <option value="viernes">Viernes</option>
+          <option value="sabado">Sábado</option>
+          <option value="domingo" selected>Domingo</option>
+        </select>
+      </div>
+      <div class="emission-status-container">
+        <p class="section-label">Estado de Emisión</p>
+        <select id="lista_anime_estado" class="custom-select">
+          <option value="finalizado">Finished Airing</option>
+          <option value="emisión">Currently Airing</option>
+          <option value="desconocido" selected>Not Yet Aired</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Géneros -->
+    <div class="genres-section">
+      <div class="section-header">
+        <p class="section-label">Genres</p>
+        <button id="editar_generos_btn" class="edit-btn">Edit Genres</button> <!-- Botón para editar -->
+      </div>
+      <p id="generos_display" class="genres-list">Action, Dark Fantasy, Post-Apocalyptic</p>
+      <input type="text" id="generos_input" class="genres-input" value="Action, Dark Fantasy, Post-Apocalyptic" style="display: none;"> <!-- Input oculto -->
+    </div>
+
+    <!-- Relacionado con (sin botón "Añadir") -->
+    <div class="related-section">
+      <p class="section-label">Relacionado con</p> <!-- Etiqueta sin botón de añadir -->
+      <div class="related-controls">
+        <input type="text" id="anime_relacionado" class="related-input" placeholder="Buscar anime relacionado">
+        <select id="relacion_url" class="custom-select">
+          <option value="secuela" selected>Secuela</option>
+          <option value="precuela">Precuela</option>
+          <option value="alternativa">Versión Alternativa</option>
+          <option value="paralela">Historia Paralela</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Botón final -->
+    <button id="guardar" class="save-btn">Save to Folders</button>
+
   </div>
 
   <script type="module" src="popup.js"></script>
+  <script>
+    // Script para editar géneros
+    document.addEventListener('DOMContentLoaded', function() {
+      const editBtn = document.getElementById('editar_generos_btn');
+      const displayP = document.getElementById('generos_display');
+      const inputField = document.getElementById('generos_input');
+
+      let editing = false;
+
+      editBtn.addEventListener('click', function() {
+        if (editing) {
+          // Guardar cambios
+          displayP.textContent = inputField.value;
+          inputField.style.display = 'none';
+          displayP.style.display = 'block';
+          editBtn.textContent = 'Edit Genres';
+          editing = false;
+        } else {
+          // Editar
+          inputField.value = displayP.textContent;
+          displayP.style.display = 'none';
+          inputField.style.display = 'block';
+          editBtn.textContent = 'Save';
+          editing = true;
+        }
+      });
+    });
+  </script>
 </body>
 </html>
