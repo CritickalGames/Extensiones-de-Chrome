@@ -38,7 +38,17 @@ export function parse_url({ url }) {
       match: /^(.+)-(\d{1,3})$/.test(last),
       extract: () => {
         const m = last.match(/^(.+)-(\d{1,3})$/);
+        URL_nombre = m[1];
         capitulo = parseInt(m[2]);
+      }
+    },
+    {
+      name: 'nombre-cap-<capítulo>',
+      match: /^(.+)-cap-(\d{1,3})$/.test(last),
+      extract: () => {
+        const m = last.match(/^(.+)-cap-(\d{1,3})$/);
+        URL_nombre = m[1];
+        temporada = parseInt(m[2]);
       }
     },
     {
@@ -49,7 +59,6 @@ export function parse_url({ url }) {
         URL_nombre = m[1];
         temporada = parseInt(m[2]);
         capitulo = parseInt(m[3]);
-        console.log(URL_nombre);
       }
     },
     {
@@ -107,7 +116,7 @@ export function parse_url({ url }) {
     for (const p of patterns_length_1) {
       if (p.match) {
         p.extract();
-        // console.warn(`Patrón de 1 detectado: ${p.name}`);
+        console.warn(`Patrón de 1 detectado: ${p.name}`);
       }
     }
   } else {
@@ -115,7 +124,7 @@ export function parse_url({ url }) {
     for (const p of patterns_length_2) {
       if (p.match) {
         p.extract();
-        // console.warn(`Patrón de 2 detectado: ${p.name}`);
+        console.warn(`Patrón de 2 detectado: ${p.name}`);
       }
     }
   }
