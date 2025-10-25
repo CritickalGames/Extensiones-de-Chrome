@@ -1,84 +1,76 @@
 // 🔧 Utilidad base
-function getElemento(id) {
-  return document.getElementById(id);
+function obtener_elemento_por_id(id) {
+  const elemento = document.getElementById(id);
+  if (!elemento) {
+    console.warn(`Elemento con ID '${id}' no encontrado.`);
+  }
+  return elemento;
 }
 
-// 📥 Inputs relacionados al anime
-export function obtenerInputsAnime() {
+// 📄 Elementos de estado y visualización (solo lectura o representación visual del estado)
+export function obtener_estado_anime() {
   return {
-    inputNombreAnime: getElemento("url_anime"),
-    animeTempoCap: getElemento("capitulo_temp_cap"),
-    capVisto: getElemento("cap_visto"),
-    urlImagen: getElemento("url_imagen"),
-    relacionUrl: getElemento("relacion_url"),
-    animeRelacionado: getElemento("anime_relacionado"),
-    temporadaEstreno: getElemento("temporada_estreno"),
-    anyoEstreno: getElemento("anyo_estreno"),
-    favoritoCheckbox: getElemento("favorito_checkbox"),
-    notaUsuario: getElemento("nota_usuario"),
-    generosInput: getElemento("generos_input"),
-    tagsTipo: getElemento("tags_tipo")
+    texto_nombre_anime: obtener_elemento_por_id("texto_nombre_anime"),
+    texto_id_anime: obtener_elemento_por_id("texto_id_anime"),
+    imagen_portada_principal: obtener_elemento_por_id("imagen_portada_principal"),
+    texto_nota_usuario: obtener_elemento_por_id("texto_nota_usuario"),
+    texto_lista_generos: obtener_elemento_por_id("texto_lista_generos"),
+    capa_fondo_portada: obtener_elemento_por_id("capa_fondo_portada"),
   };
 }
 
-// 📄 Elementos de estado y metadatos
-export function obtenerEstadoAnime() {
+// 📥 Entradas relacionadas al anime (campos editables: input type="text", "number", etc.)
+export function obtener_entradas_anime() {
   return {
-    animeNombre: getElemento("anime_nombre"),
-    animePortada: getElemento("anime_portada"), // Puede ser un <img> oculto
-    urlActual: getElemento("url_actual")
+    entrada_buscar_anime: obtener_elemento_por_id("entrada_buscar_anime"),
+    entrada_es_favorito: obtener_elemento_por_id("entrada_es_favorito"),
+    entrada_temporada_actual: obtener_elemento_por_id("entrada_temporada_actual"),
+    entrada_episodio_actual: obtener_elemento_por_id("entrada_episodio_actual"),
+    entrada_anyo_estreno: obtener_elemento_por_id("entrada_anyo_estreno"),
+    entrada_edicion_generos: obtener_elemento_por_id("entrada_edicion_generos"),
+    entrada_buscar_anime_relacionado: obtener_elemento_por_id("entrada_buscar_anime_relacionado"),
   };
 }
 
-// 📋 Listas desplegables y controles
-export function obtenerListas() {
+// 📋 Listas desplegables y controles (solo <select>)
+export function obtener_listas() {
   return {
-    animeEstado: getElemento("lista_anime_estado"),
-    serieViendo: getElemento("lista_serie_viendo"),
-    doblaje: getElemento("doblaje"),
-    subtitulos: getElemento("subtitulos"),
-    dia: getElemento("tags_dia")
+    selector_estado_seguimiento: obtener_elemento_por_id("selector_estado_seguimiento"),
+    selector_idioma_audio: obtener_elemento_por_id("selector_idioma_audio"),
+    selector_idioma_subtitulos: obtener_elemento_por_id("selector_idioma_subtitulos"),
+    selector_temporada_estreno: obtener_elemento_por_id("selector_temporada_estreno"),
+    selector_dia_emision: obtener_elemento_por_id("selector_dia_emision"),
+    selector_estado_general_anime: obtener_elemento_por_id("selector_estado_general_anime"),
+    selector_tipo_relacion: obtener_elemento_por_id("selector_tipo_relacion"),
   };
 }
 
-// 🎛️ Botones de interacción
-export function obtenerBotonesAnime() {
+// 🎛️ Botones de interacción (solo <button>)
+export function obtener_botones_interaccion() {
   return {
-    btnGuardar: getElemento("guardar"),
-    btnBuscar: getElemento("btn_buscar"),
-    btnCarpetas: getElemento("mostrarCarpetas")
+    btn_menu_principal: obtener_elemento_por_id("btn_menu_principal"),
+    btn_guardar_datos: obtener_elemento_por_id("btn_guardar_datos"),
+    btn_abrir_carpetas: obtener_elemento_por_id("btn_abrir_carpetas"),
+    btn_alternar_configuracion: obtener_elemento_por_id("btn_alternar_configuracion"),
+    btn_copiar_id: obtener_elemento_por_id("btn_copiar_id"),
+    btn_restar_temporada: obtener_elemento_por_id("btn_restar_temporada"),
+    btn_sumar_temporada: obtener_elemento_por_id("btn_sumar_temporada"),
+    btn_restar_episodio: obtener_elemento_por_id("btn_restar_episodio"),
+    btn_sumar_episodio: obtener_elemento_por_id("btn_sumar_episodio"),
+    btn_marcar_episodio_visto: obtener_elemento_por_id("btn_marcar_episodio_visto"),
+    btn_restar_calificacion: obtener_elemento_por_id("btn_restar_calificacion"),
+    btn_sumar_calificacion: obtener_elemento_por_id("btn_sumar_calificacion"),
+    btn_editar_generos: obtener_elemento_por_id("btn_editar_generos"),
+    btn_guardar_final: obtener_elemento_por_id("btn_guardar_final"),
   };
 }
 
 // 🧩 Composición final
-// Añadimos las referencias a los elementos específicos del nuevo diseño
-export function extraerAnimeDesdeDOM() {
+export function extraer_anime_desde_dom() {
   return {
-    ...obtenerInputsAnime(),
-    ...obtenerEstadoAnime(),
-    ...obtenerListas(),
-    ...obtenerBotonesAnime(),
-    // Elementos específicos del nuevo diseño
-    anime_id_display: getElemento("anime_id_display"),
-    copy_id_btn: getElemento("copy_id_btn"),
-    temporada_actual: getElemento("temporada_actual"),
-    episodio_actual: getElemento("episodio_actual"),
-    temp_dec_btn: getElemento("temp_dec_btn"),
-    temp_inc_btn: getElemento("temp_inc_btn"),
-    ep_dec_btn: getElemento("ep_dec_btn"),
-    ep_inc_btn: getElemento("ep_inc_btn"),
-    nota_usuario_display: getElemento("nota_usuario_display"),
-    rating_dec_btn: getElemento("rating_dec_btn"),
-    rating_inc_btn: getElemento("rating_inc_btn"),
-    editar_generos_btn: getElemento("editar_generos_btn"),
-    generos_display: getElemento("generos_display"),
-    generos_input: getElemento("generos_input"), // Ya está en obtenerInputsAnime, pero lo repetimos por claridad si se usa aparte
-    cover_container: getElemento("cover_container"),
-    settings_toggle_btn: getElemento("settings_toggle_btn"),
-    settings_dropdown: getElemento("settings_dropdown"),
-    url_anime_buscar: getElemento("url_anime_buscar"),
-    save_btn_icon: document.querySelector('.save-btn-icon'),
-    folder_btn_icon: document.querySelector('.folder-btn-icon'),
-    menu_btn: document.querySelector('.menu-btn')
+    ...obtener_entradas_anime(),
+    ...obtener_estado_anime(),
+    ...obtener_listas(),
+    ...obtener_botones_interaccion(),
   };
 }

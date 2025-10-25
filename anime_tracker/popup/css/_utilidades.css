@@ -1,0 +1,52 @@
+/* _utilities.css */
+
+/* --- Dropdown --- */
+.c_configuracion_wrapper {
+  position: relative;
+}
+
+.c_menu_configuracion {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 10;
+  margin-top: 8px;
+  width: 192px;
+  border-radius: var(--border-radius-md);
+  background-color: var(--surface-dark);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid #444;
+}
+
+.c_menu_configuracion.oculto {
+  display: none;
+}
+
+.c_menu_items {
+  padding: 4px 0;
+}
+
+.c_item_menu {
+  display: block;
+  padding: 8px 16px;
+  color: var(--text-white);
+  text-decoration: none;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.c_item_menu:hover {
+  background-color: #2a2a2a;
+}
+
+/* --- Layout Flex/Grid --- */
+.c_botones_cabecera {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* --- Utilities --- */
+.campo-oculto {
+  display: none;
+}

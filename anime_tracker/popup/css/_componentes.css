@@ -1,0 +1,215 @@
+/* _components.css */
+
+/* --- Botones Generales --- */
+.c_boton_menu,
+.c_boton_guardar,
+.c_boton_carpeta,
+.c_boton_configuracion,
+.c_boton_numero,
+.c_boton_calificacion,
+.c_boton_visto,
+.c_boton_editar,
+.c_boton_guardar_final {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  background-color: var(--surface-dark);
+  color: var(--text-white);
+  border-radius: var(--border-radius-lg);
+}
+
+.c_boton_menu,
+.c_boton_guardar,
+.c_boton_carpeta,
+.c_boton_configuracion {
+  width: 40px;
+  height: 40px;
+}
+
+.c_boton_numero,
+.c_boton_calificacion {
+  width: 32px;
+  height: 32px;
+  font-size: 20px;
+  border-radius: var(--border-radius-full);
+}
+
+.c_boton_visto {
+  height: 32px;
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--border-radius-md);
+  background-color: var(--primary);
+}
+
+.c_boton_editar {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.c_boton_guardar_final {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: var(--border-radius-lg);
+  background-color: var(--primary);
+}
+
+/* --- Inputs y Formularios --- */
+.c_entrada_busqueda_wrapper {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  border: 2px solid var(--primary);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  background-color: transparent;
+}
+
+.c_icono_busqueda {
+  color: var(--primary);
+  padding: 0 12px;
+  font-size: 24px;
+}
+
+.c_entrada_busqueda,
+.c_entrada_numero,
+.c_entrada_anyo,
+.c_entrada_generos,
+.c_entrada_relacionado {
+  background-color: transparent;
+  color: var(--text-white);
+  font-size: 16px;
+  padding: 12px;
+  border: none;
+  border-radius: var(--border-radius-md);
+  outline: none;
+}
+
+.c_entrada_busqueda {
+  flex: 1;
+  font-weight: normal;
+}
+.c_entrada_busqueda::placeholder,
+.c_entrada_generos::placeholder,
+.c_entrada_relacionado::placeholder {
+  color: var(--text-gray);
+}
+
+.c_entrada_numero {
+  width: 36px;
+  text-align: center;
+  font-weight: 500;
+  padding: 0;
+  background-color: var(--surface-dark);
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+.c_entrada_numero::-webkit-outer-spin-button,
+.c_entrada_numero::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.c_entrada_anyo,
+.c_entrada_generos,
+.c_entrada_relacionado {
+  width: 100%;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: var(--surface-dark);
+}
+
+/* Focus States */
+.c_entrada_busqueda:focus,
+.c_entrada_anyo:focus,
+.c_entrada_generos:focus,
+.c_entrada_relacionado:focus,
+.c_selector_estado:focus,
+.c_selector_audio:focus,
+.c_selector_subtitulos:focus,
+.c_selector_temporada:focus,
+.c_selector_dia:focus,
+.c_selector_estado_emision:focus,
+.c_selector_relacion:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary);
+}
+
+/* --- Selects --- */
+.c_selector_estado,
+.c_selector_audio,
+.c_selector_subtitulos,
+.c_selector_temporada,
+.c_selector_dia,
+.c_selector_estado_emision,
+.c_selector_relacion {
+  width: 100%;
+  padding: 6px 32px 6px 12px;
+  border-radius: var(--border-radius-md);
+  background-color: var(--surface-dark);
+  color: var(--text-white);
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+/* --- Switch (Favorito) --- */
+.c_switch_favorito {
+  position: relative;
+  display: inline-block;
+  width: 51px;
+  height: 31px;
+  border: none;
+  background-color: var(--surface-dark);
+  border-radius: var(--border-radius-full);
+  padding: 4px;
+  cursor: pointer;
+}
+
+.c_switch_favorito input:checked + .c_slider_favorito {
+  transform: translate(24px, -50%);
+}
+
+.c_switch_favorito input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.c_slider_favorito {
+  position: absolute;
+  top: 50%;
+  left: 2px;
+  width: 27px;
+  height: 27px;
+  background-color: var(--text-white);
+  border-radius: var(--border-radius-full);
+  transition: transform 0.2s;
+  transform: translate(0, -50%);
+}
+
+.c_switch_favorito input:checked ~ .c_slider_favorito {
+  background-color: var(--text-white);
+}
+
+.c_switch_favorito input:checked {
+  background-color: var(--primary);
+}
+
+/* Cuando está activo */
+.c_switch_favorito:has(input:checked) {
+  background-color: var(--primary);
+}

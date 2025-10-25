@@ -12,31 +12,30 @@ import {
 
 // 🔗 Recolección de referencias DOM
 const ref_input = obtenerInputsAnime();
-
 const ref_botones = obtenerBotonesAnime();
-
 const ref_estado = obtenerEstadoAnime();
-
 const ref_listas = obtenerListas();
 
 // 🌐 Obtener URL de la pestaña activa y cargar datos
 chrome.tabs.query({ active: true, currentWindow: true }, async function(tabs) {
-  iniciar(obj_route, tabs, {
-      ...ref_estado,
-      ...ref_listas,
-      ...ref_input
-    }
-  );
+  // Combinar referencias para pasarlas a 'iniciar'
+  const refs_para_iniciar = {
+    ...ref_estado,
+    ...ref_listas,
+    ...ref_input
+  };
+  iniciar(obj_route, tabs, refs_para_iniciar);
 });
 
 // 🗃️ Guardar anime en IndexedDB
 ref_botones.btnGuardar.addEventListener("click", () => {
-  guardarAnimeDesdePopup(obj_route, ref_botones.btnGuardar, {
-      ...ref_estado,
-      ...ref_listas,
-      ...ref_input
-    }
-  );
+  // Combinar referencias para pasarlas a 'guardarAnimeDesdePopup'
+  const refs_para_guardar = {
+    ...ref_estado,
+    ...ref_listas,
+    ...ref_input
+  };
+  guardarAnimeDesdePopup(obj_route, ref_botones.btnGuardar, refs_para_guardar);
 });
 
 // 📁 Redirigir a carpetas.html
@@ -44,14 +43,27 @@ ref_botones.btnCarpetas.addEventListener("click", () => {
   window.location.href = "subpopup/carpetas.html";
 });
 
-//! YA NO ES UN BOTÓN, ES UNA LISTA.
-// ✅ Alternar estado de capítulo visto
-// ref_botones.btnCapituloVisto.addEventListener("click", () => {
-//   fnCapituloVisto(animeEstadoViendo);
-// });
+// ✅ Escuchar cambios en el selector de estado de seguimiento (anteriormente "botón capítulo visto")
+// Ahora la acción se dispara al cambiar la selección en la lista desplegable 'serieViendo'.
+// Se asume que 'ref_listas.serieViendo' es el <select> correcto.
+if (ref_listas.serieViendo) {
+  ref_listas.serieViendo.addEventListener("change", () => {
+     // Llamar a la función que maneja el cambio de estado
+     // Se pasa la referencia a la propia lista para que la función pueda obtener su valor.
+     fnCapituloVisto(ref_listas.serieViendo);
+  });
+} else {
+  console.warn("Elemento 'serieViendo' no encontrado. La función 'fnCapituloVisto' no se ha vinculado.");
+}
 
-//!PENDIENTE
-// 🔍 Buscar manualmente
+// 🔍 Buscar manualmente (PENDIENTE DE IMPLEMENTACIÓN)
 ref_botones.btnBuscar.addEventListener("click", async () => {
-
+  console.log("Funcionalidad de búsqueda manual aún no implementada.");
+  // Aquí iría la lógica para realizar una búsqueda manual, si se desarrolla.
+  // Por ejemplo:
+  // const terminoBusqueda = document.getElementById('url_anime_buscar').value;
+  // if (terminoBusqueda) {
+  //   // Realizar búsqueda usando obj_route o directamente con la API
+  //   // ...
+  // }
 });

@@ -1,0 +1,15 @@
+/* _variables.css */
+:root {
+  --primary: #8A2BE2; /* Color púrpura */
+  --background-dark: #121212;
+  --background-light: #f6f7f8;
+  --surface-dark: #1e1e1e;
+  --text-white: #ffffff;
+  --text-gray: #A9A9A9;
+  --text-light-gray: #a1a1aa;
+  --border-radius-sm: 0.25rem;
+  --border-radius-md: 0.5rem;
+  --border-radius-lg: 0.75rem;
+  --border-radius-full: 9999px;
+  --font-display: "Arial", sans-serif; /* Fallback */
+}

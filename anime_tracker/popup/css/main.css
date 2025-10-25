@@ -1,0 +1,29 @@
+/* main.css */
+/*
+/css/
+│
+├── main.css                 (Archivo principal que importa todo)
+├── _variables.css           (Variables CSS)
+├── _base.css                (Estilos generales del body, html, etc.)
+├── _layout.css              (Contenedores principales, barras, etc.)
+├── _components.css          (Botones, inputs, selects, switches, etc.)
+├── _sections.css            (Estilos para secciones específicas como portada, info, progreso, etc.)
+├── _utilities.css           (Clases de utilidad como .oculto, .campo-oculto, etc.)
+*/
+/* 1. Variables */
+@import url('./_variables.css');
+
+/* 2. Estilos base */
+@import url('./_base.css');
+
+/* 3. Layout principal */
+@import url('./_layout.css');
+
+/* 4. Componentes reutilizables */
+@import url('./_componentes.css');
+
+/* 5. Secciones específicas */
+@import url('./_secciones.css');
+
+/* 6. Clases de utilidad */
+@import url('./_utilidades.css');

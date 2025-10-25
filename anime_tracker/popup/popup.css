@@ -26,7 +26,7 @@ body {
   overflow-x: hidden;
 }
 
-.app-container {
+.contenedor-app {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -34,8 +34,8 @@ body {
   min-height: 100%;
 }
 
-/* Barra de búsqueda superior (nueva) */
-.search-bar-container {
+/* Barra de búsqueda superior */
+.contenedor-barra-busqueda {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -43,7 +43,7 @@ body {
   padding: 0 0 4px 0; /* Espacio inferior para separar de la portada */
 }
 
-.menu-btn {
+.boton-menu {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -57,11 +57,11 @@ body {
   font-size: 24px;
 }
 
-.menu-btn:focus {
+.boton-menu:focus {
   outline: none;
 }
 
-.search-input-wrapper {
+.contenedor-entrada-busqueda {
   display: flex;
   align-items: center;
   flex: 1; /* Ocupa el espacio restante */
@@ -71,13 +71,13 @@ body {
   background-color: transparent;
 }
 
-.search-icon {
+.icono-busqueda {
   color: var(--primary);
   padding: 0 12px;
   font-size: 24px;
 }
 
-.search-input {
+.entrada-busqueda {
   flex: 1;
   background-color: transparent;
   color: var(--text-white);
@@ -88,17 +88,17 @@ body {
   outline: none;
 }
 
-.search-input::placeholder {
+.entrada-busqueda::placeholder {
   color: var(--text-gray);
 }
 
-.header-buttons-container {
+.contenedor-botones-cabecera {
   display: flex;
   align-items: center;
   gap: 8px; /* Espacio entre botones */
 }
 
-.save-btn-icon, .folder-btn-icon {
+.boton-guardar-icono, .boton-carpeta-icono {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -112,15 +112,15 @@ body {
   font-size: 24px;
 }
 
-.save-btn-icon:focus, .folder-btn-icon:focus {
+.boton-guardar-icono:focus, .boton-carpeta-icono:focus {
   outline: none;
 }
 
-.settings-dropdown-container {
+.contenedor-desplegable-configuracion {
   position: relative;
 }
 
-.settings-btn {
+.boton-configuracion {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -134,11 +134,11 @@ body {
   font-size: 24px;
 }
 
-.settings-btn:focus {
+.boton-configuracion:focus {
   outline: none;
 }
 
-.settings-dropdown {
+.desplegable-configuracion {
   position: absolute;
   right: 0;
   top: 100%;
@@ -151,8 +151,8 @@ body {
   border: 1px solid #444; /* Borde opcional para mejor visibilidad */
 }
 
-.settings-dropdown.hidden {
-  display: none;
+.desplegable-configuracion.oculto {
+  display: none; /* Clase en español para ocultar */
 }
 
 .py-1 {
@@ -160,7 +160,7 @@ body {
   padding-bottom: 4px;
 }
 
-.dropdown-item {
+.elemento-desplegable {
   display: block;
   padding: 8px 16px;
   color: var(--text-white);
@@ -169,73 +169,115 @@ body {
   transition: background-color 0.2s;
 }
 
-.dropdown-item:hover {
+.elemento-desplegable:hover {
   background-color: #2a2a2a;
 }
 
-/* Portada */
-.cover-container {
+/* Portada - ESTILO ACTUALIZADO */
+.contenedor-portada {
+  position: relative; /* Contenedor de referencia para posicionamiento absoluto */
   width: 100%;
-  min-height: 240px; /* Altura fija como en el ejemplo */
+  height: 240px; /* Altura fija */
   border-radius: var(--border-radius-lg);
+  overflow: hidden; /* Oculta cualquier parte de las imágenes que se salga */
+}
+
+/* Capa de fondo con desenfoque */
+.capa-fondo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  overflow: hidden;
+  /* Aplicar el efecto de desenfoque */
+  filter: blur(10px); /* Ajusta el valor de 'blur' según el nivel de desenfoque deseado */
+  /* Hacer que la imagen cubra el área, incluso si se corta, para evitar bordes */
+  transform: scale(1.05); /* Escala ligeramente para compensar el recorte del blur */
+  z-index: 1; /* Detrás de la imagen principal */
 }
 
+/* Capa que contiene la imagen principal */
+.capa-imagen-principal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: center;     /* Centrar verticalmente */
+  z-index: 2; /* Encima de la capa de fondo */
+  /* Opcional: añadir un ligero sombreado para separarla visualmente del fondo */
+  /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); */
+}
+
+/* Imagen principal nítida */
+.imagen-principal {
+  max-width: 90%;       /* Ajusta según el espacio deseado dentro del contenedor */
+  max-height: 90%;      /* Ajusta según el espacio deseado dentro del contenedor */
+  width: auto;
+  height: auto;
+  object-fit: contain;  /* Asegura que la imagen no se deforme */
+  border-radius: var(--border-radius-md); /* Opcional: bordes redondeados */
+  /* filter: drop-shadow(0 0 5px rgba(0,0,0,0.5)); */ /* Opcional: sombra sutil */
+}
+
+
 /* Información principal */
-.info-section {
+.seccion-informacion {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 12px;
 }
 
-.title-id-container {
+.contenedor-titulo-id {
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
-.anime-title {
+.titulo-anime {
   font-size: 24px; /* 2xl en Tailwind */
   font-weight: bold;
   color: var(--text-white);
   margin: 0;
 }
 
-.id-container {
+.contenedor-id {
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
-.anime-id {
+.id-anime {
   font-size: 14px; /* text-sm */
   color: var(--text-gray);
   margin: 0;
 }
 
-.copy-icon {
+.icono-copiar {
   font-size: 16px; /* text-base */
   color: var(--text-gray);
   cursor: pointer;
 }
 
-.favorite-container {
+.contenedor-favorito {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.fav-label {
+.etiqueta-fav {
   font-size: 14px; /* text-sm */
   color: var(--text-white);
 }
 
 /* Switch (Favorito) - Diseño Púrpura */
-.switch-purple {
+.interruptor-morado {
   position: relative;
   display: inline-block;
   width: 51px;
@@ -247,12 +289,12 @@ body {
   cursor: pointer;
 }
 
-.switch-purple:has(input:checked) {
+.interruptor-morado:has(input:checked) {
   background-color: var(--primary);
   justify-content: flex-end;
 }
 
-.switch-purple .slider {
+.interruptor-morado .deslizador {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -264,49 +306,49 @@ body {
   transition: transform 0.2s;
 }
 
-.switch-purple:has(input:checked) .slider {
+.interruptor-morado:has(input:checked) .deslizador {
   transform: translate(25%, -50%);
 }
 
-.switch-purple input {
+.interruptor-morado input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
 /* Temporada/Episodio y Botón */
-.progress-section {
+.seccion-progreso {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 16px;
 }
 
-.season-episode-controls {
+.controles-temporada-episodio {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.control-group {
+.grupo-control {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.control-label {
+.etiqueta-control {
   font-size: 16px; /* text-base */
   color: var(--text-gray);
   margin: 0;
 }
 
-.number-control {
+.control-numero {
   display: flex;
   align-items: center;
   gap: 2px;
 }
 
-.number-btn {
+.boton-numero {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -320,7 +362,7 @@ body {
   cursor: pointer;
 }
 
-.number-input {
+.entrada-numero {
   width: 36px;
   text-align: center;
   border: none;
@@ -332,13 +374,13 @@ body {
   -moz-appearance: textfield;
 }
 
-.number-input::-webkit-outer-spin-button,
-.number-input::-webkit-inner-spin-button {
+.entrada-numero::-webkit-outer-spin-button,
+.entrada-numero::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-.watched-btn {
+.boton-visto {
   height: 32px;
   padding: 0 12px;
   border-radius: var(--border-radius-md);
@@ -350,21 +392,21 @@ body {
   cursor: pointer;
 }
 
-/* Rating y Seguimiento */
-.rating-status-section {
+/* Calificación y Seguimiento */
+.seccion-calificacion-estado {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 8px;
 }
 
-.rating-container {
+.contenedor-calificacion {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.rating-controls {
+.controles-calificacion {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -373,17 +415,17 @@ body {
   border-radius: var(--border-radius-md);
 }
 
-.rating-star {
+.estrella-calificacion {
   color: var(--primary);
   font-size: 24px;
 }
 
-.rating-value {
+.valor-calificacion {
   font-size: 18px;
   font-weight: 600;
 }
 
-.rating-btn {
+.boton-calificacion {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -397,13 +439,13 @@ body {
   cursor: pointer;
 }
 
-.status-select-container {
+.contenedor-selector-estado {
   flex: 1;
   position: relative;
 }
 
 /* Select personalizado */
-.custom-select {
+.selector-personalizado {
   width: 100%;
   padding: 6px 32px 6px 12px; /* Espacio para la flecha */
   border-radius: var(--border-radius-md);
@@ -417,13 +459,13 @@ body {
   cursor: pointer;
 }
 
-.custom-select:focus {
+.selector-personalizado:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 2px var(--primary);
 }
 
 /* Flecha para el select */
-.custom-select + .material-symbols-outlined {
+.selector-personalizado + .material-symbols-outlined {
   position: absolute;
   right: 8px;
   top: 50%;
@@ -433,49 +475,49 @@ body {
   font-size: 16px;
 }
 
-/* Audio y Subs */
-.audio-subs-section {
+/* Audio y Subtítulos */
+.seccion-audio-subtitulos {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.section-label {
+.etiqueta-seccion {
   font-size: 16px; /* text-base */
   color: var(--text-gray);
   margin: 0;
 }
 
-.audio-subs-controls {
+.controles-audio-subtitulos {
   display: flex;
   gap: 8px;
 }
 
-.audio-subs-controls .custom-select {
+.controles-audio-subtitulos .selector-personalizado {
   flex: 1;
 }
 
 /* Grid (Estreno/Emisión) */
-.release-schedule-grid {
+.cuadricula-estreno-emision {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
   padding-top: 8px;
 }
 
-.grid-item {
+.elemento-cuadricula {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.grid-label {
+.etiqueta-cuadricula {
   font-size: 14px; /* text-sm */
   color: var(--text-gray);
   margin: 0;
 }
 
-.grid-input {
+.entrada-cuadricula {
   padding: 6px 12px;
   border-radius: var(--border-radius-md);
   background-color: var(--surface-dark);
@@ -486,39 +528,39 @@ body {
   outline: none;
 }
 
-.grid-input:focus {
+.entrada-cuadricula:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 2px var(--primary);
 }
 
 /* Día y Estado */
-.day-status-section {
+.seccion-dia-estado {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.day-select-container,
-.emission-status-container {
+.contenedor-selector-dia,
+.contenedor-estado-emision {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
 /* Géneros */
-.genres-section {
+.seccion-generos {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.section-header {
+.cabecera-seccion {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.edit-btn {
+.boton-editar {
   background: none;
   border: none;
   color: var(--primary);
@@ -527,13 +569,13 @@ body {
   cursor: pointer;
 }
 
-.genres-list {
+.lista-generos {
   font-size: 16px;
   color: var(--text-white);
   margin: 0;
 }
 
-.genres-input {
+.entrada-generos {
   padding: 6px 12px;
   border-radius: var(--border-radius-md);
   background-color: var(--surface-dark);
@@ -545,29 +587,23 @@ body {
   width: 100%;
 }
 
-.genres-input::placeholder {
+.entrada-generos::placeholder {
   color: var(--text-gray);
 }
 
-.genres-input:focus {
+.entrada-generos:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 2px var(--primary);
 }
 
 /* Relacionado */
-.related-section {
+.seccion-relacionado {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.add-btn {
+.boton-agregar {
   background: none;
   border: none;
   color: var(--primary);
@@ -576,13 +612,13 @@ body {
   cursor: pointer;
 }
 
-.related-controls {
+.controles-relacionado {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.related-input {
+.entrada-relacionado {
   padding: 6px 12px;
   border-radius: var(--border-radius-md);
   background-color: var(--surface-dark);
@@ -593,17 +629,17 @@ body {
   outline: none;
 }
 
-.related-input::placeholder {
+.entrada-relacionado::placeholder {
   color: var(--text-gray);
 }
 
-.related-input:focus {
+.entrada-relacionado:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 2px var(--primary);
 }
 
 /* Botón final */
-.save-btn-bottom {
+.boton-guardar-final {
   width: 100%;
   padding: 12px;
   border-radius: var(--border-radius-lg);
@@ -626,11 +662,11 @@ input:focus {
 }
 
 /* Campo oculto original */
-.original-field {
+.campo-oculto {
   display: none;
 }
 
 /* Ajuste para el contenedor de portada si se cambia desde el campo original */
-#cover_container {
+#contenedor_portada { /* ID en español */
   transition: background-image 0.3s ease;
 }
