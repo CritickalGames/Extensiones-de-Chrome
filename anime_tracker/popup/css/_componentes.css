@@ -1,69 +1,109 @@
 /* _components.css */
 
-/* --- Botones Generales --- */
-.c_boton_menu,
-.c_boton_guardar,
-.c_boton_carpeta,
-.c_boton_configuracion,
-.c_boton_numero,
-.c_boton_calificacion,
-.c_boton_visto,
-.c_boton_editar,
-.c_boton_guardar_final {
+/* --- Botones: clase base --- */
+.c_boton {
   display: flex;
   align-items: center;
   justify-content: center;
   border: none;
   cursor: pointer;
-  font-size: 24px;
-  background-color: var(--surface-dark);
+  background-color: var(--boton-color, var(--surface-dark));
   color: var(--text-white);
   border-radius: var(--border-radius-lg);
-}
-
-.c_boton_menu,
-.c_boton_guardar,
-.c_boton_carpeta,
-.c_boton_configuracion {
+  font-size: 24px;
   width: 40px;
   height: 40px;
 }
 
-.c_boton_numero,
-.c_boton_calificacion {
+/* Variantes de botón */
+.c_boton--pequenyo {
   width: 32px;
   height: 32px;
   font-size: 20px;
   border-radius: var(--border-radius-full);
 }
+.c_boton--activo {
+  --boton-color: var(--surface-dark) !important;
+}
 
-.c_boton_visto {
+.c_boton--no-activo {
+  --boton-color: var(--primary);
+}
+#btn_marcar_episodio_visto {
   height: 32px;
   padding: 0 12px;
   font-size: 14px;
   font-weight: 500;
   border-radius: var(--border-radius-md);
-  background-color: var(--primary);
+  width: auto;
 }
 
-.c_boton_editar {
+.c_boton--editar {
   background: none;
   border: none;
   color: var(--primary);
   font-size: 14px;
   font-weight: 500;
+  width: auto;
+  height: auto;
+  border-radius: 0;
 }
 
-.c_boton_guardar_final {
+#btn_guardar_final {
   width: 100%;
   padding: 12px;
   font-size: 16px;
   font-weight: 700;
   border-radius: var(--border-radius-lg);
-  background-color: var(--primary);
 }
 
-/* --- Inputs y Formularios --- */
+/* --- Inputs: clase base --- */
+.c_entrada {
+  background-color: transparent;
+  color: var(--text-white);
+  font-size: 16px;
+  padding: 12px;
+  border: none;
+  border-radius: var(--border-radius-md);
+  outline: none;
+  width: 100%;
+}
+
+.c_entrada::placeholder {
+  color: var(--text-gray);
+}
+
+/* Variantes de input */
+.c_entrada--busqueda {
+  flex: 1;
+  font-weight: normal;
+}
+
+.c_entrada--numero {
+  width: 36px;
+  text-align: center;
+  font-weight: 500;
+  padding: 0;
+  background-color: var(--surface-dark);
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.c_entrada--numero::-webkit-outer-spin-button,
+.c_entrada--numero::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.c_entrada--compacta {
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: var(--surface-dark);
+  width: 100%;
+}
+
+/* --- Wrapper de búsqueda --- */
 .c_entrada_busqueda_wrapper {
   display: flex;
   align-items: center;
@@ -80,79 +120,15 @@
   font-size: 24px;
 }
 
-.c_entrada_busqueda,
-.c_entrada_numero,
-.c_entrada_anyo,
-.c_entrada_generos,
-.c_entrada_relacionado {
-  background-color: transparent;
-  color: var(--text-white);
-  font-size: 16px;
-  padding: 12px;
-  border: none;
-  border-radius: var(--border-radius-md);
-  outline: none;
-}
-
-.c_entrada_busqueda {
-  flex: 1;
-  font-weight: normal;
-}
-.c_entrada_busqueda::placeholder,
-.c_entrada_generos::placeholder,
-.c_entrada_relacionado::placeholder {
-  color: var(--text-gray);
-}
-
-.c_entrada_numero {
-  width: 36px;
-  text-align: center;
-  font-weight: 500;
-  padding: 0;
-  background-color: var(--surface-dark);
-  appearance: textfield;
-  -moz-appearance: textfield;
-}
-.c_entrada_numero::-webkit-outer-spin-button,
-.c_entrada_numero::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.c_entrada_anyo,
-.c_entrada_generos,
-.c_entrada_relacionado {
-  width: 100%;
-  padding: 6px 12px;
-  font-size: 14px;
-  font-weight: 500;
-  background-color: var(--surface-dark);
-}
-
-/* Focus States */
-.c_entrada_busqueda:focus,
-.c_entrada_anyo:focus,
-.c_entrada_generos:focus,
-.c_entrada_relacionado:focus,
-.c_selector_estado:focus,
-.c_selector_audio:focus,
-.c_selector_subtitulos:focus,
-.c_selector_temporada:focus,
-.c_selector_dia:focus,
-.c_selector_estado_emision:focus,
-.c_selector_relacion:focus {
+/* --- Focus states --- */
+.c_entrada:focus,
+.c_selector:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 2px var(--primary);
 }
 
 /* --- Selects --- */
-.c_selector_estado,
-.c_selector_audio,
-.c_selector_subtitulos,
-.c_selector_temporada,
-.c_selector_dia,
-.c_selector_estado_emision,
-.c_selector_relacion {
+.c_selector {
   width: 100%;
   padding: 6px 32px 6px 12px;
   border-radius: var(--border-radius-md);
@@ -179,10 +155,6 @@
   cursor: pointer;
 }
 
-.c_switch_favorito input:checked + .c_slider_favorito {
-  transform: translate(24px, -50%);
-}
-
 .c_switch_favorito input {
   opacity: 0;
   width: 0;
@@ -201,15 +173,10 @@
   transform: translate(0, -50%);
 }
 
-.c_switch_favorito input:checked ~ .c_slider_favorito {
-  background-color: var(--text-white);
+.c_switch_favorito input:checked + .c_slider_favorito {
+  transform: translate(24px, -50%);
 }
 
-.c_switch_favorito input:checked {
-  background-color: var(--primary);
-}
-
-/* Cuando está activo */
 .c_switch_favorito:has(input:checked) {
   background-color: var(--primary);
 }

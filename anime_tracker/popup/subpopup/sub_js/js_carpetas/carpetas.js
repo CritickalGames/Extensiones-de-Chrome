@@ -1,4 +1,4 @@
-import { obj_route } from "../../../core/router.js";
+import { obj_route } from "../../../../core/router.js";
 
 // 🔗 Referencias DOM
 const contenedor = document.getElementById("lista_animes");

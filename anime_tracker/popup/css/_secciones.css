@@ -126,8 +126,7 @@
 }
 
 /* --- Grid (Estreno/Emisión) --- */
-.c_cuadricula,
-.c_cuadricula_estreno_emision {
+.c_cuadricula {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;

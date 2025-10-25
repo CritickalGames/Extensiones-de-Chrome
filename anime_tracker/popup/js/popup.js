@@ -1,5 +1,5 @@
 // 📦 Importaciones
-import { obj_route } from '../core/router.js';
+import { obj_route } from '../../core/router.js';
 import { guardarAnimeDesdePopup } from "./submodulos/guardar.js";
 import { fnCapituloVisto } from "./submodulos/btnCapituloVisto.js";
 import { iniciar } from "./submodulos/tabQuery.js";

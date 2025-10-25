@@ -65,6 +65,12 @@ export function obtener_botones_interaccion() {
   };
 }
 
+export function obtener_ocultos() {
+  return{
+    menu_configuracion: obtener_elemento_por_id("menu_configuracion")
+  }
+}
+
 // 🧩 Composición final
 export function extraer_anime_desde_dom() {
   return {
@@ -72,5 +78,6 @@ export function extraer_anime_desde_dom() {
     ...obtener_estado_anime(),
     ...obtener_listas(),
     ...obtener_botones_interaccion(),
+    ...obtener_ocultos(),
   };
 }

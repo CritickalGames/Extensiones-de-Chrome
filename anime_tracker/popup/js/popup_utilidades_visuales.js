@@ -124,21 +124,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // * 7. Botones de cabecera (guardar, carpetas, menú)
   refs.btn_guardar_datos?.addEventListener('click', () => {
+    alert("Guardar datos presionado.");
     console.log("Guardar datos presionado.");
     // Aquí irá tu lógica de guardado
   });
 
   refs.btn_abrir_carpetas?.addEventListener('click', () => {
+    alert("Abrir carpetas presionado.");
     console.log("Abrir carpetas presionado.");
     // window.location.href = "carpetas.html";
   });
 
   refs.btn_menu_principal?.addEventListener('click', () => {
+    alert("Menú principal presionado.");
     console.log("Menú principal presionado.");
   });
 
   // * 8. Botón final de guardar
   refs.btn_guardar_final?.addEventListener('click', () => {
+    alert("Guardar a carpetas presionado.");
     console.log("Guardar a carpetas presionado.");
   });
 
