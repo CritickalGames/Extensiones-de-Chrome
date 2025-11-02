@@ -1,0 +1,49 @@
+/* Tabla de Skills */
+.tabla-skills {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  overflow-x: auto; /* ✅ Defensa contra desbordes */
+}
+
+.tabla-skills th,
+.tabla-skills td {
+  padding: 12px;
+  white-space: nowrap;       /* ❌ Evita saltos de línea */
+  overflow: hidden;          /* ✅ Oculta el exceso */
+  text-overflow: ellipsis;   /* ✅ Muestra "..." si se recorta */
+  justify-content: flex-start;
+}
+
+.tabla-skills th {
+  color: var(--texto-sec);
+  font-weight: normal;
+}
+
+.tecnologia {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+td.lv {
+  text-align: right;
+}
+
+.icono-skill {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  margin-right: 5px;
+  background-color: transparent;
+}
+
+.icono-skill:hover {
+  padding-right: 5%;
+}
+
+.icono-skill svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}

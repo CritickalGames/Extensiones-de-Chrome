@@ -1,0 +1,25 @@
+/* Estilos base y reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--fondo);
+  color: var(--texto);
+  font-family: 'Courier New', monospace;
+  line-height: 1.6;
+  padding: 20px;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Protección global contra textos largos */
+h1, h2, h3, p, span, td, th {
+  word-break: break-word;
+}
+
+img {
+  max-width: 100%;
+}

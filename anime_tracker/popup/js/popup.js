@@ -4,17 +4,17 @@ import { guardarAnimeDesdePopup } from "./submodulos/guardar.js";
 import { fnCapituloVisto } from "./submodulos/btnCapituloVisto.js";
 import { iniciar } from "./submodulos/tabQuery.js";
 import {
-  obtenerInputsAnime,
-  obtenerBotonesAnime,
-  obtenerEstadoAnime,
-  obtenerListas
+  obtener_entradas_anime,
+  obtener_botones_interaccion,
+  obtener_estado_anime,
+  obtener_listas
 } from "./submodulos/extraer.js";
 
 // 🔗 Recolección de referencias DOM
-const ref_input = obtenerInputsAnime();
-const ref_botones = obtenerBotonesAnime();
-const ref_estado = obtenerEstadoAnime();
-const ref_listas = obtenerListas();
+const ref_input = obtener_entradas_anime();
+const ref_botones = obtener_botones_interaccion();
+const ref_estado = obtener_estado_anime();
+const ref_listas = obtener_listas();
 
 // 🌐 Obtener URL de la pestaña activa y cargar datos
 chrome.tabs.query({ active: true, currentWindow: true }, async function(tabs) {

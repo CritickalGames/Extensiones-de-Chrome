@@ -1,0 +1,33 @@
+/* Layout principal */
+body {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Secciones generales */
+section {
+  background-color: var(--skill-bg);
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px var(--complementario-glow);
+}
+
+section h2 {
+  font-size: 1.8rem;
+  color: var(--accent);
+  padding-bottom: 5px;
+}
+
+.contenedor-articulos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}

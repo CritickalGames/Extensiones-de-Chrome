@@ -1,0 +1,19 @@
+/* Variables globales */
+:root {
+  --fondo: #0d0c15;
+  --texto: #ffffff;
+  --texto-sec: #a0a0b0;
+  --accent: #8a2be2;
+  --complementario: #ffa600;
+  --complementario-glow: #ffa600;
+  --accent-glow: #9d3cf7;
+  --border: #ad22ee71;
+  --barra: #7b2cd3;
+  --barra-bg: #2a2a3a;
+  --skill-bg: #1a1a2a;
+  --hechizo-bg: #12121e;
+  --mision-bg: #12121e;
+  --repositorio-bg: #12121e;
+  --destacado-bg: #12121e;
+  --check: #4caf50;
+}
