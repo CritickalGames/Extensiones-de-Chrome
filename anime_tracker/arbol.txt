@@ -1,0 +1,47 @@
+﻿📁 Proyecto: anime_tracker
+🕒 Generado: 2025-11-02 17:06:15
+
+├── arbol.txt
+├── background.js
+├── config
+│   ├── manifest.json
+│   └── package.json
+├── core
+│   ├── api
+│   │   └── index.js
+│   ├── db
+│   ├── parser
+│   │   └── index.js
+│   ├── router
+│   │   └── index.js
+│   └── search
+│       └── index.js
+├── devtools.js
+├── docs
+│   └── versiones.js
+├── icons
+│   ├── icon.png
+│   └── icon128.png
+├── popup
+│   ├── css
+│   │   ├── base
+│   │   ├── componentes
+│   │   ├── layout
+│   │   └── utilidades
+│   ├── js
+│   │   ├── features
+│   │   ├── popup.js
+│   │   └── utilidades
+│   │       └── visuales.js
+│   ├── popup.html
+│   └── variantes
+│       ├── css
+│       │   └── carpetas
+│       ├── html
+│       └── js
+│           └── carpetas
+├── reordenar.ps1
+└── tests
+
+📦 Total carpetas: 25
+📄 Total archivos: 16

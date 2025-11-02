@@ -51,6 +51,7 @@ export function obtener_botones_interaccion() {
     btn_menu_principal: obtener_elemento_por_id("btn_menu_principal"),
     btn_guardar_datos: obtener_elemento_por_id("btn_guardar_datos"),
     btn_abrir_carpetas: obtener_elemento_por_id("btn_abrir_carpetas"),
+    btn_buscar: obtener_elemento_por_id("btn_buscar"),
     btn_alternar_configuracion: obtener_elemento_por_id("btn_alternar_configuracion"),
     btn_copiar_id: obtener_elemento_por_id("btn_copiar_id"),
     btn_restar_temporada: obtener_elemento_por_id("btn_restar_temporada"),

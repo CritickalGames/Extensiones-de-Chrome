@@ -1,5 +1,5 @@
 // Importamos el módulo que contiene las funciones de extracción
-import { extraer_anime_desde_dom } from './submodulos/extraer.js';
+import { extraer_anime_desde_dom } from '../submodulos/extraer.js';
 
 document.addEventListener('DOMContentLoaded', function () {
   // --- Referencias a elementos del DOM ---

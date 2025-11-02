@@ -15,7 +15,7 @@
       </button>
 
       <form class="c_entrada_busqueda_wrapper">
-        <span class="material-symbols-outlined c_icono_busqueda">search</span>
+        <span class="material-symbols-outlined c_icono_busqueda" id="btn_buscar">search</span>
         <input type="text" id="entrada_buscar_anime" class="c_entrada c_entrada--busqueda" placeholder="Buscar un anime..." value="">
       </form>
 
@@ -46,178 +46,183 @@
   <!-- Portada -->
   <section class="c_portada_container" id="contenedor_portada">
     <div class="c_capa_fondo" id="capa_fondo_portada"></div>
-    <figure class="c_imagen_principal_wrapper">
+    <section class="c_imagen_principal_wrapper">
       <img id="imagen_portada_principal" class="c_imagen_principal"
         src="https://lh3.googleusercontent.com/-tGHmZ6GF0cc/WpohCECY6kI/AAAAAAABdDI/fdZBbrmha_A9gOQ9wp-qKgThLFr1rUq0QCHMYCw/s0/ef3ba899fa0c572bebb18586d81b151c2d72f2bf.jpg"
         alt="Portada del anime">
-    </figure>
+    </section>
   </section>
-
-  <!-- Información principal -->
-  <section class="c_info_principal_flex contenedor_flex">
-    <header class="c_titulo_id_wrapper_flex contenedor_flex">
-      <h1 id="texto_nombre_anime" class="c_titulo_anime">Anime Genérico</h1>
-      <div class="c_id_container_flex contenedor_flex">
-        <p class="c_etiqueta_id">ID: <span id="texto_id_anime">anime-generico</span></p>
-        <span class="material-symbols-outlined c_icono_copiar" id="btn_copiar_id" title="Copiar ID">content_copy</span>
-      </div>
-    </header>
-  </section>
-  <!-- Estado -->
-  <section>
-    <article class="c_estado_container ">
-      <label class="c_seccion_label">Al anime yo: </label>
-      <select id="selector_estado_seguimiento" class="c_selector">
-        <option value="ver">Ver</option>
-        <option value="viendo" selected>Viendo</option>
-        <option value="visto">Visto</option>
-        <option value="abandonado">Abandonado</option>
-      </select>
-    </article>
-  </section>
-  <section class="contenedor_flex">
-    <!-- Favorito -->
-    <article class="c_favorito_container_flex contenedor_flex">
-      <label class="c_etiqueta_fav">Favorite</label>
-      <label class="c_switch_favorito">
-        <input type="checkbox" id="entrada_es_favorito">
-        <span class="c_slider_favorito"></span>
-      </label>
-    </article>
-
-    <!-- Calificación -->
-    <article class="c_calificacion_container_flex contenedor_flex">
-      <label class="c_etiqueta_calificacion">Rating</label>
-      <section class="c_rating_controls_flex contenedor_flex">
-        <span class="material-symbols-outlined c_estrella">star</span>
-        <span class="c_valor_calificacion" id="texto_nota_usuario">5</span>
-        <button class="c_boton c_boton--pequenyo" id="btn_restar_calificacion">-</button>
-        <button class="c_boton c_boton--pequenyo" id="btn_sumar_calificacion">+</button>
-      </section>
-    </article>
-  </section>
-
-  <!-- Temporada/Episodio -->
-  <section class="c_progreso_wrapper_flex contenedor_flex">
-    <fieldset class="c_temporada_episodio_controls_flex contenedor_flex">
-      <div class="c_grupo_T_E_flex contenedor_flex">
-        <label class="c_etiqueta_T_E">T</label>
-        <section class="c_numero_control_flex contenedor_flex">
-          <button class="c_boton c_boton--pequenyo" id="btn_restar_temporada">-</button>
-          <input type="number" id="entrada_temporada_actual" class="c_entrada c_entrada--numero" value="1" min="1">
-          <button class="c_boton c_boton--pequenyo" id="btn_sumar_temporada">+</button>
+  <main>
+    <section class="contenedor_flex centrar">
+      <article class="contenedor_grid">
+        <!-- Información principal -->
+        <section class="c_info_principal_flex contenedor_flex">
+          <header class="c_titulo_id_wrapper_flex contenedor_flex">
+            <h1 id="texto_nombre_anime" class="c_titulo_anime">Anime Genérico</h1>
+            <div class="c_id_container_flex contenedor_flex">
+              <p class="c_etiqueta_id">ID: <span id="texto_id_anime">anime-generico</span></p>
+              <span class="material-symbols-outlined c_icono_copiar" id="btn_copiar_id" title="Copiar ID">content_copy</span>
+            </div>
+          </header>
         </section>
-      </div>
-
-      <div class="c_grupo_T_E_flex contenedor_flex">
-        <label class="c_etiqueta_T_E">E</label>
-        <section class="c_numero_control_flex contenedor_flex">
-          <button class="c_boton c_boton--pequenyo" id="btn_restar_episodio">-</button>
-          <input type="number" id="entrada_episodio_actual" class="c_entrada c_entrada--numero" value="0" min="1">
-          <button class="c_boton c_boton--pequenyo" id="btn_sumar_episodio">+</button>
+        <!-- Estado -->
+        <section>
+          <article class="c_estado_container ">
+            <label class="c_seccion_label">Seguimiento</label>
+            <select id="selector_estado_seguimiento" class="c_selector">
+              <option value="ver">Ver</option>
+              <option value="viendo" selected>Viendo</option>
+              <option value="visto">Visto</option>
+              <option value="abandonado">Abandonado</option>
+            </select>
+          </article>
         </section>
-      </div>
-    </fieldset>
-    <button id="btn_marcar_episodio_visto" class="c_boton c_boton--no-activo ">Capitulo Visto</button>
-  </section>
+      </article>
+      <article class="contenedor_grid">
+        <!-- Favorito -->
+        <section class="c_favorito_container_flex contenedor_flex">
+          <label class="c_etiqueta_fav">Favorite</label>
+          <label class="c_switch_favorito">
+            <input type="checkbox" id="entrada_es_favorito">
+            <span class="c_slider_favorito"></span>
+          </label>
+        </section>
 
-  <!-- Audio y Subtítulos -->
-  <section class="c_audio_subtitulos_section_flex contenedor_flex">
-    <label class="c_seccion_label">Audio & Subtitles</label>
-    <fieldset class="c_audio_subtitulos_controls_flex contenedor_flex">
-      <select id="selector_idioma_audio" class="c_selector">
-        <option value="es">🇪🇸 Español</option>
-        <option value="jp">🇯🇵 Japonés</option>
-        <option value="en">🇺🇸 Inglés</option>
-        <option value="kr">🇰🇷 Coreano</option>
-        <option value="cn">🇨🇳 Chino</option>
-        <option value="tr">🇹🇷 Turco</option>
-      </select>
-      <select id="selector_idioma_subtitulos" class="c_selector">
-        <option value="-">🚫 No</option>
-        <option value="es">🇪🇸 Español</option>
-        <option value="jp">🇯🇵 Japonés</option>
-        <option value="en">🇺🇸 Inglés</option>
-        <option value="kr">🇰🇷 Coreano</option>
-        <option value="cn">🇨🇳 Chino</option>
-        <option value="tr">🇹🇷 Turco</option>
-      </select>
-    </fieldset>
-  </section>
+        <!-- Calificación -->
+        <section class="c_calificacion_container_flex contenedor_flex">
+          <label class="c_etiqueta_calificacion">Rating</label>
+          <article class="c_rating_controls_flex contenedor_flex">
+            <span class="material-symbols-outlined c_estrella">star</span>
+            <span class="c_valor_calificacion" id="texto_nota_usuario">5</span>
+            <button class="c_boton c_boton--pequenyo" id="btn_restar_calificacion">-</button>
+            <button class="c_boton c_boton--pequenyo" id="btn_sumar_calificacion">+</button>
+          </article>
+        </section>
+      </article>
+    </section>
 
-  <!-- Estreno -->
-  <section class="c_cuadricula">
-    <article class="c_elemento_cuadricula_flex contenedor_flex">
-      <label class="c_etiqueta_cuadricula">Temporada de Estreno</label>
-      <select id="selector_temporada_estreno" class="c_selector">
-        <option value="">-</option>
-        <option value="primavera">🌸 Primavera</option>
-        <option value="verano">☀️ Verano</option>
-        <option value="otoño">🍂 Otoño</option>
-        <option value="invierno">❄️ Invierno</option>
-      </select>
-    </article>
-    <article class="c_elemento_cuadricula_flex contenedor_flex">
-      <p class="c_etiqueta_cuadricula">Año de Estreno</p>
-      <input type="number" id="entrada_anyo_estreno" class="c_entrada c_entrada--compacta" placeholder="Año" value="2025" min="1400" max="2200">
-    </article>
-  </section>
+    <!-- Temporada/Episodio -->
+    <section class="c_progreso_wrapper_flex contenedor_flex">
+      <button id="btn_marcar_episodio_visto" class="c_boton c_boton--no-activo ">Capitulo Visto</button>
+      <fieldset class="c_temporada_episodio_controls_flex contenedor_flex">
+        <div class="c_grupo_T_E_flex contenedor_flex">
+          <label class="c_etiqueta_T_E">T</label>
+          <section class="c_numero_control_flex contenedor_flex">
+            <button class="c_boton c_boton--pequenyo" id="btn_restar_temporada">-</button>
+            <input type="number" id="entrada_temporada_actual" class="c_entrada c_entrada--numero" value="1" min="1">
+            <button class="c_boton c_boton--pequenyo" id="btn_sumar_temporada">+</button>
+          </section>
+        </div>
 
-  <!-- Día y Estado -->
-  <section class="c_cuadricula">
-    <article class="c_elemento_cuadricula_flex contenedor_flex">
-      <label class="c_etiqueta_cuadricula" for="selector_dia_emision">Día de Estreno</label>
-      <select id="selector_dia_emision" class="c_selector">
-        <option value="">-</option>
-        <option value="lunes">lunes</option>
-        <option value="martes">martes</option>
-        <option value="miercoles">miércoles</option>
-        <option value="jueves">jueves</option>
-        <option value="viernes">viernes</option>
-        <option value="sabado">sábado</option>
-        <option value="domingo">domingo</option>
-      </select>
-    </article>
-    <article class="c_elemento_cuadricula_flex contenedor_flex">
-      <label class="c_etiqueta_cuadricula" for="selector_estado_general_anime">Estado de Emisión</label>
-      <select id="selector_estado_general_anime" class="c_selector">
-        <option value="desconocido">? Desconocido</option>
-        <option value="emisión">Emisión</option>
-        <option value="finalizado">Finalizado</option>
-        <option value="cancelada">Cancelada</option>
-        <option value="peli-ova">Película/Ova</option>
-      </select>
-    </article>
-  </section>
+        <div class="c_grupo_T_E_flex contenedor_flex">
+          <label class="c_etiqueta_T_E">E</label>
+          <section class="c_numero_control_flex contenedor_flex">
+            <button class="c_boton c_boton--pequenyo" id="btn_restar_episodio">-</button>
+            <input type="number" id="entrada_episodio_actual" class="c_entrada c_entrada--numero" value="0" min="1">
+            <button class="c_boton c_boton--pequenyo" id="btn_sumar_episodio">+</button>
+          </section>
+        </div>
+      </fieldset>
+    </section>
 
-  <!-- Géneros -->
-  <section class="c_seccion_generos_flex contenedor_flex">
-    <article class="c_cabecera_seccion_flex contenedor_flex">
-      <p class="c_etiqueta_seccion">Genres</p>
-      <button id="btn_editar_generos" class="c_boton c_boton--editar">Edit Genres</button>
-    </article>
-    <p id="texto_lista_generos" class="c_lista_generos">Action, Dark Fantasy, Post-Apocalyptic</p>
-    <input type="text" id="entrada_edicion_generos" class="c_entrada c_entrada--compacta" value="Action, Dark Fantasy, Post-Apocalyptic" style="display: none;">
-  </section>
+    <!-- Audio y Subtítulos -->
+    <section class="c_audio_subtitulos_section_flex contenedor_flex">
+      <label class="c_seccion_label">Audio & Subtitles</label>
+      <fieldset class="c_audio_subtitulos_controls_flex contenedor_flex">
+        <select id="selector_idioma_audio" class="c_selector">
+          <option value="es">🇪🇸 Español</option>
+          <option value="jp">🇯🇵 Japonés</option>
+          <option value="en">🇺🇸 Inglés</option>
+          <option value="kr">🇰🇷 Coreano</option>
+          <option value="cn">🇨🇳 Chino</option>
+          <option value="tr">🇹🇷 Turco</option>
+        </select>
+        <select id="selector_idioma_subtitulos" class="c_selector">
+          <option value="-">🚫 No</option>
+          <option value="es">🇪🇸 Español</option>
+          <option value="jp">🇯🇵 Japonés</option>
+          <option value="en">🇺🇸 Inglés</option>
+          <option value="kr">🇰🇷 Coreano</option>
+          <option value="cn">🇨🇳 Chino</option>
+          <option value="tr">🇹🇷 Turco</option>
+        </select>
+      </fieldset>
+    </section>
 
-  <!-- Relacionado -->
-  <section class="c_seccion_relacionado_flex contenedor_flex">
-    <p class="c_etiqueta_seccion">Relacionado con</p>
-    <article class="c_controles_relacionado_flex contenedor_flex">
-      <input type="text" id="entrada_buscar_anime_relacionado" class="c_entrada c_entrada--compacta" placeholder="Buscar anime relacionado">
-      <select id="selector_tipo_relacion" class="c_selector">
-        <option value="secuela" selected>Secuela</option>
-        <option value="precuela">Precuela</option>
-        <option value="alternativa">Versión Alternativa</option>
-        <option value="paralela">Historia Paralela</option>
-      </select>
-    </article>
-  </section>
+    <!-- Estreno -->
+    <section class="c_cuadricula">
+      <article class="c_elemento_cuadricula_flex contenedor_flex">
+        <label class="c_etiqueta_cuadricula">Temporada de Estreno</label>
+        <select id="selector_temporada_estreno" class="c_selector">
+          <option value="">-</option>
+          <option value="primavera">🌸 Primavera</option>
+          <option value="verano">☀️ Verano</option>
+          <option value="otoño">🍂 Otoño</option>
+          <option value="invierno">❄️ Invierno</option>
+        </select>
+      </article>
+      <article class="c_elemento_cuadricula_flex contenedor_flex">
+        <p class="c_etiqueta_cuadricula">Año de Estreno</p>
+        <input type="number" id="entrada_anyo_estreno" class="c_entrada c_entrada--compacta" placeholder="Año" value="2025" min="1400" max="2200">
+      </article>
+    </section>
 
-  <!-- Botón final -->
-  <button id="btn_guardar_final" class="c_boton c_boton--no-activo">Save to Folders</button>
+    <!-- Día y Estado -->
+    <section class="c_cuadricula">
+      <article class="c_elemento_cuadricula_flex contenedor_flex">
+        <label class="c_etiqueta_cuadricula" for="selector_dia_emision">Día de Estreno</label>
+        <select id="selector_dia_emision" class="c_selector">
+          <option value="">-</option>
+          <option value="lunes">lunes</option>
+          <option value="martes">martes</option>
+          <option value="miercoles">miércoles</option>
+          <option value="jueves">jueves</option>
+          <option value="viernes">viernes</option>
+          <option value="sabado">sábado</option>
+          <option value="domingo">domingo</option>
+        </select>
+      </article>
+      <article class="c_elemento_cuadricula_flex contenedor_flex">
+        <label class="c_etiqueta_cuadricula" for="selector_estado_general_anime">Estado de Emisión</label>
+        <select id="selector_estado_general_anime" class="c_selector">
+          <option value="desconocido">? Desconocido</option>
+          <option value="emisión">Emisión</option>
+          <option value="finalizado">Finalizado</option>
+          <option value="cancelada">Cancelada</option>
+          <option value="peli-ova">Película/Ova</option>
+        </select>
+      </article>
+    </section>
+
+    <!-- Géneros -->
+    <section class="c_seccion_generos_flex contenedor_flex">
+      <article class="c_cabecera_seccion_flex contenedor_flex">
+        <p class="c_etiqueta_seccion">Genres</p>
+        <button id="btn_editar_generos" class="c_boton c_boton--editar">Edit Genres</button>
+      </article>
+      <p id="texto_lista_generos" class="c_lista_generos">Action, Dark Fantasy, Post-Apocalyptic</p>
+      <input type="text" id="entrada_edicion_generos" class="c_entrada c_entrada--compacta" value="Action, Dark Fantasy, Post-Apocalyptic" style="display: none;">
+    </section>
+
+    <!-- Relacionado -->
+    <section class="c_seccion_relacionado_flex contenedor_flex">
+      <p class="c_etiqueta_seccion">Relacionado con</p>
+      <article class="c_controles_relacionado_flex contenedor_flex">
+        <input type="text" id="entrada_buscar_anime_relacionado" class="c_entrada c_entrada--compacta" placeholder="Buscar anime relacionado">
+        <select id="selector_tipo_relacion" class="c_selector">
+          <option value="secuela" selected>Secuela</option>
+          <option value="precuela">Precuela</option>
+          <option value="alternativa">Versión Alternativa</option>
+          <option value="paralela">Historia Paralela</option>
+        </select>
+      </article>
+    </section>
+
+    <!-- Botón final -->
+    <button id="btn_guardar_final" class="c_boton c_boton--no-activo">Save to Folders</button>
+  </main>
 
 </body>
-  <script type="module" src="./js/popup_utilidades_visuales.js"></script>
-  <script type="module" src="./js/popup.js"></script>
+  <script type="module" src="./js/utilidades/visuales.js"></script>
+  <!-- <script type="module" src="./js/popup.js"></script> -->
 </html>
