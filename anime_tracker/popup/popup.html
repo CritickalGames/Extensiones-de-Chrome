@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+  <script type="module" src="./js/utilidades/visuales.js"></script>
+  <script type="module" src="./js/popup.js"></script>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -53,17 +55,19 @@
     </section>
   </section>
   <main>
+    <!-- Información principal -->
+    <section class="c_info_principal_flex contenedor_flex">
+      <header class="c_titulo_id_wrapper_flex contenedor_flex">
+        <h1 id="texto_nombre_anime" class="c_titulo_anime">Anime Genérico</h1>
+      </header>
+    </section>
     <section class="contenedor_flex centrar">
       <article class="contenedor_grid">
-        <!-- Información principal -->
-        <section class="c_info_principal_flex contenedor_flex">
-          <header class="c_titulo_id_wrapper_flex contenedor_flex">
-            <h1 id="texto_nombre_anime" class="c_titulo_anime">Anime Genérico</h1>
-            <div class="c_id_container_flex contenedor_flex">
-              <p class="c_etiqueta_id">ID: <span id="texto_id_anime">anime-generico</span></p>
-              <span class="material-symbols-outlined c_icono_copiar" id="btn_copiar_id" title="Copiar ID">content_copy</span>
-            </div>
-          </header>
+        <section>
+          <div class="c_id_container_flex contenedor_flex">
+            <p class="c_etiqueta_id">ID: <span id="texto_id_anime">anime-generico</span></p>
+            <span class="material-symbols-outlined c_icono_copiar" id="btn_copiar_id" title="Copiar ID">content_copy</span>
+          </div>
         </section>
         <!-- Estado -->
         <section>
@@ -223,6 +227,4 @@
   </main>
 
 </body>
-  <script type="module" src="./js/utilidades/visuales.js"></script>
-  <!-- <script type="module" src="./js/popup.js"></script> -->
 </html>
