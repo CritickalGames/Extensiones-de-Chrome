@@ -1,28 +1,8 @@
-
-//* 🧩 Auxiliares
-function asignarValoresPorTipo(refs, datos) {
-  for (const clave in datos) {
-    const el = refs[clave];
-    const valor = datos[clave];
-
-    if (!el || valor === undefined) continue;
-
-    const tipo = el.type?.toLowerCase();
-    const etiqueta = el.tagName?.toLowerCase();
-
-    if (etiqueta === 'input' && tipo === 'checkbox') {
-      el.checked = Boolean(valor);
-    } else if (etiqueta === 'input' || etiqueta === 'textarea' || etiqueta === 'select') {
-      el.value = valor;
-    } else {
-      el.textContent = valor;
-    }
-  }
-}
-
 //* MAIN
+let refs;
 export async function iniciar(obj_route, tabs, ref) {
   console.info("ENTRADA tabQuery");
+  refs =ref;
   let metaAnime = {
     //todo) agregar esto en configuración
     urlActual: tabs[0]?.url || "No disponible", // ref.urlActual.textContent = url;
@@ -35,23 +15,23 @@ export async function iniciar(obj_route, tabs, ref) {
   const url = metaAnime.urlActual;
   const {
     resultado,
-    URL_nombre, 
-    nombre, 
+    URL_nombre,
+    nombre,
     temporada, 
     capitulo
   } = await fn(obj_route, url);
 
   if (resultado) {
-    actualizarDOM(ref, resultado, temporada, capitulo);
+    actualizarDOM(resultado, URL_nombre, nombre, temporada, capitulo);
   } else {
-    prevista_generica(ref, URL_nombre, nombre, temporada, capitulo);
+    prevista_generica(URL_nombre, nombre, temporada, capitulo);
   }
 
   //*) Asignar nombre relacionado para guardar carpeta
-  ref.entrada_buscar_anime_relacionado.textContent = URL_nombre;
+  refs.entrada_buscar_anime_relacionado.textContent = URL_nombre;
 
   //*) Actualizar metadatos auxiliares
-  metaAnime.urlImagen = ref.animePortada?.src || "";
+  metaAnime.urlImagen = refs.animePortada?.src || "";
   metaAnime.tagsTipo = resultado?.tags?.tags?.join(", ") || "";
   sessionStorage.setItem("metaAnime", JSON.stringify(metaAnime));
 }
@@ -78,26 +58,29 @@ async function fn(obj_route, url) {
   const busqueda = await obj_route('search.conseguir_anime', URL_nombre);
 
   const resultado = busqueda.result;
+  console.log("busqueda:", JSON.stringify(busqueda, null, 2));
+  
   if (busqueda.error === false) {
     //*) Anime encontrado correctamente
     console.log('Anime encontrado; Actualizando DOM con:', resultado);
   } else {
     //!) No se encontró el anime
-    console.warn('No se encontró al buscar el anime:', busqueda.error);
+    console.error('No se encontró al buscar el anime:', busqueda.error);
   }
 
   return { resultado, URL_nombre, nombre, temporada, capitulo };
 }
 
 //* 🧩 Actualizar DOM con datos de anime
-function actualizarDOM(ref, resultado, temporada = 0, capitulo = 0) {
-  asignarValoresPorTipo(ref, 
+function actualizarDOM(resultado, URL_nombre, nombre, temporada, capitulo) {
+  console.log(resultado);
+  asignarValoresPorTipo(
     {
-      texto_nombre_anime: resultado?.anime?.nombre || "",
-      texto_id_anime: resultado?.anime?.nombre || "",
-      entrada_temporada_actual: temporada ?? "",
-      entrada_episodio_actual: capitulo ?? "",
-      entrada_anyo_estreno: resultado?.estreno?.anyo || "",
+      texto_nombre_anime: nombre,
+      texto_id_anime: URL_nombre,
+      entrada_temporada_actual: temporada ?? 0,
+      entrada_episodio_actual: capitulo ?? 0,
+      entrada_anyo_estreno: resultado?.estreno?.anyo || 2000,
       entrada_es_favorito: resultado?.anime?.favorito ?? false,
       entrada_edicion_generos: resultado?.generos?.generos?.join(", ") || "",
       texto_nota_usuario: resultado?.notas?.nota ?? 5,
@@ -113,18 +96,38 @@ function actualizarDOM(ref, resultado, temporada = 0, capitulo = 0) {
 
   //*) Asignar imagen principal si existe
   if (resultado?.anime?.portada) {
-    ref.imagen_portada_principal.src = resultado.anime.portada;
-    ref.capa_fondo_portada.src = resultado.anime.portada;
+    refs.imagen_portada_principal.src = resultado.anime.portada;
   }
 }
 
 //* 🧪 Vista genérica si no se encuentra el anime
-function prevista_generica(ref, URL_anime, name, temporada, capitulo) {
-  asignarValoresPorTipo(ref, {
+function prevista_generica(URL_nombre, name, temporada, capitulo) {
+  asignarValoresPorTipo({
     texto_nombre_anime: name || "Anime Genérico",
+    texto_id_anime: URL_nombre|| "anime-generico",
     entrada_temporada_actual: temporada,
     entrada_episodio_actual: capitulo,
-    texto_id_anime: URL_anime,
     texto_nota_usuario: 5
   });
+}
+
+//* 🧩 Auxiliares
+function asignarValoresPorTipo(datos) {
+  for (const clave in datos) {
+    const el = refs[clave];
+    const valor = datos[clave];
+
+    if (!el || valor === undefined) continue;
+
+    const tipo = el.type?.toLowerCase();
+    const etiqueta = el.tagName?.toLowerCase();
+
+    if (etiqueta === 'input' && tipo === 'checkbox') {
+      el.checked = Boolean(valor);
+    } else if (etiqueta === 'input' || etiqueta === 'textarea' || etiqueta === 'select') {
+      el.value = valor;
+    } else {
+      el.textContent = valor;
+    }
+  }
 }

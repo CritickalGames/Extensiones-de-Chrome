@@ -1,94 +1,60 @@
-export async function guardarAnimeDesdePopup(obj_route, btnGuardar, refs) {
-  const url_anime = refs.inputNombreAnime?.value.trim().toLowerCase().replace(/\s+/g, "-");
-  const url_dir = refs.urlActual?.textContent?.trim();
-  const cap = refs.animeTempoCap?.value?.trim() || "";
-  const EPISODIO = cap.match(/(.*?)(\d+)(.*?)(\d+)/)?.[4] || 0;
-  // Datos base del anime
-  const anime_base = {
-    url_anime,
-    nombre: refs.animeNombre?.textContent?.trim() || refs.inputNombreAnime?.value.trim(),
-    portada: refs.urlImagen?.value.trim() || refs.animePortada?.src,
-    seguimiento: refs.serieViendo?.value || "ver",
-    favorito: refs.favoritoCheckbox?.checked || false
-  };
-
-  // URL base
-  const url = {
-    url_anime,
-    url_dir: EPISODIO==0?url_dir:"",
-    url_ultima: EPISODIO!=0?url_dir:"",
-    url_relacion:refs.animeRelacionado?.value || url_anime,
-    relacion: refs.relacionUrl?.value || "primera"
-  };
-
-  console.warn(cap.match(/(.*?)(\d+)(.*?)(\d+)/), EPISODIO, url);
+export async function guardarAnimeDesdePopup(obj_route, refs, btnGuardar) {
+  const metaAnime = JSON.parse(sessionStorage.getItem("metaAnime"));
   
-  // Estado de emisión
-  const emision = {
-    url_anime,
-    estado: refs.animeEstado?.value || "desconocido"
-  };
-
-  // Capítulos
-  const capitulos = {
-    url_anime,
-    visto: refs.capVisto?.checked,
-    capitulo: cap
-  };
-
-  // Idiomas
-  const idiomas = {
-    url_anime,
-    doblaje: refs.doblaje?.value || "es",
-    subtitulos: refs.subtitulos?.value || "es"
-  };
-
-  // Estreno
-  const estreno = {
-    url_anime,
-    temporada: refs.temporadaEstreno?.value || "",
-    anyo: refs.anyoEstreno?.value || "",
-    dia: refs.dia?.value || ""
-  };
-
-  // Nota
-  const nota = {
-    url_anime,
-    nota: refs.notaUsuario?.value ? parseInt(refs.notaUsuario.value) : 0
-  };
-
-
-  // 🗃️ Guardar cada módulo por separado
-  await obj_route("db.guardarAnime", anime_base);
-  await obj_route("db.guardarModulo", ["emision", emision]);
-  await obj_route("db.guardarModulo", ["capitulos", capitulos]);
-  await obj_route("db.guardarModulo", ["idiomas", idiomas]);
-  await obj_route("db.guardarModulo", ["estreno", estreno]);
-  await obj_route("db.guardarModulo", ["notas", nota]);
-  
-  // Guardar URL base (es donde está toda la lista de capítulos)
-  await obj_route("db.guardarURL", url);
-  
-  // Guardar géneros (múltiples)
-  if (refs.generosInput?.value) {
-    const generos = refs.generosInput.value.split(",").map(g => g.trim()).filter(g => g);
-    for (const genero of generos) {
-      await obj_route("db.guardarModulo", ["generos", { url_anime, genero }]);
-    }
-  }
-  
-  // Guardar tags (múltiples)
-  if (refs.tagsTipo?.value) {
-    const tags = refs.tagsTipo.value.split(",").map(t => t.trim()).filter(t => t);
-    for (const tipo of tags) {
-      const tag = {
-        url_anime,
-        tipo: tipo
-      };
-      await obj_route("db.guardarModulo", ["tags", tag]);
-    }
+  const anime={
+    clave: refs.texto_id_anime.textContent,              // PK
+    nombre: refs.texto_nombre_anime.textContent,
+    favorito: refs.entrada_es_favorito .value,
+    seguimiento: refs.selector_estado_seguimiento.value,
+    audio: refs.selector_idioma_audio.value,
+    subtitulos: refs.selector_idioma_subtitulos.value,
+    temporada_estreno: refs.selector_temporada_estreno.textContent,
+    anyo_estreno: parseInt(refs.entrada_anyo_estreno.value),
+    dia_estreno: refs.selector_dia_emision.value,
+    estado: refs.selector_estado_general_anime.value,
+    nota: parseInt(refs.texto_nota_usuario.textContent),
+    generos: refs.entrada_edicion_generos.value,
+    temporada_actual: parseInt(refs.entrada_temporada_actual.value),
+    episodio_actual: parseInt(refs.entrada_episodio_actual.value),
+    url: metaAnime?.urlActual,
+    //! Falta : URLIMG
   }
 
-  btnGuardar.textContent = "Guardado ✔";
-  setTimeout(() => btnGuardar.textContent = "Guardar anime", 1500);
+  const genero={
+    genero: "acción",             // parte de PK compuesta
+    clave: refs.texto_id_anime.textContent,              // FK al anime
+  }
+
+  const esValido = verificarCamposDOM([anime, genero]);
+
+  if (esValido) {
+    await obj_route("db.guardar", ["animes",anime]);
+    await obj_route("db.guardar", ["generos",genero]);
+  }
+
+}
+
+
+function verificarCamposDOM(objetos) {
+  const errores = [];
+
+  objetos.forEach((objeto, index) => {
+    for (const [clave, valor] of Object.entries(objeto)) {
+      if (
+        valor instanceof Node || // incluye HTMLElement, Text, etc.
+        (typeof valor === "object" && valor !== null && "nodeType" in valor)
+      ) {
+        errores.push(`🛑 Objeto[${index}] campo "${clave}" contiene un nodo DOM: ${valor.constructor.name}`);
+      }
+    }
+  });
+
+  if (errores.length > 0) {
+    console.error("❌ Se detectaron campos con nodos DOM:");
+    errores.forEach(e => console.error(e));
+    return false;
+  }
+
+  console.log("✅ Todos los objetos están libres de nodos DOM.");
+  return true;
 }

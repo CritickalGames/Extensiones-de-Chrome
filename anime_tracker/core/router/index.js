@@ -17,9 +17,7 @@ export async function obj_route(action, payload) {
       return { error: `Función no especificada`, result: null };
     }
     //^) Conseguimos el modulo através de ruta relativa a la raíz
-    console.info("ruta:", ruta);
     const mod = await import(chrome.runtime.getURL(ruta));
-    console.info("mod:", mod);
 
     //^) Verificar que la función exista en el módulo
     if (typeof mod[funcion] !== 'function') {
@@ -41,10 +39,10 @@ export async function obj_route(action, payload) {
     //~) Sólo consideramos que hay un error si "error" no da Fasle
     //~) Si error = false, debería devolver un resultado
     return {
-      error: result?.error || false,
+      error: result?.error,
       //^) descompongo el resultado en: resultado o null
       //todo: debería mejorar esta parte
-      result: result.result ? result.result : result ? result : null
+      result: result?.result
     };
   } catch (error) {
     //!) Error inesperado en importación o ejecución

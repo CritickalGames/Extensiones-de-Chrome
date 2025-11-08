@@ -1,9 +1,0 @@
-/* Archivo principal que importa todos los módulos */
-@import url('./_variables.css');
-@import url('./_base.css');
-@import url('./_layout.css');
-@import url('./_perfil.css');
-@import url('./_articulos.css');
-@import url('./_skills.css');
-@import url('./_responsive.css');
-/* @import url('./_debug.css'); */

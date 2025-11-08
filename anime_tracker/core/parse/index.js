@@ -141,21 +141,27 @@ export function parse_url({ url }) {
   
   
   return {
-    URL_dir,
-    URL_nombre,
-    nombre,
-    temporada,
-    capitulo
+    error: false,
+    result: {
+      URL_dir,
+      URL_nombre,
+      nombre,
+      temporada,
+      capitulo
+    }
   };
 }
 
 // 🧩 Estructura vacía en caso de error
 function fallback() {
   return {
-    URL_dir: null,
-    URL_nombre: null,
-    nombre: null,
-    temporada: 1,
-    capitulo: 0
+    error: "ERROR DE PARSEO",
+    result: {
+      URL_dir: null,
+      URL_nombre: null,
+      nombre: null,
+      temporada: 1,
+      capitulo: 0
+    }
   };
 }

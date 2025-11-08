@@ -35,10 +35,7 @@ ref_botones.btn_guardar_datos.addEventListener("click", () => {
     ...ref_listas,
     ...ref_input
   };
-  //!) Soluciona la implementación antes de activar
-  alert("Soluciona la implementación");
-  //todo) Activar guardado cuando esté implementado
-  // guardarAnimeDesdePopup(obj_route, ref_botones.btn_guardar_datos, refs_para_guardar);
+  guardarAnimeDesdePopup(obj_route, refs_para_guardar, ref_botones.btn_guardar_datos);
 });
 
 //*) 📁 Redirigir a carpetas.html

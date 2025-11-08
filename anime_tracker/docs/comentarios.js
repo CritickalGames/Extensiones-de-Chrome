@@ -12,3 +12,7 @@
  * // En otra página:
  * const metaAnime = JSON.parse(sessionStorage.getItem("metaAnime") || "{}");
  */
+
+// TODO: IMPLEMENTAR EL SAVE FOLDER
+// TODO: IMPLEMENTAR LA URL IMG
+// TODO: BORRAR ALERTS
