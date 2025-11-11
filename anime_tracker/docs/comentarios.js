@@ -13,6 +13,7 @@
  * const metaAnime = JSON.parse(sessionStorage.getItem("metaAnime") || "{}");
  */
 
+//! TODO: Si eliminas un genero, no se elimina de la base de datos
 // TODO: IMPLEMENTAR EL SAVE FOLDER
 // TODO: IMPLEMENTAR LA URL IMG
 // TODO: BORRAR ALERTS
