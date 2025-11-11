@@ -144,18 +144,13 @@ function alternarMenuConfiguracion(refs) {
 
 // * 7. Botones de cabecera
 function botonesCabecera(refs) {
-  refs.btn_guardar_datos?.addEventListener('click', () => {
-    alert("Guardar datos presionado.");
-    console.log("Guardar datos presionado.");
-  });
-
   refs.btn_abrir_carpetas?.addEventListener('click', () => {
-    alert("Abrir carpetas presionado.");
+    alert("VISTAS:Abrir carpetas presionado.");
     console.log("Abrir carpetas presionado.");
   });
 
   refs.btn_menu_principal?.addEventListener('click', () => {
-    alert("Menú principal presionado.");
+    alert("VISTAS:Menú principal presionado.");
     console.log("Menú principal presionado.");
   });
 }
@@ -163,7 +158,7 @@ function botonesCabecera(refs) {
 // * 8. Botón final de guardar
 function guardarFinal(refs) {
   refs.btn_guardar_final?.addEventListener('click', () => {
-    alert("Guardar a carpetas presionado.");
+    alert("VISTAS:Guardar a carpetas presionado.");
     console.log("Guardar a carpetas presionado.");
   });
 }
@@ -171,6 +166,6 @@ function guardarFinal(refs) {
 // * 9. Búsqueda de anime
 function buscarAnime(refs) {
   refs.entrada_buscar_anime?.addEventListener('input', () => {
-    console.log("Búsqueda:", refs.entrada_buscar_anime.value);
+    console.log("VISTAS: Búsqueda:", refs.entrada_buscar_anime.value);
   });
 }

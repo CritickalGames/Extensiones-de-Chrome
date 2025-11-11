@@ -8,7 +8,7 @@ export async function guardarAnimeDesdePopup(obj_route, refs, btnGuardar) {
     seguimiento: refs.selector_estado_seguimiento.value,
     audio: refs.selector_idioma_audio.value,
     subtitulos: refs.selector_idioma_subtitulos.value,
-    temporada_estreno: refs.selector_temporada_estreno.textContent,
+    temporada_estreno: refs.selector_temporada_estreno.value,
     anyo_estreno: parseInt(refs.entrada_anyo_estreno.value),
     dia_estreno: refs.selector_dia_emision.value,
     estado: refs.selector_estado_general_anime.value,
@@ -20,41 +20,19 @@ export async function guardarAnimeDesdePopup(obj_route, refs, btnGuardar) {
     //! Falta : URLIMG
   }
 
-  const genero={
-    genero: "acción",             // parte de PK compuesta
-    clave: refs.texto_id_anime.textContent,              // FK al anime
-  }
-
-  const esValido = verificarCamposDOM([anime, genero]);
-
-  if (esValido) {
-    await obj_route("db.guardar", ["animes",anime]);
-    await obj_route("db.guardar", ["generos",genero]);
-  }
-
-}
+  const generos = refs.entrada_edicion_generos.value
+  .split(",")
+  .map(g => g.trim())
+  .filter(g => g.length > 0)
+  .map(genero => ({
+    genero,
+    clave: refs.texto_id_anime.value
+  }));
 
 
-function verificarCamposDOM(objetos) {
-  const errores = [];
+  await obj_route("db.guardar", ["animes",anime]);
+  await Promise.all(
+    generos.map(genero => obj_route("db.guardar", ["generos", genero]))
+  );
 
-  objetos.forEach((objeto, index) => {
-    for (const [clave, valor] of Object.entries(objeto)) {
-      if (
-        valor instanceof Node || // incluye HTMLElement, Text, etc.
-        (typeof valor === "object" && valor !== null && "nodeType" in valor)
-      ) {
-        errores.push(`🛑 Objeto[${index}] campo "${clave}" contiene un nodo DOM: ${valor.constructor.name}`);
-      }
-    }
-  });
-
-  if (errores.length > 0) {
-    console.error("❌ Se detectaron campos con nodos DOM:");
-    errores.forEach(e => console.error(e));
-    return false;
-  }
-
-  console.log("✅ Todos los objetos están libres de nodos DOM.");
-  return true;
 }
