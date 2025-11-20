@@ -1,10 +1,12 @@
 export async function guardarAnimeDesdePopup(obj_route, refs, btnGuardar) {
   const metaAnime = JSON.parse(sessionStorage.getItem("metaAnime"));
-  
+  const dato_clave =  refs.texto_id_anime.textContent; //~ no me gusta hacer llamadas dos veces.
+  //* Parsear información
+  //** Tabla anime
   const anime={
-    clave: refs.texto_id_anime.textContent,              // PK
+    clave: dato_clave,              // PK
     nombre: refs.texto_nombre_anime.textContent,
-    favorito: refs.entrada_es_favorito .value,
+    favorito: refs.entrada_es_favorito.value,
     seguimiento: refs.selector_estado_seguimiento.value,
     audio: refs.selector_idioma_audio.value,
     subtitulos: refs.selector_idioma_subtitulos.value,
@@ -17,18 +19,44 @@ export async function guardarAnimeDesdePopup(obj_route, refs, btnGuardar) {
     temporada_actual: parseInt(refs.entrada_temporada_actual.value),
     episodio_actual: parseInt(refs.entrada_episodio_actual.value),
     url: metaAnime?.urlActual,
-    //! Falta : URLIMG
+    url_img: metaAnime?.urlImagen
   }
+  //** Tabla generos
+  //- 1. Lista actual (entrada del usuario)
+  const generosActuales = refs.entrada_edicion_generos.value
+    .split(",")
+    .map(g => g.trim())
+    .filter(g => g.length > 0);
 
-  const generos = refs.entrada_edicion_generos.value
-  .split(",")
-  .map(g => g.trim())
-  .filter(g => g.length > 0)
-  .map(genero => ({
+  //- 2. Lista original (desde sessionStorage)
+  const tagsOriginales = metaAnime?.tagsOriginales
+    .split(",")
+    .map(g => g.trim())
+    .filter(g => g.length > 0);
+
+  //- 3. Diferencia: los que estaban antes pero ya no están ahora
+  const generosEliminados = tagsOriginales.filter(
+    g => !generosActuales.includes(g)
+  );
+
+  //- 4. Eliminar de la base de datos (ejemplo con fetch)
+  await Promise.all(
+    generosEliminados.map(eliminar => obj_route("db.borrar", ["generos", [eliminar, dato_clave]]))
+  );
+
+  //- 5. Guardar los generos
+  const generos = generosActuales.map(genero => ({
     genero,
-    clave: refs.texto_id_anime.value
+    clave: dato_clave
   }));
 
+  //** Tabla Folders
+  /*
+    Esto se debe guardar con "save folder".
+    No tiene sentido guardar algo que no cambia tanto.
+    ? Quizás vale la pena para ponerlo en "pendiente", "viendo", etc
+    ? Quizás no vale la pena y se pueden falsear las carpetas de seguimiento.
+  */
 
   await obj_route("db.guardar", ["animes",anime]);
   await Promise.all(

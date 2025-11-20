@@ -10,6 +10,7 @@ export async function iniciar(obj_route, tabs, ref) {
     urlImagen: "",                              // ref.urlImagen.value = ref.animePortada.src;
     //todo) convertir en metadato del botón "save el folder"
     tagsTipo: "",                               // ref.tagsTipo.value = resultado.tags.tags.join(", ");
+    tagsOriginales: ""
   };
 
   const url = metaAnime.urlActual;
@@ -31,8 +32,10 @@ export async function iniciar(obj_route, tabs, ref) {
   refs.entrada_buscar_anime_relacionado.textContent = URL_nombre;
 
   //*) Actualizar metadatos auxiliares
-  metaAnime.urlImagen = refs.animePortada?.src || "";
-  metaAnime.tagsTipo = resultado?.tags?.tags?.join(", ") || "";
+  metaAnime.urlImagen = refs.imagen_portada_principal?.src || "";
+  metaAnime.tagsTipo = resultado?.tags?.tags?.join(", ") || ""; //~ Serán las carpetas
+  //~ metaAnime.urlActual para la URL del capítulo y el anime en general.
+  metaAnime.tagsOriginales = ref.entrada_edicion_generos.value;//~ para ayudar a eliminar los generos viejos.
   sessionStorage.setItem("metaAnime", JSON.stringify(metaAnime));
 }
 
