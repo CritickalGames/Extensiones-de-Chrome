@@ -39,9 +39,8 @@ export async function obj_route(action, payload) {
     //~) Sólo consideramos que hay un error si "error" no da Fasle
     //~) Si error = false, debería devolver un resultado
     return {
-      error: result?.error,
       //^) descompongo el resultado en: resultado o null
-      //todo: debería mejorar esta parte
+      error: result?.error,
       result: result?.result
     };
   } catch (error) {

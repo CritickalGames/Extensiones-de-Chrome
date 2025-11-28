@@ -7,7 +7,12 @@ const stores={
 export async function guardar(store, tabla) {
   try {
     const objectStore = await db_object_store(store);
-
+    if (objectStore.error) {
+      return {
+        error: objectStore.error,
+        result: null
+      };
+    }
     const request = objectStore.put(tabla); // usa `put` para insertar o actualizar
 
     request.onsuccess = function () {
@@ -25,7 +30,12 @@ export async function guardar(store, tabla) {
 export async function borrar(store, PK) {
   try {
     const objectStore = await db_object_store(store);
-
+    if (objectStore.error) {
+      return {
+        error: objectStore.error,
+        result: null
+      };
+    }
     const request = objectStore.delete(PK);
 
     request.onsuccess = function () {
@@ -37,6 +47,52 @@ export async function borrar(store, PK) {
     };
   } catch (error) {
     console.error("❌ Error al abrir la base de datos:\n", error);
+  }
+}
+
+export async function buscar_anime(PK) {
+  return buscar(stores["animes"],PK);
+}
+
+async function buscar(store, PK) {
+  try {
+    const objectStore = await db_object_store(store, "readonly");
+    if (objectStore.error) {
+      return {
+        error: objectStore.error,
+        result: null
+      };
+    }
+    const result = await new Promise((resolve, reject) => {
+      const request = objectStore.get(PK);
+
+      request.onsuccess = function () {
+        if (request.result) {
+          console.log("✅ Anime encontrado:", request.result);
+          resolve(request.result);
+        } else {
+          console.log(`⚠️ No se encontró anime con clave "${PK}"`);
+          resolve(null);
+        }
+      };
+
+      request.onerror = function (event) {
+        console.error("❌ Error al buscar:\n", event.target.error);
+        reject(event.target.error);
+      };
+    });
+
+    return {
+      error: false,
+      result
+    };
+
+  } catch (error) {
+    console.error("❌ Error al abrir la base de datos:\n", error);
+    return {
+      error: "❌ Error al abrir la base de datos",
+      result: null
+    };
   }
 }
 

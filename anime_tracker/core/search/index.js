@@ -3,11 +3,13 @@ import { obj_route } from "../router/index.js";
 export async function conseguir_anime(URL_nombre) {
   // Buscar en base de datos
   //? Si DB falla, busca en API automaticamente
-  const resultado = await obj_route('db.buscar_en_db', URL_nombre);
-  console.log(`Error: ${resultado.error}\n`,"Resultado DB:", resultado);
+  const resultado = await obj_route('db.buscar_anime', URL_nombre);
   
   //~ Con el nuevo router: !resultado.error significa éxito
-  if (!resultado.error) return resultado.result;
+  if (!resultado.error) return {
+    error: resultado.error,
+    result: resultado.result
+  };
 
   // Buscar en API
   const api_resultado = await obj_route('api.buscar_en_api', URL_nombre);
