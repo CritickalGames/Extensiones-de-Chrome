@@ -4,12 +4,23 @@ export async function conseguir_anime(URL_nombre) {
   // Buscar en base de datos
   //? Si DB falla, busca en API automaticamente
   const resultado = await obj_route('db.buscar_anime', URL_nombre);
-  
   //~ Con el nuevo router: !resultado.error significa éxito
-  if (!resultado.error) return {
-    error: resultado.error,
-    result: resultado.result
-  };
+  if (!resultado.error){
+    const resultado_genero = await obj_route('db.buscar_generos_por_anime', URL_nombre);    
+    if (!resultado_genero.error){
+      return{
+        error: false,
+        result: {
+          anime: resultado.result,
+          generos: resultado_genero.result
+        }
+      }
+    }
+    return {
+      error: resultado.error,
+      result: resultado.result
+    };
+  }
 
   // Buscar en API
   const api_resultado = await obj_route('api.buscar_en_api', URL_nombre);

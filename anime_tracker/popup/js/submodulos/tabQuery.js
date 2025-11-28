@@ -33,7 +33,8 @@ export async function iniciar(obj_route, tabs, ref) {
 
   //*) Actualizar metadatos auxiliares
   metaAnime.urlImagen = refs.imagen_portada_principal?.src || "";
-  metaAnime.tagsTipo = resultado?.tags?.tags?.join(", ") || ""; //~ Serán las carpetas
+  //~ Serán las carpetas
+  metaAnime.tagsTipo = resultado?.__FOLDER__?.tags?.tags?.join(", ") || "";//º Folder todavía no se implementa
   //~ metaAnime.urlActual para la URL del capítulo y el anime en general.
   metaAnime.tagsOriginales = ref.entrada_edicion_generos.value;//~ para ayudar a eliminar los generos viejos.
   sessionStorage.setItem("metaAnime", JSON.stringify(metaAnime));
@@ -51,7 +52,7 @@ async function fn(obj_route, url) {
   }
 
   const {
-    URL_dir,
+    _URL_dir,
     URL_nombre,
     nombre,
     temporada,
@@ -61,7 +62,6 @@ async function fn(obj_route, url) {
   const busqueda = await obj_route('search.conseguir_anime', URL_nombre);
 
   const resultado = busqueda.result;
-  console.log("busqueda:", JSON.stringify(busqueda, null, 2));
   
   if (busqueda.error === false) {
     //*) Anime encontrado correctamente
@@ -76,29 +76,29 @@ async function fn(obj_route, url) {
 
 //* 🧩 Actualizar DOM con datos de anime
 function actualizarDOM(resultado, URL_nombre, nombre, temporada, capitulo) {
-  console.log(resultado);
   asignarValoresPorTipo(
     {
       texto_nombre_anime: nombre,
       texto_id_anime: URL_nombre,
       entrada_temporada_actual: temporada ?? 0,
       entrada_episodio_actual: capitulo ?? 0,
-      entrada_anyo_estreno: resultado?.estreno?.anyo || 2000,
-      entrada_es_favorito: resultado?.anime?.favorito ?? false,
-      entrada_edicion_generos: resultado?.generos?.generos?.join(", ") || "",
-      texto_nota_usuario: resultado?.notas?.nota ?? 5,
-      selector_idioma_audio: resultado?.idiomas?.doblaje || "es",
-      selector_idioma_subtitulos: resultado?.idiomas?.subtitulos || "-",
-      selector_estado_general_anime: resultado?.emision?.estado || "desconocido",
-      selector_estado_seguimiento: resultado?.anime?.seguimiento || "ver",
-      selector_dia_emision: resultado?.estreno?.dia || "",
-      selector_temporada_estreno: resultado?.estreno?.temporada || ""
+      entrada_anyo_estreno: resultado?.anime?.estreno?.anyo || 2000,
+      entrada_es_favorito: resultado?.anime?.anime?.favorito ?? false,
+      entrada_edicion_generos: resultado?.anime?.generos?.generos?.join(", ") || "",
+      texto_nota_usuario: resultado?.anime?.notas?.nota ?? 5,
+      selector_idioma_audio: resultado?.anime?.idiomas?.doblaje || "es",
+      selector_idioma_subtitulos: resultado?.anime?.idiomas?.subtitulos || "-",
+      selector_estado_general_anime: resultado?.anime?.emision?.estado || "desconocido",
+      selector_estado_seguimiento: resultado?.anime?.anime?.seguimiento || "ver",
+      selector_dia_emision: resultado?.anime?.estreno?.dia || "",
+      selector_temporada_estreno: resultado?.anime?.estreno?.temporada || "",
+      texto_lista_generos: resultado?.generos?.map(g => g.genero).join(", ") || ""
     }
   );
 
 
   //*) Asignar imagen principal si existe
-  if (resultado?.anime?.portada) {
+  if (resultado?.anime?.anime?.portada) {
     refs.imagen_portada_principal.src = resultado.anime.portada;
   }
 }

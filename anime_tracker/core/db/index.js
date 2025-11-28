@@ -54,8 +54,8 @@ export async function buscar_anime(PK) {
   return buscar(stores.animes,PK);
 }
 
-export async function buscar_generos_por_clave(PK) {
-  return buscar_por_index(stores.generos,"por_clave",PK);
+export async function buscar_generos_por_anime(PK) {
+  return buscar_todo_por_index(stores.generos,"por_clave",PK);
 }
 
 async function buscar(store, PK) {
@@ -100,7 +100,7 @@ async function buscar(store, PK) {
   }
 }
 
-async function buscar_por_index(store, INX, indice) {
+async function buscar_todo_por_index(store, indice, PK) {
   try {
     const objectStore = await db_object_store(store, "readonly");
     if (objectStore.error)
@@ -111,14 +111,14 @@ async function buscar_por_index(store, INX, indice) {
 
     const result = await new Promise((resolve, reject) => {
       const index = objectStore.index(indice); 
-      const request = index.get(INX); 
+      const request = index.getAll(PK); 
 
       request.onsuccess = function () {
         if (request.result) {
           console.log("✅ Índice encontrado:", request.result);
           resolve(request.result);
         } else {
-          console.log(`⚠️ No se encontró el índice con clave "${INX}"`);
+          console.log(`⚠️ No se encontró el índice con clave "${PK}"`);
           resolve(null);
         }
       };
