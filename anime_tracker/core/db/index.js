@@ -51,18 +51,22 @@ export async function borrar(store, PK) {
 }
 
 export async function buscar_anime(PK) {
-  return buscar(stores["animes"],PK);
+  return buscar(stores.animes,PK);
+}
+
+export async function buscar_generos_por_clave(PK) {
+  return buscar_por_index(stores.generos,"por_clave",PK);
 }
 
 async function buscar(store, PK) {
   try {
     const objectStore = await db_object_store(store, "readonly");
-    if (objectStore.error) {
+    if (objectStore.error)
       return {
         error: objectStore.error,
         result: null
       };
-    }
+
     const result = await new Promise((resolve, reject) => {
       const request = objectStore.get(PK);
 
@@ -72,6 +76,49 @@ async function buscar(store, PK) {
           resolve(request.result);
         } else {
           console.log(`⚠️ No se encontró anime con clave "${PK}"`);
+          resolve(null);
+        }
+      };
+
+      request.onerror = function (event) {
+        console.error("❌ Error al buscar:\n", event.target.error);
+        reject(event.target.error);
+      };
+    });
+
+    return {
+      error: false,
+      result
+    };
+
+  } catch (error) {
+    console.error("❌ Error al abrir la base de datos:\n", error);
+    return {
+      error: "❌ Error al abrir la base de datos",
+      result: null
+    };
+  }
+}
+
+async function buscar_por_index(store, INX, indice) {
+  try {
+    const objectStore = await db_object_store(store, "readonly");
+    if (objectStore.error)
+      return {
+        error: objectStore.error,
+        result: null
+      };
+
+    const result = await new Promise((resolve, reject) => {
+      const index = objectStore.index(indice); 
+      const request = index.get(INX); 
+
+      request.onsuccess = function () {
+        if (request.result) {
+          console.log("✅ Índice encontrado:", request.result);
+          resolve(request.result);
+        } else {
+          console.log(`⚠️ No se encontró el índice con clave "${INX}"`);
           resolve(null);
         }
       };
