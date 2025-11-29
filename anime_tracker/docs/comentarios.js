@@ -13,15 +13,7 @@
  * const metaAnime = JSON.parse(sessionStorage.getItem("metaAnime") || "{}");
  */
 
-//!// TODO: Si eliminas un genero, no se elimina de la base de datos
-//! Implementar buscar_generos
-//*Probelma
-/*
- * Cuando Search consigue Anime por DB, no consigue sus generos.
- * Como no consigue sus generos, no puedo actualizar la lista de generos.
- & Si busqueda Anime tiene éxito, buscar Generos antes de enviar la información
- º Mantener la responsabilidad en search y no en el tabquerry
- * */
+//! TODO: Si eliminas un genero, no se elimina de la base de datos
 // TODO: IMPLEMENTAR EL SAVE FOLDER
 //- Tabla de FOLDER(KF=Folder+serie)
 // TODO: El botón folder debe tener menos relevacia, es más importante el de guardar anime.

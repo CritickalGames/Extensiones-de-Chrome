@@ -36,7 +36,7 @@ export async function iniciar(obj_route, tabs, ref) {
   //~ Serán las carpetas
   metaAnime.tagsTipo = resultado?.__FOLDER__?.tags?.tags?.join(", ") || "";//º Folder todavía no se implementa
   //~ metaAnime.urlActual para la URL del capítulo y el anime en general.
-  metaAnime.tagsOriginales = ref.entrada_edicion_generos.value;//~ para ayudar a eliminar los generos viejos.
+  metaAnime.tagsOriginales = ref.texto_lista_generos.textContent;//~ para ayudar a eliminar los generos viejos.
   sessionStorage.setItem("metaAnime", JSON.stringify(metaAnime));
 }
 
