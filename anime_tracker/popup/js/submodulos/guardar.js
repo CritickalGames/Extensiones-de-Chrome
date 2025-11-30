@@ -23,8 +23,8 @@ export async function guardar_anime(obj_route, refs) {
   }
   await obj_route("db.guardar", ["animes",anime]);
   //** Tabla generos
-  //? ¿Debería hacer que llame a guardar_generos? De momento, sí
-  await guardar_generos(obj_route, refs);
+  //? ¿Debería hacer que llame a guardar_generos? De momento, no. Creo que es innecesario.
+  // await guardar_generos(obj_route, refs);
   //** Tabla Folders
   /*
     Esto se debe guardar con "save folder".
