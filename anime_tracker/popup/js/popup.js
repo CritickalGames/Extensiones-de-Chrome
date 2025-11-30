@@ -1,6 +1,6 @@
 //* 📦 Importaciones
 import { obj_route } from '../../core/router/index.js';
-import { guardarAnimeDesdePopup } from "./submodulos/guardar.js";
+import { guardar_anime } from "./submodulos/guardar.js";
 import { fnCapituloVisto } from "./submodulos/btnCapituloVisto.js";
 import { iniciar } from "./submodulos/tabQuery.js";
 import {
@@ -29,13 +29,13 @@ chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
 
 //*) 🗃️ Guardar anime en IndexedDB
 ref_botones.btn_guardar_datos.addEventListener("click", () => {
-  //*) Combinar referencias para pasarlas a 'guardarAnimeDesdePopup'
+  //º) Combinar referencias para pasarlas a 'guardar_anime'
   const refs_para_guardar = {
     ...ref_estado,
     ...ref_listas,
     ...ref_input
   };
-  guardarAnimeDesdePopup(obj_route, refs_para_guardar, ref_botones.btn_guardar_datos);
+  guardar_anime(obj_route, refs_para_guardar);
 });
 
 //*) 📁 Redirigir a carpetas.html

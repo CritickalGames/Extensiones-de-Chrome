@@ -1,5 +1,6 @@
 import { extraer_anime_desde_dom } from '../submodulos/extraer.js';
-
+import { guardar_generos } from '../submodulos/guardar.js';
+import { obj_route } from '../../../core/router/index.js';
 let editingGeneros = false;
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -32,6 +33,13 @@ function editarGeneros(refs) {
         refs.texto_lista_generos.style.display = 'block';
         refs.btn_editar_generos.textContent = 'Edit Genres';
         editingGeneros = false;
+        //º Ref para guardar_generos
+        const refs_para_generos = {
+          entrada_edicion_generos: refs.entrada_edicion_generos,
+          texto_id_anime: refs.texto_id_anime
+        };
+      
+        guardar_generos(obj_route, refs_para_generos);
       } else {
         refs.entrada_edicion_generos.value = refs.texto_lista_generos.textContent;
         refs.texto_lista_generos.style.display = 'none';

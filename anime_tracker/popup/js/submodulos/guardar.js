@@ -1,4 +1,4 @@
-export async function guardarAnimeDesdePopup(obj_route, refs, btnGuardar) {
+export async function guardar_anime(obj_route, refs) {
   const metaAnime = JSON.parse(sessionStorage.getItem("metaAnime"));
   const dato_clave =  refs.texto_id_anime.textContent; //~ no me gusta hacer llamadas dos veces.
   //* Parsear información
@@ -21,7 +21,23 @@ export async function guardarAnimeDesdePopup(obj_route, refs, btnGuardar) {
     url: metaAnime?.urlActual,
     url_img: metaAnime?.urlImagen
   }
+  await obj_route("db.guardar", ["animes",anime]);
   //** Tabla generos
+  //? ¿Debería hacer que llame a guardar_generos? De momento, sí
+  await guardar_generos(obj_route, refs);
+  //** Tabla Folders
+  /*
+    Esto se debe guardar con "save folder".
+    No tiene sentido guardar algo que no cambia tanto.
+    ? Quizás vale la pena para ponerlo en "pendiente", "viendo", etc
+    ? Quizás no vale la pena y se pueden falsear las carpetas de seguimiento.
+  */
+
+}
+
+export async function guardar_generos(obj_route, refs) {
+  const metaAnime = JSON.parse(sessionStorage.getItem("metaAnime"));
+  const dato_clave =  refs.texto_id_anime.textContent; //~ no me gusta hacer llamadas dos veces.
   //- 1. Lista actual (entrada del usuario)
   const generosActuales = refs.entrada_edicion_generos.value
     .split(",")
@@ -50,17 +66,7 @@ export async function guardarAnimeDesdePopup(obj_route, refs, btnGuardar) {
     clave: dato_clave
   }));
 
-  //** Tabla Folders
-  /*
-    Esto se debe guardar con "save folder".
-    No tiene sentido guardar algo que no cambia tanto.
-    ? Quizás vale la pena para ponerlo en "pendiente", "viendo", etc
-    ? Quizás no vale la pena y se pueden falsear las carpetas de seguimiento.
-  */
-
-  await obj_route("db.guardar", ["animes",anime]);
   await Promise.all(
     generos.map(genero => obj_route("db.guardar", ["generos", genero]))
   );
-
 }
