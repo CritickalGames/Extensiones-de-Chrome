@@ -13,8 +13,7 @@
  * const metaAnime = JSON.parse(sessionStorage.getItem("metaAnime") || "{}");
  */
 
-//TODO actualizar géneros actualizamente
-// º quizás deba hacer que se actualice actuamaticamente.
+
 // TODO: IMPLEMENTAR EL SAVE FOLDER
 //- Tabla de FOLDER(KF=Folder+serie)
 // TODO: El botón folder debe tener menos relevacia, es más importante el de guardar anime.
@@ -26,3 +25,4 @@
 //-// Guardar la URL a meta datos
 //- Extraer la URL de meta datos
 // TODO: BORRAR ALERTS
+// TODO: Implementar las "relaciones"
