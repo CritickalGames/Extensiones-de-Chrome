@@ -40,7 +40,11 @@ ref_botones.btn_guardar_datos.addEventListener("click", () => {
 
 //*) 📁 Redirigir a carpetas.html
 ref_botones.btn_abrir_carpetas.addEventListener("click", () => {
-  window.location.href = "subpopup/carpetas.html";
+  window.location.href = "/popup/subpopup/html/carpetas.html";
+});
+
+ref_botones.btn_alternar_configuracion.addEventListener("click", () => {
+  window.location.href = "/popup/subpopup/html/config_anime.html";
 });
 
 //todo) 🔍 Buscar manualmente (PENDIENTE DE IMPLEMENTACIÓN)

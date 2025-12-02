@@ -16,8 +16,12 @@ function iniciarPopup(refs) {
   manejarCalificacion(refs);
   sincronizarTemporadaEpisodio(refs);
   copiarID(refs);
+  //! testear Sincronizar Fondos
   sincronizarFondoPortada(refs);
+  //TODO: Hay que cambiar esto.
+  //ºla idea original era mandar a otra pantalla, así que, hay lo eliminaré luego
   alternarMenuConfiguracion(refs);
+  //TODO: borrar los siguientes cuando ya no sean útiles
   botonesCabecera(refs);
   guardarFinal(refs);
   buscarAnime(refs);
@@ -153,12 +157,11 @@ function alternarMenuConfiguracion(refs) {
 // * 7. Botones de cabecera
 function botonesCabecera(refs) {
   refs.btn_abrir_carpetas?.addEventListener('click', () => {
-    alert("VISTAS:Abrir carpetas presionado.");
-    console.log("Abrir carpetas presionado.");
+
   });
 
   refs.btn_menu_principal?.addEventListener('click', () => {
-    alert("VISTAS:Menú principal presionado.");
+    alert("VISUALES.js:Menú principal presionado.");
     console.log("Menú principal presionado.");
   });
 }
@@ -166,7 +169,7 @@ function botonesCabecera(refs) {
 // * 8. Botón final de guardar
 function guardarFinal(refs) {
   refs.btn_guardar_final?.addEventListener('click', () => {
-    alert("VISTAS:Guardar a carpetas presionado.");
+    alert("VISUALES.js:Guardar a carpetas presionado.");
     console.log("Guardar a carpetas presionado.");
   });
 }
@@ -174,6 +177,6 @@ function guardarFinal(refs) {
 // * 9. Búsqueda de anime
 function buscarAnime(refs) {
   refs.entrada_buscar_anime?.addEventListener('input', () => {
-    console.log("VISTAS: Búsqueda:", refs.entrada_buscar_anime.value);
+    console.log("VISUALES.js: Búsqueda:", refs.entrada_buscar_anime.value);
   });
 }
