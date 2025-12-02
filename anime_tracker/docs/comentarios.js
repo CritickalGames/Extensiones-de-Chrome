@@ -26,3 +26,4 @@
 //- Extraer la URL de meta datos
 // TODO: BORRAR ALERTS
 // TODO: Implementar las "relaciones"
+// TODO: Hacer que Save Folder sea un botón folder y que guarde el anime en la base de datos.
