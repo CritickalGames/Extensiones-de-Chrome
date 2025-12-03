@@ -13,9 +13,14 @@
  * const metaAnime = JSON.parse(sessionStorage.getItem("metaAnime") || "{}");
  */
 
-
+//! TODO NECESITO ARREGLAR BTN VISTO
+//- hacer que se pueda cambiar el estado
+//- hacer que se guarde en la bd
+//- hacer que se recupere de la bd
 // TODO: IMPLEMENTAR EL SAVE FOLDER
 //- Tabla de FOLDER(KF=Folder+serie)
+//- hacer folders por defecto y personalizados
+//- hacer que el botón en forma de carpeta sea para guardar en una carpta personalizada
 // TODO: El botón folder debe tener menos relevacia, es más importante el de guardar anime.
 // º Los nuevos usuarios no entenderán
 // + Los botones de disquete y de carpeta deben ser para ver la lista enteras
@@ -26,3 +31,6 @@
 // TODO: BORRAR ALERTS
 // TODO: Implementar las "relaciones"
 // TODO: Hacer que Save Folder sea un botón folder y que guarde el anime en la base de datos.
+// TODO: Darle funcionalidad a la lista deplegable
+//+ Lo que pensaba poner en el engranaje irá ahí. El engranaje sólo será para configuración del usuario
+//º seguro así será mucho más intuintivo. Uno en un engranaje espera las configuraciones.
