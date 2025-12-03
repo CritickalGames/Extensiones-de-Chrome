@@ -22,7 +22,6 @@
 // + Al findo, o en algún lugar accesible deben estar los dos botones: guaradar anime y guardar en carpeta
 // ºº Guardar en carpeta debe desplegar un menú de carpetas
 // TODO: IMPLEMENTAR LA URL IMG
-//-// Guardar la URL a meta datos
 //- Extraer la URL de meta datos
 // TODO: BORRAR ALERTS
 // TODO: Implementar las "relaciones"

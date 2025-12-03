@@ -1,6 +1,6 @@
 import { extraer_anime_desde_dom } from '../submodulos/extraer.js';
 import { guardar_generos } from '../submodulos/guardar.js';
-import { obj_route } from '../../../core/router/index.js';
+import { obj_route } from '../../../core/router/router.js';
 let editingGeneros = false;
 
 document.addEventListener('DOMContentLoaded', function () {

@@ -1,4 +1,4 @@
-import { obj_route } from "../router/index.js";
+import { obj_route } from "../router/router.js";
 
 export async function conseguir_anime(URL_nombre) {
   // Buscar en base de datos

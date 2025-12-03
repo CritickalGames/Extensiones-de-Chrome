@@ -3,7 +3,7 @@ export async function obj_route(action, payload) {
   console.info("ENTRADA router");
   try {
     const [modulo, funcion] = action.split('.');
-    const ruta = "core/" + modulo + "/index.js";
+    const ruta = "core/" + modulo + "/"+modulo+".js";
 
     //^) Validar que el módulo esté definido
     if (!modulo) {
