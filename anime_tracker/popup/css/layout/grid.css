@@ -1,1 +1,18 @@
-﻿
+﻿/* --- Grid (Estreno/Emisión) --- */
+.c_cuadricula {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding-top: 8px;
+}
+
+.c_elemento_cuadricula_flex {
+  flex-direction: column;
+  gap: 4px;
+}
+
+.c_etiqueta_cuadricula {
+  font-size: 14px;
+  color: var(--text-gray);
+  margin: 0;
+}

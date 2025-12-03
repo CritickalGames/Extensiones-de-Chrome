@@ -3,10 +3,13 @@ export async function guardar_anime(obj_route, refs) {
   const dato_clave =  refs.texto_id_anime.textContent; //~ no me gusta hacer llamadas dos veces.
   //* Parsear información
   //** Tabla anime
+  console.warn(refs.entrada_es_favorito.value);
+  
+  
   const anime={
     clave: dato_clave,              // PK
     nombre: refs.texto_nombre_anime.textContent,
-    favorito: refs.entrada_es_favorito.value,
+    favorito: ""+refs.entrada_es_favorito.checked,
     seguimiento: refs.selector_estado_seguimiento.value,
     audio: refs.selector_idioma_audio.value,
     subtitulos: refs.selector_idioma_subtitulos.value,

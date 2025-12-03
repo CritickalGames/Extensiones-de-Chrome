@@ -76,26 +76,24 @@ async function fn(obj_route, url) {
 
 //* 🧩 Actualizar DOM con datos de anime
 function actualizarDOM(resultado, URL_nombre, nombre, temporada, capitulo) {
-  asignarValoresPorTipo(
-    {
-      texto_nombre_anime: nombre,
-      texto_id_anime: URL_nombre,
-      entrada_temporada_actual: temporada ?? 0,
-      entrada_episodio_actual: capitulo ?? 0,
-      entrada_anyo_estreno: resultado?.anime?.estreno?.anyo || 2000,
-      entrada_es_favorito: resultado?.anime?.anime?.favorito ?? false,
-      entrada_edicion_generos: resultado?.anime?.generos?.generos?.join(", ") || "",
-      texto_nota_usuario: resultado?.anime?.notas?.nota ?? 5,
-      selector_idioma_audio: resultado?.anime?.idiomas?.doblaje || "es",
-      selector_idioma_subtitulos: resultado?.anime?.idiomas?.subtitulos || "-",
-      selector_estado_general_anime: resultado?.anime?.emision?.estado || "desconocido",
-      selector_estado_seguimiento: resultado?.anime?.anime?.seguimiento || "ver",
-      selector_dia_emision: resultado?.anime?.estreno?.dia || "",
-      selector_temporada_estreno: resultado?.anime?.estreno?.temporada || "",
-      texto_lista_generos: resultado?.generos?.map(g => g.genero).join(", ") || ""
-    }
-  );
-
+  
+  asignarValoresPorTipo({
+    texto_nombre_anime: nombre,
+    texto_id_anime: URL_nombre,
+    entrada_temporada_actual: temporada ?? 0,
+    entrada_episodio_actual: capitulo ?? 0,
+    entrada_anyo_estreno: resultado?.anime?.anyo_estreno || 2000,
+    entrada_es_favorito: (resultado?.anime?.favorito ?? "false") !== "false",
+    entrada_edicion_generos: resultado?.generos?.map(g => g.genero).join(", ") || "",
+    texto_nota_usuario: resultado?.anime?.nota ?? 5,
+    selector_idioma_audio: resultado?.anime?.audio || "es",
+    selector_idioma_subtitulos: resultado?.anime?.subtitulos || "-",
+    selector_estado_general_anime: resultado?.anime?.estado || "desconocido",
+    selector_estado_seguimiento: resultado?.anime?.seguimiento || "ver",
+    selector_dia_emision: resultado?.anime?.dia_estreno || "",
+    selector_temporada_estreno: resultado?.anime?.temporada_estreno || "",
+    texto_lista_generos: resultado?.generos?.map(g => g.genero).join(", ") || ""
+  });
 
   //*) Asignar imagen principal si existe
   if (resultado?.anime?.anime?.portada) {

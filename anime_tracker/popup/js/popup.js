@@ -7,10 +7,12 @@ import {
   obtener_entradas_anime,
   obtener_botones_interaccion,
   obtener_estado_anime,
-  obtener_listas
+  obtener_listas,
+  // obtener_test,
 } from "./submodulos/extraer.js";
 
 //*) 🔗 Recolección de referencias DOM
+// const ref_test = obtener_test();
 const ref_input = obtener_entradas_anime();
 const ref_botones = obtener_botones_interaccion();
 const ref_estado = obtener_estado_anime();
@@ -51,3 +53,7 @@ ref_botones.btn_alternar_configuracion.addEventListener("click", () => {
 ref_botones.btn_buscar.addEventListener("click", async () => {
   console.log("Funcionalidad de búsqueda manual aún no implementada.");
 });
+
+ref_input.entrada_es_favorito.addEventListener("click", ()=>{
+  // ref_test.log.value = ref_input.entrada_es_favorito.checked
+})

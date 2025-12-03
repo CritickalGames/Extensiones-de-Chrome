@@ -1,0 +1,88 @@
+/* --- Inputs: clase base --- */
+.c_entrada {
+  background-color: transparent;
+  color: var(--text-white);
+  font-size: 16px;
+  padding: 12px;
+  border: none;
+  border-radius: var(--border-radius-md);
+  outline: none;
+  width: 100%;
+}
+
+.c_entrada::placeholder {
+  color: var(--text-gray);
+}
+
+/*º Variantes de input */
+.c_entrada--busqueda {
+  flex: 1;
+  font-weight: normal;
+}
+
+.c_entrada--numero {
+  width: 36px;
+  text-align: center;
+  font-weight: 500;
+  padding: 0;
+  background-color: var(--surface-dark);
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.c_entrada--numero::-webkit-outer-spin-button,
+.c_entrada--numero::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.c_entrada--compacta {
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: var(--surface-dark);
+  width: 100%;
+}
+
+/* --- Día y Estado --- */
+.c_seccion_dia_estado_flex {
+  flex-direction: column;
+  gap: 16px;
+}
+
+.c_contenedor_emision_flex {
+  flex-direction: column;
+  gap: 8px;
+}
+
+.c_etiqueta_seccion {
+  font-size: 16px;
+  color: var(--text-gray);
+  margin: 0;
+}
+
+/* --- Géneros --- */
+.c_seccion_generos_flex {
+  flex-direction: column;
+  gap: 8px;
+}
+
+.c_cabecera_seccion_flex {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.c_lista_generos {
+  font-size: 16px;
+  color: var(--text-white);
+  margin: 0;
+}
+
+/* Barra de búsqueda superior */
+.c_barra_busqueda {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 0 4px 0;
+}

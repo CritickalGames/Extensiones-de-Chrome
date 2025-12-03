@@ -1,0 +1,48 @@
+/* --- Audio y Subtítulos --- */
+.c_audio_subtitulos_section_flex {
+  flex-direction: column;
+  gap: 8px;
+}
+
+.c_seccion_label {
+  font-size: 16px;
+  color: var(--text-gray);
+  margin: 0;
+}
+
+.c_audio_subtitulos_controls_flex {
+  gap: 8px;
+}
+
+.c_audio_subtitulos_controls_flex > select {
+  flex: 1;
+}
+/* --- Calificación y Seguimiento --- */
+.c_calificacion_container_flex {
+  align-items: center;
+  gap: 8px;
+}
+
+.c_rating_controls_flex {
+  align-items: center;
+  gap: 4px;
+  background-color: var(--surface-dark);
+  padding: 4px;
+  border-radius: var(--border-radius-md);
+}
+
+.c_estrella {
+  color: var(--primary);
+  font-size: 24px;
+}
+
+.c_valor_calificacion {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-white);
+}
+
+.c_estado_container {
+  flex: 1;
+  max-width: 140px;
+}

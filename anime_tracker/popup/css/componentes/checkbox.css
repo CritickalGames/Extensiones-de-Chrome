@@ -1,0 +1,38 @@
+/* --- Switch (Favorito) --- */
+.c_switch_favorito {
+  position: relative;
+  display: inline-block;
+  width: 51px;
+  height: 31px;
+  border: none;
+  background-color: var(--surface-dark);
+  border-radius: var(--border-radius-full);
+  padding: 4px;
+  cursor: pointer;
+}
+
+.c_switch_favorito input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.c_slider_favorito {
+  position: absolute;
+  top: 50%;
+  left: 2px;
+  width: 27px;
+  height: 27px;
+  background-color: var(--text-white);
+  border-radius: var(--border-radius-full);
+  transition: transform 0.2s;
+  transform: translate(0, -50%);
+}
+
+.c_switch_favorito input:checked + .c_slider_favorito {
+  transform: translate(24px, -50%);
+}
+
+.c_switch_favorito:has(input:checked) {
+  background-color: var(--primary);
+}

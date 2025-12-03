@@ -72,6 +72,13 @@ export function obtener_ocultos() {
   }
 }
 
+// export function obtener_test() {
+//   return{
+//     log: obtener_elemento_por_id("log"),
+//     check: obtener_elemento_por_id("prueba"),
+//   }
+// }
+
 // 🧩 Composición final
 export function extraer_anime_desde_dom() {
   return {

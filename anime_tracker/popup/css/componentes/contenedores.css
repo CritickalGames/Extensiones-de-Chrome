@@ -1,0 +1,70 @@
+/* _sections.css */
+.contenedor_flex{
+  display: flex;
+}
+/* --- Información principal --- */
+.c_info_principal_flex {
+  flex-direction: column;
+  gap: 12px;
+}
+
+.c_titulo_id_wrapper_flex {
+  flex-direction: column;
+  flex: 1;
+}
+
+.c_titulo_anime {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--text-white);
+  margin: 0;
+}
+
+.c_id_container_flex {
+  align-items: center;
+  gap: 6px;
+}
+
+.c_etiqueta_id {
+  font-size: 14px;
+  color: var(--text-gray);
+  margin: 0;
+}
+
+.c_icono_copiar {
+  font-size: 16px;
+  color: var(--text-gray);
+  cursor: pointer;
+}
+
+.c_favorito_container_flex {
+  align-items: center;
+}
+
+.c_etiqueta_fav {
+  font-size: 14px;
+  color: var(--text-white);
+}
+/* --- Selects --- */
+.c_selector {
+  width: 100%;
+  padding: 6px 32px 6px 12px;
+  border-radius: var(--border-radius-md);
+  background-color: var(--surface-dark);
+  color: var(--text-white);
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+/** _layout.css */
+.c_contenedor_app {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  min-height: 100%;
+}
