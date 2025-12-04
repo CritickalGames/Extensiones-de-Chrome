@@ -13,10 +13,6 @@
  * const metaAnime = JSON.parse(sessionStorage.getItem("metaAnime") || "{}");
  */
 
-//! TODO NECESITO ARREGLAR BTN VISTO
-//- hacer que se pueda cambiar el estado
-//- hacer que se guarde en la bd
-//- hacer que se recupere de la bd
 // TODO: IMPLEMENTAR EL SAVE FOLDER
 //- Tabla de FOLDER(KF=Folder+serie)
 //- hacer folders por defecto y personalizados
@@ -28,6 +24,7 @@
 // ºº Guardar en carpeta debe desplegar un menú de carpetas
 // TODO: IMPLEMENTAR LA URL IMG
 //- Extraer la URL de meta datos
+//- Modificar la URL de forma manual
 // TODO: BORRAR ALERTS
 // TODO: Implementar las "relaciones"
 // TODO: Hacer que Save Folder sea un botón folder y que guarde el anime en la base de datos.
