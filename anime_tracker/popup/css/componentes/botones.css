@@ -20,17 +20,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: none;
-  cursor: pointer;
-  background-color: var(--boton-color, var(--surface-dark));
-  color: var(--text-white);
-  border-radius: var(--border-radius-lg);
-  font-size: 24px;
   width: 40px;
   height: 40px;
+  border: none;
+  border-radius: var(--border-radius-lg, 8px);
+  background-color: var(--boton-color, var(--surface-dark));
+  color: var(--text-white);
+  font-size: 24px;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
-/*º Variantes de botón */
+/** Variantes de botón */
 .c_boton--pequenyo {
   width: 32px;
   height: 32px;
@@ -44,6 +45,30 @@
 .c_boton--no-activo {
   --boton-color: var(--primary);
 }
+
+/*- check como btn */
+#entrada_episodio_visto{
+  display: none;
+}
+/*º Texto por defecto (no visto) */
+.btn-toggle{
+  height: 32px;
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--border-radius-md);
+  width: auto;
+}
+.btn-toggle::before {
+  content: "No Visto";
+}
+#entrada_episodio_visto:checked + .btn-toggle {
+  --boton-color: var(--surface-dark); 
+}
+#entrada_episodio_visto:checked + .btn-toggle::before {
+  content: "Visto";
+}
+
 #btn_marcar_episodio_visto {
   height: 32px;
   padding: 0 12px;

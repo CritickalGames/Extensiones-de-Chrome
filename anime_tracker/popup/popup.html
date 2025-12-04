@@ -109,7 +109,9 @@
 
     <!-- Temporada/Episodio -->
     <section class="c_progreso_wrapper_flex contenedor_flex">
-      <button id="btn_marcar_episodio_visto" class="c_boton c_boton--no-activo ">Capitulo Visto</button>
+      <!-- Checkbox oculto + label simulando botón -->
+      <input type="checkbox" id="entrada_episodio_visto">
+      <label for="entrada_episodio_visto" class="btn-toggle c_boton c_boton--no-activo"></label>
       <fieldset class="c_temporada_episodio_controls_flex contenedor_flex">
         <div class="c_grupo_T_E_flex contenedor_flex">
           <label class="c_etiqueta_T_E">T</label>

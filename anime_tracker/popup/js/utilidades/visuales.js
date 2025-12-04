@@ -20,7 +20,6 @@ function iniciarPopup(refs) {
   sincronizarFondoPortada(refs);
   //TODO: Hay que cambiar esto.
   //ºla idea original era mandar a otra pantalla, así que, hay lo eliminaré luego
-  alternarMenuConfiguracion(refs);
   //TODO: borrar los siguientes cuando ya no sean útiles
   botonesCabecera(refs);
   guardarFinal(refs);
@@ -135,7 +134,7 @@ function sincronizarFondoPortada(refs) {
   }
 }
 
-// * 6. Menú configuración
+// *. Menú configuración
 function alternarMenuConfiguracion(refs) {
   if (refs.btn_alternar_configuracion && refs.menu_configuracion) {
     refs.btn_alternar_configuracion.addEventListener('click', (e) => {
@@ -154,7 +153,7 @@ function alternarMenuConfiguracion(refs) {
   }
 }
 
-// * 7. Botones de cabecera
+// *. Botones de cabecera
 function botonesCabecera(refs) {
   refs.btn_abrir_carpetas?.addEventListener('click', () => {
 
@@ -166,7 +165,7 @@ function botonesCabecera(refs) {
   });
 }
 
-// * 8. Botón final de guardar
+// *. Botón final de guardar
 function guardarFinal(refs) {
   refs.btn_guardar_final?.addEventListener('click', () => {
     alert("VISUALES.js:Guardar a carpetas presionado.");
@@ -174,7 +173,7 @@ function guardarFinal(refs) {
   });
 }
 
-// * 9. Búsqueda de anime
+// *. Búsqueda de anime
 function buscarAnime(refs) {
   refs.entrada_buscar_anime?.addEventListener('input', () => {
     console.log("VISUALES.js: Búsqueda:", refs.entrada_buscar_anime.value);

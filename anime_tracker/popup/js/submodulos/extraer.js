@@ -29,6 +29,7 @@ export function obtener_entradas_anime() {
     entrada_anyo_estreno: obtener_elemento_por_id("entrada_anyo_estreno"),
     entrada_edicion_generos: obtener_elemento_por_id("entrada_edicion_generos"),
     entrada_buscar_anime_relacionado: obtener_elemento_por_id("entrada_buscar_anime_relacionado"),
+    entrada_episodio_visto: obtener_elemento_por_id("entrada_episodio_visto"),
   };
 }
 
@@ -58,8 +59,7 @@ export function obtener_botones_interaccion() {
     btn_sumar_temporada: obtener_elemento_por_id("btn_sumar_temporada"),
     btn_restar_episodio: obtener_elemento_por_id("btn_restar_episodio"),
     btn_sumar_episodio: obtener_elemento_por_id("btn_sumar_episodio"),
-    btn_marcar_episodio_visto: obtener_elemento_por_id("btn_marcar_episodio_visto"),
-    btn_restar_calificacion: obtener_elemento_por_id("btn_restar_calificacion"),
+    btn_restar_calificacion: obtener_elemento_por_id("btn_episodio_visto"),
     btn_sumar_calificacion: obtener_elemento_por_id("btn_sumar_calificacion"),
     btn_editar_generos: obtener_elemento_por_id("btn_editar_generos"),
     btn_guardar_final: obtener_elemento_por_id("btn_guardar_final"),

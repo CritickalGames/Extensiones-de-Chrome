@@ -63,6 +63,7 @@ function crearStore_Animes(db) {
    * nota
    * URL, no se puede buscar por url 
    * URL_imagen, aunque no se puede buscar por url_imagen
+   * ep_visto, un array de [temporada, episodio]
   */
 }
 

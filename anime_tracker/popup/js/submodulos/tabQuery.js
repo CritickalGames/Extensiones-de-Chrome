@@ -76,7 +76,13 @@ async function fn(obj_route, url) {
 
 //* 🧩 Actualizar DOM con datos de anime
 function actualizarDOM(resultado, URL_nombre, nombre, temporada, capitulo) {
-  
+  const ep_visto = resultado?.anime?.ep_visto ?? [-1,-1];
+  const ep_t = ep_visto[0];
+  const ep_e = ep_visto[1];
+  const _t_e = parseInt(temporada+""+ capitulo)
+  const ep_te = parseInt(ep_t+""+ep_e);
+  const _visto =(_t_e<=ep_te ? true: false)
+
   asignarValoresPorTipo({
     texto_nombre_anime: nombre,
     texto_id_anime: URL_nombre,
@@ -84,6 +90,7 @@ function actualizarDOM(resultado, URL_nombre, nombre, temporada, capitulo) {
     entrada_episodio_actual: capitulo ?? 0,
     entrada_anyo_estreno: resultado?.anime?.anyo_estreno || 2000,
     entrada_es_favorito: (resultado?.anime?.favorito ?? "false") !== "false",
+    entrada_episodio_visto: _visto,
     entrada_edicion_generos: resultado?.generos?.map(g => g.genero).join(", ") || "",
     texto_nota_usuario: resultado?.anime?.nota ?? 5,
     selector_idioma_audio: resultado?.anime?.audio || "es",

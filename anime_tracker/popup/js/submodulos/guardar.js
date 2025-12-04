@@ -3,13 +3,18 @@ export async function guardar_anime(obj_route, refs) {
   const dato_clave =  refs.texto_id_anime.textContent; //~ no me gusta hacer llamadas dos veces.
   //* Parsear información
   //** Tabla anime
-  console.warn(refs.entrada_es_favorito.value);
   
-  
+  let temporada_actual= parseInt(refs.entrada_temporada_actual.value);
+  let episodio_actual= parseInt(refs.entrada_episodio_actual.value);
+  let ep_visto;
+  if (refs.entrada_episodio_visto.checked){
+    ep_visto = [temporada_actual, episodio_actual];
+  }
   const anime={
     clave: dato_clave,              // PK
     nombre: refs.texto_nombre_anime.textContent,
     favorito: ""+refs.entrada_es_favorito.checked,
+    ep_visto,
     seguimiento: refs.selector_estado_seguimiento.value,
     audio: refs.selector_idioma_audio.value,
     subtitulos: refs.selector_idioma_subtitulos.value,
@@ -19,8 +24,6 @@ export async function guardar_anime(obj_route, refs) {
     estado: refs.selector_estado_general_anime.value,
     nota: parseInt(refs.texto_nota_usuario.textContent),
     generos: refs.entrada_edicion_generos.value,
-    temporada_actual: parseInt(refs.entrada_temporada_actual.value),
-    episodio_actual: parseInt(refs.entrada_episodio_actual.value),
     url: metaAnime?.urlActual,
     url_img: metaAnime?.urlImagen
   }

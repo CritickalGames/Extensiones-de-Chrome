@@ -37,6 +37,7 @@ ref_botones.btn_guardar_datos.addEventListener("click", () => {
     ...ref_listas,
     ...ref_input
   };
+  
   guardar_anime(obj_route, refs_para_guardar);
 });
 
