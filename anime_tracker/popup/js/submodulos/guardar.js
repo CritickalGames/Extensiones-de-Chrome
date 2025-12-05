@@ -76,3 +76,20 @@ export async function guardar_generos(obj_route, refs) {
     generos.map(genero => obj_route("db.guardar", ["generos", genero]))
   );
 }
+
+export async function guardar_folder(obj_route, refs) {
+  //- Conseguir clave
+  //- Conseguir Seguimiento
+  //- Conseguir Favorito
+  //- Conseguir Año
+  //- Conseguir Temporada
+  //- Conseguir Día de Estreno
+  //- Conseguir Estado de Emisión
+  //- Conseguir Meta_folders
+  //- Encontrar diferencia
+  //--Borra diferencias, si hay
+
+  await Promise.all(
+    //folders.map(folder => obj_route("db.guardar", ["folders", folder]))
+  );
+}
