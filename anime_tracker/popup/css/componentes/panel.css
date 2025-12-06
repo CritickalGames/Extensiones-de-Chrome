@@ -1,0 +1,29 @@
+.panel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50vh;
+  background: var(--background-dark);
+  transform: translateY(100%);
+  transition: transform 0.3s;
+  z-index: 1000;
+}
+
+.panel--activo {
+  transform: translateY(0);
+}
+
+.panel__header {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  cursor: grab;
+}
+
+.panel__content {
+  padding: 10px;
+  overflow-y: auto;
+  height: calc(100% - 50px);
+}

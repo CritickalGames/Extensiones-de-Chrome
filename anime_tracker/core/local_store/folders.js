@@ -75,7 +75,7 @@ export async function eliminar_carpeta(id) {
   // ⚠️ ¡No olvides eliminar sus relaciones en IndexedDB!
   // Llamá a tu función: eliminar_todas_las_relaciones_de_carpeta(id);
 }
-// Exportar
+
 export async function exportar_carpetas() {
   const data = await chrome.storage.local.get(LStores.carpetas);
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });

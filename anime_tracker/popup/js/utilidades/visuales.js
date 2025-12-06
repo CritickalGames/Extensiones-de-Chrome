@@ -3,31 +3,29 @@ import { guardar_generos } from '../submodulos/guardar.js';
 import { obj_route } from '../../../core/router/router.js';
 let editingGeneros = false;
 
-document.addEventListener('DOMContentLoaded', function () {
-  const refs = extraer_anime_desde_dom();
+const refs = extraer_anime_desde_dom();
 
-  iniciarPopup(refs);
+document.addEventListener('DOMContentLoaded', function () {
+
+  iniciarPopup();
 
   console.log("Popup script cargado y listeners asignados.");
 });
 
-function iniciarPopup(refs) {
-  editarGeneros(refs);
-  manejarCalificacion(refs);
-  sincronizarTemporadaEpisodio(refs);
-  copiarID(refs);
+function iniciarPopup() {
+  editarGeneros();
+  manejarCalificacion();
+  sincronizarTemporadaEpisodio();
+  copiarID();
   //! testear Sincronizar Fondos
-  sincronizarFondoPortada(refs);
-  //TODO: Hay que cambiar esto.
-  //ºla idea original era mandar a otra pantalla, así que, hay lo eliminaré luego
-  //TODO: borrar los siguientes cuando ya no sean útiles
-  botonesCabecera(refs);
-  guardarFinal(refs);
-  buscarAnime(refs);
+  sincronizarFondoPortada();
+
+  abrir_carpetas(); 
+
 }
 
 // * 1. Editar Géneros
-function editarGeneros(refs) {
+function editarGeneros() {
   if (refs.btn_editar_generos && refs.texto_lista_generos && refs.entrada_edicion_generos) {
     refs.btn_editar_generos.addEventListener('click', function () {
       if (editingGeneros) {
@@ -57,7 +55,7 @@ function editarGeneros(refs) {
 }
 
 // * 2. Manejar Calificación
-function manejarCalificacion(refs) {
+function manejarCalificacion() {
   if (refs.btn_restar_calificacion && refs.btn_sumar_calificacion && refs.texto_nota_usuario) {
     const actualizarNota = (delta) => {
       let val = parseInt(refs.texto_nota_usuario.textContent) || 0;
@@ -70,7 +68,7 @@ function manejarCalificacion(refs) {
 }
 
 // * 3. Temporada/Episodio
-function sincronizarTemporadaEpisodio(refs) {
+function sincronizarTemporadaEpisodio() {
   const sync = () => {
     if (refs.entrada_temporada_actual) {
       const temp = parseInt(refs.entrada_temporada_actual.value) || 1;
@@ -108,7 +106,7 @@ function sincronizarTemporadaEpisodio(refs) {
 }
 
 // * 4. Copiar ID
-function copiarID(refs) {
+function copiarID() {
   if (refs.btn_copiar_id && refs.texto_id_anime) {
     refs.btn_copiar_id.addEventListener('click', () => {
       const id = refs.texto_id_anime.textContent.trim();
@@ -118,7 +116,7 @@ function copiarID(refs) {
 }
 
 // * 5. Fondo de portada
-function sincronizarFondoPortada(refs) {
+function sincronizarFondoPortada() {
   if (refs.imagen_portada_principal && refs.capa_fondo_portada) {
     const actualizarFondo = () => {
       const src = refs.imagen_portada_principal.src;
@@ -134,8 +132,54 @@ function sincronizarFondoPortada(refs) {
   }
 }
 
-// *. Menú configuración
-function alternarMenuConfiguracion(refs) {
+// * 6. Menu_desplegable_carpeta
+function abrir_carpetas() {
+  const panel = refs.panel_deslizable;
+  const btnAbrir = refs.btn_abrir_carpetas;
+  const btnCerrar = refs.btn_cerrar_panel;
+  const header = refs.panel_header;
+  let startY = 0;
+  let currentY = 0;
+
+  btnAbrir.addEventListener('click', () => {
+    panel.classList.add('panel--activo');
+  });
+
+  btnCerrar.addEventListener('click', () => {
+    panel.classList.remove('panel--activo');
+  });
+
+  header.addEventListener('mousedown', (e) => {
+    if (e.target === btnCerrar) return;
+    startY = e.clientY;
+    currentY = parseInt(getComputedStyle(panel).transform.split(',')[5]) || 0;
+    document.addEventListener('mousemove', moverPanel);
+    document.addEventListener('mouseup', soltarPanel);
+  });
+
+  function moverPanel(e) {
+    const deltaY = e.clientY - startY;
+    const nuevoY = currentY + deltaY;
+    if (nuevoY >= 0) {
+      panel.style.transform = `translateY(${nuevoY}px)`;
+    }
+  }
+
+  function soltarPanel(e) {
+    const deltaY = e.clientY - startY;
+    if (deltaY > 100) {
+      panel.classList.remove('panel--activo');
+      panel.style.transform = '';
+    } else {
+      panel.classList.add('panel--activo');
+    }
+    document.removeEventListener('mousemove', moverPanel);
+    document.removeEventListener('mouseup', soltarPanel);
+  }
+}
+
+//! *. Menú configuración
+function alternarMenuConfiguracion() {
   if (refs.btn_alternar_configuracion && refs.menu_configuracion) {
     refs.btn_alternar_configuracion.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -153,8 +197,8 @@ function alternarMenuConfiguracion(refs) {
   }
 }
 
-// *. Botones de cabecera
-function botonesCabecera(refs) {
+//! *. Botones de cabecera
+function botonesCabecera() {
   refs.btn_abrir_carpetas?.addEventListener('click', () => {
 
   });
@@ -165,16 +209,20 @@ function botonesCabecera(refs) {
   });
 }
 
-// *. Botón final de guardar
-function guardarFinal(refs) {
+//! *. Botón final de guardar
+function guardarFinal() {
   refs.btn_guardar_final?.addEventListener('click', () => {
     alert("VISUALES.js:Guardar a carpetas presionado.");
     console.log("Guardar a carpetas presionado.");
   });
 }
 
-// *. Búsqueda de anime
-function buscarAnime(refs) {
+//! *. Búsqueda de anime
+function buscarAnime(
+
+
+
+) {
   refs.entrada_buscar_anime?.addEventListener('input', () => {
     console.log("VISUALES.js: Búsqueda:", refs.entrada_buscar_anime.value);
   });

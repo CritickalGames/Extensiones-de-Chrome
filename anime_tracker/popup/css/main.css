@@ -8,7 +8,7 @@
 @import url("./componentes/input.css");
 @import url("./layout/grid.css");
 @import url("./utilidades/utilidades.css");
-
+@import url("./componentes/panel.css");
 /* _base.css */
 body {
   font-family: var(--font-display);
